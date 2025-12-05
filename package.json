@@ -1,7 +1,7 @@
 {
   "name": "intor-translator",
-  "version": "1.1.5",
-  "description": "A type safe translator that knows what to say and how to handle the rest. Supports custom messages, rich replacements, and async loading.",
+  "version": "1.2.0",
+  "description": "🤖 A modern, type-safe i18n engine.",
   "author": "Yiming Liao",
   "license": "MIT",
   "homepage": "https://github.com/yiming-liao/intor-translator#readme",
@@ -17,21 +17,9 @@
     "internationalization",
     "translation",
     "typescript",
-    "node",
-    "nextjs",
-    "react",
-    "translator",
-    "i18n core",
-    "custom messages",
-    "rich replacements",
-    "async loading",
-    "type safe",
     "type-safe",
-    "type safety",
-    "type-safe translator",
-    "type-safe i18n",
-    "type-safe translation",
-    "type-safe core"
+    "i18n engine",
+    "translator"
   ],
   "exports": {
     ".": {
@@ -59,6 +47,10 @@
     "knip": "knip --config .config/knip.config.ts",
     "examples:html": "vite --config examples/html/vite.config.ts"
   },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^24.10.1",
@@ -80,9 +72,5 @@
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.6",
     "vitest": "^4.0.9"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=16.0.0"
   }
 }
