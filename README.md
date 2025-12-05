@@ -2,7 +2,8 @@
 
 <div align="center">
 
-A type safe translator that knows what to say and how to handle the rest.
+A modern **i18n engine** powered by a customizable, type-safe translation pipeline.  
+Easy to adopt, modular at its core, and fully extensible.
 
 </div>
 
@@ -10,44 +11,32 @@ A type safe translator that knows what to say and how to handle the rest.
 
 [![NPM version](https://img.shields.io/npm/v/intor-translator?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/intor-translator)
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/intor-translator?style=flat&colorA=000000&colorB=000000)](https://bundlephobia.com/package/intor-translator)
+[![Coverage Status](https://img.shields.io/coveralls/github/yiming-liao/intor-translator.svg?branch=main&style=flat&colorA=000000&colorB=000000)](https://coveralls.io/github/yiming-liao/intor-translator?branch=main)
 [![License](https://img.shields.io/npm/l/intor-translator?style=flat&colorA=000000&colorB=000000)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-%E2%9C%94-blue?style=flat&colorA=000000&colorB=000000)](https://www.typescriptlang.org/)
 
 </div>
 
-> Translate with confidence.  
-> A type-safe i18n engine with fallback, scoped namespaces, and graceful loading.
-
----
+> Structured 󠁯•󠁏 Predictable 󠁯•󠁏 Beautifully simple
 
 ## Features
 
-- 🌍 Fallback locale support for smooth language switching
-- ⚡ Reactive translation logic that updates on the fly
-- 🧠 Type-safe nested key paths with full autocomplete
-- 🔁 Flexible replacement and interpolation support
-- 🎨 Rich formatting for complex replacement content
-- 🌀 Graceful handling of loading and async states
-- 🔧 Configurable handlers for fallback, loading, and missing keys
-- 🧩 Scoped translators for modules and namespaces
+- 🔧 **Modular Pipeline** – A pluggable, hook-driven flow for any translation logic.
+- ✨ **Typed Autocomplete** – Inferred keys and locales with precise, reliable completion.
+- 🌐 **Framework-Agnostic** – A lightweight engine that runs anywhere in JavaScript.
 
----
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Triangular%20Flag.png" alt="Triangular Flag" width="16" height="16" /> Installation
+## Installation
 
 ```bash
+# npm
 npm install intor-translator
-```
-
-or use **yarn**
-
-```bash
+# yarn
 yarn add intor-translator
+# pnpm
+pnpm add intor-translator
 ```
 
----
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="25" height="25" /> Quick Start
+## Quick Start
 
 ```typescript
 import { Translator } from "intor-translator";
@@ -67,134 +56,35 @@ translator.t("hello"); // -> Hello World
 translator.t("greeting", { name: "John doe" }); // -> Hello, John doe!
 ```
 
----
+## Handlers & Hooks
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Sparkles.png" alt="Sparkles" width="25" height="25" /> Advanced Features
+Intor Translator is powered by **a flexible pipeline** that lets you control how translations behave and how they are rendered.
 
-- Fallback Locales, Placeholder & Custom Handlers
+### Handlers — format the final output
 
-```typescript
-const translator = new Translator({
-  locale: "en",
-  messages: {
-    en: {
-      welcome: "Welcome back, {name}",
-    },
-    zh: {
-      welcome: "歡迎回來，{name}",
-      notification: "你有 {count} 則新通知",
-    },
-  },
-  fallbackLocales: { en: ["zh"] }, // Use zh if message not found in en
-  placeholder: "Content unavailable", // Shown if key is missing in all locales
-  handlers: {
-    formatHandler: ({ locale, message }) =>
-      locale === "zh" ? `${message}。` : `${message}.`, // Auto punctuation per locale
-  },
-});
+<sup>_changing how translations look_.</sup>
 
-// en has 'welcome'
-console.log(translator.t("welcome", { name: "John" })); // -> Welcome back, John.
+Handlers operate on the resolved message, use them to:
 
-// en does not have 'notification', fallback to zh
-console.log(translator.t("notification", { count: 3 })); // -> 你有 3 則新通知。
+- format ICU messages
+- apply custom plural logic
+- post-process output
+- style or transform the final string
 
-// message does not exist in any locale
-console.log(translator.t("unknown.key")); // -> Content unavailable
-```
+### Hooks — shape the translation flow
 
-- With Custom ICU Formatter
+<sup>_changing how translations work_.</sup>
 
-```typescript
-import { Translator, FormatMessage } from "intor-translator";
-import { IntlMessageFormat } from "intl-messageformat";
+Hooks run through the pipeline and can intercept any stage, use them to:
 
-// Create a custom handler
-const formatHandler: FormatMessage = ({ message, locale, replacements }) => {
-  const formatter = new IntlMessageFormat(message, locale);
-  return formatter.format(replacements);
-};
+- transform keys or messages
+- adjust fallback behavior
+- implement loading or missing logic
+- attach metadata or analytics
 
-const messages = {
-  en: {
-    notification:
-      "{name} has {count, plural, =0 {no messages} one {1 message} other {# messages}}.",
-  },
-};
-
-// Create a translator instance
-const translator = new Translator({
-  locale: "en",
-  messages,
-  handlers: { formatHandler },
-});
-
-translator.t("notification", { name: "John", count: 0 }); // -> John has no messages.
-translator.t("notification", { name: "John", count: 5 }); // -> John has 5 messages.
-```
+> Together, they form a customizable translation pipeline — structured, predictable, beautifully simple.
 
 ---
 
-## API Reference
-
-### Translator Parameters
-
-| Option            | Type                                  | Description                                                              |
-| ----------------- | ------------------------------------- | ------------------------------------------------------------------------ |
-| `messages`        | `Readonly<LocaleMessages>`            | Translation messages grouped by locale and namespace                     |
-| `locale`          | `string`                              | Active locale key                                                        |
-| `fallbackLocales` | `Record<Locale, Locale[]>` (optional) | Locales to fallback to when a key is missing                             |
-| `placeholder`     | `string` (optional)                   | Message to display when a key is missing in all locales                  |
-| `loadingMessage`  | `string` (optional)                   | Message to display during loading or async state                         |
-| `handlers`        | `TranslateHandlers` (optional)        | Custom functions for formatting, loading state, and missing key handling |
-
-**TranslateHandlers :**
-
-```ts
-type TranslateHandlers = {
-  formatHandler?: (
-    ctx: TranslateHandlerContext & { message: string },
-  ) => unknown;
-  LoadingHandler?: (ctx: TranslateHandlerContext) => unknown;
-  MissingHandler?: (ctx: TranslateHandlerContext) => unknown;
-};
-```
-
-> Use handlers to control how messages are formatted, what to show during loading, and how to respond to missing keys.  
-> Each handler receives a full translation context, including the current locale, key, and replacement values.
-
----
-
-### Instance Properties
-
-| Property    | Type        | Description                                |
-| ----------- | ----------- | ------------------------------------------ |
-| `messages`  | `M`         | Current messages object                    |
-| `locale`    | `Locale<M>` | Currently active locale                    |
-| `isLoading` | `boolean`   | Whether the translator is in loading state |
-
----
-
-### Instance Methods
-
-| Method        | Signature                                         | Description                                                         |
-| ------------- | ------------------------------------------------- | ------------------------------------------------------------------- |
-| `setMessages` | `(messages: M) => void`                           | Replaces the current message set                                    |
-| `setLocale`   | `(locale: Locale<M>) => boolean`                  | Sets a new locale and returns whether it changed                    |
-| `setLoading`  | `(state: boolean) => void`                        | Sets the loading state manually                                     |
-| `hasKey`      | `(key, targetLocale?) => boolean`                 | Checks whether the given key exists in the target or current locale |
-| `t`           | `<Result = string>(key, replacements?) => Result` | Translates a key with optional replacements                         |
-| `scoped`      | `(preKey: string) => { hasKey(), t() }`           | Creates a scoped translator with a namespace prefix                 |
-
-**translator.t(key, replacements?)**
-
-- Fully type-safe key access
-- Supports nested keys
-- Supports both string and rich replacements
-
-**translator.scoped(preKey)**
-
-- Returns a scoped translator instance based on a message subtree
-- Useful for organizing large sets of translations with shared prefixes
-
----
+**_For more advanced usage, see the full examples._**
+[View examples ↗](https://github.com/yiming-liao/intor-translator/tree/main/examples)
