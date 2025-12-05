@@ -43,5 +43,3 @@ next-env.d.ts
 # dist
 /dist
 
-# examples
-/examples

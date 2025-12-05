@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        background-color: #222;
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+
+    <div>
+      <button data-locale="en-US">en-US</button>
+      <button data-locale="zh-TW">zh-TW</button>
+    </div>
+
+    <script type="module">
+      import { Translator } from "../../dist";
+      import EN_US from "./messages/en-US/index.json";
+      import ZH_TW from "./messages/zh-TW/index.json";
+
+      const translator = new Translator({
+        locale: "en-US",
+        messages: { "en-US": EN_US, "zh-TW": ZH_TW },
+      });
+
+      const h1 = document.querySelector("h1");
+
+      const render = () => (h1.textContent = translator.t("hello"));
+      render();
+
+      document.querySelectorAll("button[data-locale]").forEach((button) => {
+        const { locale } = button.dataset;
+        button.addEventListener("click", () => {
+          translator.setLocale(locale);
+          render();
+        });
+      });
+    </script>
+  </body>
+</html>
