@@ -1,5 +1,6 @@
 import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
 import type { LocaleMessages, Replacement } from "@/types";
+import type { RuraHook } from "rura";
 
 /**
  * Context object shared across the translate pipeline.
@@ -36,25 +37,5 @@ export interface TranslateContext<Result = unknown> {
 
 /**
  * A single step in the translate pipeline.
- *
- * @template Result - Final translated value type.
  */
-export interface TranslateHook<Result = unknown> {
-  /** Unique name for this hook, used for debugging and introspection. */
-  name: string;
-  /**
-   * Optional execution order.
-   * - Lower values run earlier; hooks without order run last-in registration order.
-   */
-  order?: number;
-  /**
-   * Run the hook with the current context.
-   * - Return `{ done: true, value }` to short-circuit the pipeline.
-   */
-  run(ctx: TranslateContext<Result>): void | {
-    /** Indicates the pipeline should stop after this hook. */
-    done: true;
-    /** Final value to return from the translate call. */
-    value: Result;
-  };
-}
+export type TranslateHook = RuraHook<TranslateContext>;

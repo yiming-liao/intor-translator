@@ -1,9 +1,9 @@
 import type { TranslateContext } from "@/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { interpolateHook } from "@/pipeline/hooks/interpolate.hook";
+import { interpolate } from "@/pipeline/hooks/interpolate";
 import * as interpUtil from "@/translators/shared/utils/replace-values";
 
-describe("interpolateHook", () => {
+describe("interpolate", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -16,7 +16,7 @@ describe("interpolateHook", () => {
       finalMessage: undefined,
     } as unknown as TranslateContext;
 
-    interpolateHook.run(ctx);
+    interpolate.run(ctx);
 
     expect(ctx.finalMessage).toBe("formatted");
   });
@@ -29,7 +29,7 @@ describe("interpolateHook", () => {
       finalMessage: undefined,
     } as unknown as TranslateContext;
 
-    interpolateHook.run(ctx);
+    interpolate.run(ctx);
 
     expect(ctx.finalMessage).toBe("raw-only");
   });
@@ -47,7 +47,7 @@ describe("interpolateHook", () => {
       finalMessage: undefined,
     } as unknown as TranslateContext;
 
-    interpolateHook.run(ctx);
+    interpolate.run(ctx);
 
     expect(replaceSpy).toHaveBeenCalledWith("Hello {name}", { name: "John" });
     expect(ctx.finalMessage).toBe(mockOutput);
@@ -63,7 +63,7 @@ describe("interpolateHook", () => {
       finalMessage: undefined,
     } as unknown as TranslateContext;
 
-    interpolateHook.run(ctx);
+    interpolate.run(ctx);
 
     expect(replaceSpy).not.toHaveBeenCalled();
     expect(ctx.finalMessage).toBe(123);
@@ -79,7 +79,7 @@ describe("interpolateHook", () => {
       finalMessage: undefined,
     } as unknown as TranslateContext;
 
-    interpolateHook.run(ctx);
+    interpolate.run(ctx);
 
     expect(replaceSpy).not.toHaveBeenCalled();
     expect(ctx.finalMessage).toBe("Hello {name}");

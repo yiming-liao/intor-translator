@@ -1,10 +1,10 @@
 import type { TranslateContext } from "@/pipeline/types";
 import type { HandlerContext } from "@/translators";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { loadingHook } from "@/pipeline/hooks/loading.hook";
+import { loading } from "@/pipeline/hooks/loading";
 import * as handlerUtil from "@/pipeline/utils/make-handler-context";
 
-describe("loadingHook", () => {
+describe("loading", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -15,7 +15,7 @@ describe("loadingHook", () => {
       config: {},
     } as unknown as TranslateContext;
 
-    const result = loadingHook.run(ctx);
+    const result = loading.run(ctx);
 
     expect(result).toBeUndefined();
   });
@@ -39,15 +39,15 @@ describe("loadingHook", () => {
       },
     } as unknown as TranslateContext;
 
-    const result = loadingHook.run(ctx);
+    const result = loading.run(ctx);
 
     // handler called
     expect(loadingHandler).toHaveBeenCalledWith(mockCtxSnapshot);
 
     // return correct result
     expect(result).toEqual({
-      done: true,
-      value: mockResult,
+      early: true,
+      output: mockResult,
     });
 
     // makeHandlerContext called correctly
@@ -62,11 +62,11 @@ describe("loadingHook", () => {
       },
     } as unknown as TranslateContext;
 
-    const result = loadingHook.run(ctx);
+    const result = loading.run(ctx);
 
     expect(result).toEqual({
-      done: true,
-      value: "Loading…",
+      early: true,
+      output: "Loading…",
     });
   });
 
@@ -79,7 +79,7 @@ describe("loadingHook", () => {
       },
     } as unknown as TranslateContext;
 
-    const result = loadingHook.run(ctx);
+    const result = loading.run(ctx);
 
     expect(result).toBeUndefined();
   });

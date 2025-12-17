@@ -1,11 +1,10 @@
-import type { TranslateHook } from "@/pipeline/types";
+import type { TranslateContext } from "@/pipeline/types";
+import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 
-export const missingHook: TranslateHook = {
-  name: "missing",
-  order: 400,
-
-  run(ctx) {
+export const missing = rura.createHook<TranslateContext>(
+  "missing",
+  (ctx) => {
     const { config, key, rawMessage } = ctx;
     if (rawMessage !== undefined) return;
 
@@ -13,18 +12,19 @@ export const missingHook: TranslateHook = {
     const { missingHandler } = config.handlers || {};
     if (missingHandler) {
       return {
-        done: true,
-        value: missingHandler(makeHandlerContext(ctx)),
+        early: true,
+        output: missingHandler(makeHandlerContext(ctx)),
       };
     }
 
     // Static message
     const { placeholder } = config;
     if (placeholder) {
-      return { done: true, value: placeholder };
+      return { early: true, output: placeholder };
     }
 
     // Fallback to key
-    return { done: true, value: key };
+    return { early: true, output: key };
   },
-};
+  400,
+);

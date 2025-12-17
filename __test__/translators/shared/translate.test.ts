@@ -1,82 +1,105 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TranslateHook } from "@/pipeline/types";
-import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
+import * as ruraPackage from "rura";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import * as runPipelineModule from "@/pipeline/run-pipeline";
-import { translate } from "@/translators/shared/translate";
-
-vi.mock("@/pipeline/run-pipeline", () => ({
-  runPipeline: vi.fn(),
-}));
+import {
+  translate,
+  type TranslateOptions,
+} from "@/translators/shared/translate";
 
 describe("translate()", () => {
-  const messages = { en: { hello: "Hello" }, zh: { hello: "你好" } };
-  const hooks: TranslateHook[] = [{ name: "mockHook", run: vi.fn() }];
-
-  const locale = "en";
-
-  const translateConfig = {
-    messages,
-    locale,
-  } as TranslateConfig;
-
   beforeEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
-  it("should call runPipeline with correct context and hooks", () => {
-    const spy = vi
-      .mocked(runPipelineModule.runPipeline)
-      .mockReturnValue("TRANSLATED");
-
-    const result = translate({
-      hooks,
-      messages,
-      locale,
-      isLoading: false,
-      translateConfig,
-      key: "hello",
-      replacements: { name: "Yiming" },
+  it("should run hooks and return finalMessage when no early return", () => {
+    // Mock rura.run behavior
+    const runSpy = vi.spyOn(ruraPackage.rura, "run").mockReturnValue({
+      early: false,
+      ctx: {
+        finalMessage: "hello-final",
+      },
     });
 
-    expect(result).toBe("TRANSLATED");
+    const options: TranslateOptions = {
+      hooks: [],
+      messages: { en: { hello: "Hello" } },
+      locale: "en",
+      isLoading: false,
+      translateConfig: {},
+      key: "hello",
+      replacements: undefined,
+    };
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    const result = translate(options);
 
-    // get the actual context passed to runPipeline
-    const ctxArg = spy.mock.calls[0][0];
+    expect(result).toBe("hello-final");
 
-    // validate context structure
-    expect(ctxArg.messages).toBe(messages);
-    expect(ctxArg.locale).toBe(locale);
-    expect(ctxArg.isLoading).toBe(false);
-    expect(ctxArg.config).toBe(translateConfig);
-    expect(ctxArg.key).toBe("hello");
-    expect(ctxArg.replacements).toEqual({ name: "Yiming" });
+    // rura.run should receive merged context
+    expect(runSpy).toHaveBeenCalledTimes(1);
+    const [receivedCtx, receivedHooks] = runSpy.mock.calls[0];
 
-    // candidateLocales/meta should be initialized defaults
-    expect(ctxArg.candidateLocales).toEqual([]);
-    expect(ctxArg.meta).toEqual({});
+    expect(receivedHooks).toEqual(options.hooks);
+
+    // essential fields in context
+    expect((receivedCtx as any).locale).toBe("en");
+    expect((receivedCtx as any).key).toBe("hello");
+    expect((receivedCtx as any).config).toBe(options.translateConfig);
+    expect((receivedCtx as any).candidateLocales).toEqual([]);
+    expect((receivedCtx as any).meta).toEqual({});
   });
 
-  it("should work without replacements", () => {
-    const spy = vi
-      .mocked(runPipelineModule.runPipeline)
-      .mockReturnValue("NO_REPLACEMENTS");
-
-    const result = translate({
-      hooks,
-      messages,
-      locale,
-      isLoading: false,
-      translateConfig,
-      key: "hello",
+  it("should return output when early === true", () => {
+    const runSpy = vi.spyOn(ruraPackage.rura, "run").mockReturnValue({
+      early: true,
+      output: "early-result",
+      ctx: {},
     });
 
-    expect(result).toBe("NO_REPLACEMENTS");
+    const options: TranslateOptions = {
+      hooks: [],
+      messages: {},
+      locale: "en",
+      isLoading: false,
+      translateConfig: {},
+      key: "unused",
+    };
 
-    const ctxArg = spy.mock.calls[0][0];
+    const result = translate(options);
 
-    // ensure replacements is undefined when not provided
-    expect(ctxArg.replacements).toBeUndefined();
+    expect(result).toBe("early-result");
+    expect(runSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should pass full TranslateContext into rura.run", () => {
+    const runSpy = vi.spyOn(ruraPackage.rura, "run").mockReturnValue({
+      early: false,
+      ctx: { finalMessage: "meta-test" },
+    });
+
+    const options: TranslateOptions = {
+      hooks: [{ name: "test", run: () => {} }] as TranslateHook[],
+      messages: { en: {} },
+      locale: "en",
+      isLoading: true,
+      translateConfig: { loadingMessage: "Loading…" },
+      key: "k",
+      replacements: { user: "Yiming" },
+    };
+
+    translate(options);
+
+    const [receivedCtx] = runSpy.mock.calls[0];
+
+    expect((receivedCtx as any).messages).toBe(options.messages);
+    expect((receivedCtx as any).locale).toBe("en");
+    expect((receivedCtx as any).isLoading).toBe(true);
+    expect((receivedCtx as any).config).toBe(options.translateConfig);
+    expect((receivedCtx as any).key).toBe("k");
+    expect((receivedCtx as any).replacements).toEqual({ user: "Yiming" });
+
+    // auto-added fields
+    expect((receivedCtx as any).candidateLocales).toEqual([]);
+    expect((receivedCtx as any).meta).toEqual({});
   });
 });

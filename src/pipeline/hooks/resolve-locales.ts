@@ -1,14 +1,14 @@
-import type { TranslateHook } from "@/pipeline/types";
+import type { TranslateContext } from "@/pipeline/types";
+import { rura } from "rura";
 import { resolveCandidateLocales } from "@/translators/shared/utils/resolve-candidate-locales";
 
-export const resolveLocalesHook: TranslateHook = {
-  name: "resolveLocales",
-  order: 100,
-
-  run(ctx) {
+export const resolveLocales = rura.createHook<TranslateContext>(
+  "resolveLocales",
+  (ctx) => {
     ctx.candidateLocales = resolveCandidateLocales(
       ctx.locale,
       ctx.config.fallbackLocales,
     );
   },
-};
+  100,
+);

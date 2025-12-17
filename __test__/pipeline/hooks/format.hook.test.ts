@@ -1,10 +1,10 @@
 import type { TranslateContext } from "@/pipeline/types";
 import type { HandlerContext } from "@/translators";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { formatHook } from "@/pipeline/hooks/format.hook";
+import { format } from "@/pipeline/hooks/format";
 import * as handlerUtil from "@/pipeline/utils/make-handler-context";
 
-describe("formatHook", () => {
+describe("format", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -31,7 +31,7 @@ describe("formatHook", () => {
       },
     } as unknown as TranslateContext;
 
-    formatHook.run(ctx);
+    format.run(ctx);
 
     // handler should be called with snapshot
     expect(formatHandler).toHaveBeenCalledWith(mockSnapshot);
@@ -54,7 +54,7 @@ describe("formatHook", () => {
       },
     } as unknown as TranslateContext;
 
-    formatHook.run(ctx);
+    format.run(ctx);
 
     // handler should not be called
     expect(ctx.config.handlers!.formatHandler).not.toHaveBeenCalled();
@@ -72,7 +72,7 @@ describe("formatHook", () => {
       },
     } as unknown as TranslateContext;
 
-    formatHook.run(ctx);
+    format.run(ctx);
 
     expect(ctx.formattedMessage).toBeUndefined();
   });

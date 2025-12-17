@@ -1,12 +1,11 @@
-import type { TranslateHook } from "@/pipeline/types";
+import type { TranslateContext } from "@/pipeline/types";
 import type { HandlerContext } from "@/translators";
+import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 
-export const formatHook: TranslateHook = {
-  name: "format",
-  order: 500,
-
-  run(ctx) {
+export const format = rura.createHook<TranslateContext>(
+  "format",
+  (ctx) => {
     const { config, rawMessage } = ctx;
     const { formatHandler } = config.handlers || {};
     if (!formatHandler || rawMessage === undefined) return;
@@ -16,4 +15,5 @@ export const formatHook: TranslateHook = {
       makeHandlerContext(ctx) as HandlerContext & { rawMessage: string },
     );
   },
-};
+  500,
+);

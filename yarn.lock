@@ -1054,20 +1054,20 @@
   resolved "https://registry.yarnpkg.com/@unrs/resolver-binding-win32-x64-msvc/-/resolver-binding-win32-x64-msvc-1.11.1.tgz#538b1e103bf8d9864e7b85cc96fa8d6fb6c40777"
   integrity sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==
 
-"@vitest/coverage-v8@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@vitest/coverage-v8/-/coverage-v8-4.0.9.tgz#95ecab0387196c8ab4f08735cb1f89c1fc9fb4a0"
-  integrity sha512-70oyhP+Q0HlWBIeGSP74YBw5KSjYhNgSCQjvmuQFciMqnyF36WL2cIkcT7XD85G4JPmBQitEMUsx+XMFv2AzQA==
+"@vitest/coverage-v8@4.0.15":
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/@vitest/coverage-v8/-/coverage-v8-4.0.15.tgz#5daef6798ced6ed15f4f06f1caf789e1e0da8a11"
+  integrity sha512-FUJ+1RkpTFW7rQITdgTi93qOCWJobWhBirEPCeXh2SW2wsTlFxy51apDz5gzG+ZEYt/THvWeNmhdAoS9DTwpCw==
   dependencies:
     "@bcoe/v8-coverage" "^1.0.2"
-    "@vitest/utils" "4.0.9"
+    "@vitest/utils" "4.0.15"
     ast-v8-to-istanbul "^0.3.8"
-    debug "^4.4.3"
     istanbul-lib-coverage "^3.2.2"
     istanbul-lib-report "^3.0.1"
     istanbul-lib-source-maps "^5.0.6"
     istanbul-reports "^3.2.0"
     magicast "^0.5.1"
+    obug "^2.1.1"
     std-env "^3.10.0"
     tinyrainbow "^3.0.3"
 
@@ -1099,13 +1099,6 @@
   dependencies:
     tinyrainbow "^3.0.3"
 
-"@vitest/pretty-format@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-4.0.9.tgz#f755b29d41b7123aa99645ec2cf81ad0f9fb3788"
-  integrity sha512-Hor0IBTwEi/uZqB7pvGepyElaM8J75pYjrrqbC8ZYMB9/4n5QA63KC15xhT+sqHpdGWfdnPo96E8lQUxs2YzSQ==
-  dependencies:
-    tinyrainbow "^3.0.3"
-
 "@vitest/runner@4.0.15":
   version "4.0.15"
   resolved "https://registry.yarnpkg.com/@vitest/runner/-/runner-4.0.15.tgz#fdd4e5d05a4c6b73be9746845d29c7329c37ae3b"
@@ -1134,14 +1127,6 @@
   integrity sha512-HXjPW2w5dxhTD0dLwtYHDnelK3j8sR8cWIaLxr22evTyY6q8pRCjZSmhRWVjBaOVXChQd6AwMzi9pucorXCPZA==
   dependencies:
     "@vitest/pretty-format" "4.0.15"
-    tinyrainbow "^3.0.3"
-
-"@vitest/utils@4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-4.0.9.tgz#6e227c12df0342fe772d5b50e754dcb1c7c3bf48"
-  integrity sha512-cEol6ygTzY4rUPvNZM19sDf7zGa35IYTm9wfzkHoT/f5jX10IOY7QleWSOh5T0e3I3WVozwK5Asom79qW8DiuQ==
-  dependencies:
-    "@vitest/pretty-format" "4.0.9"
     tinyrainbow "^3.0.3"
 
 acorn-jsx@^5.3.2:
@@ -1553,7 +1538,7 @@ debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@^4.4.0, debug@^4.4.1, debug@^4.4.3:
+debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@^4.4.0, debug@^4.4.1:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.3.tgz#c6ae432d9bd9662582fce08709b038c58e9e3d6a"
   integrity sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==
@@ -3456,6 +3441,11 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rura@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/rura/-/rura-1.0.7.tgz#56e6e96a2d7ef2435fcb6c38bf6116ebda4e2ba6"
+  integrity sha512-hVx4AcnfooACe+VsuFbQGFU2jBTs6UKKq0HdozsIPehFVK5FM1lJLtccZeqXQ6k62XQI+cndsw1HuQzKQBugSQ==
 
 safe-array-concat@^1.1.3:
   version "1.1.3"

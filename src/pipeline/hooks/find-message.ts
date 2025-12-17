@@ -1,15 +1,15 @@
-import type { TranslateHook } from "@/pipeline/types";
+import type { TranslateContext } from "@/pipeline/types";
+import { rura } from "rura";
 import { findMessageInLocales } from "@/translators/shared/utils/find-message-in-locales";
 
-export const findMessageHook: TranslateHook = {
-  name: "findMessage",
-  order: 200,
-
-  run(ctx) {
+export const findMessage = rura.createHook<TranslateContext>(
+  "findMessage",
+  (ctx) => {
     ctx.rawMessage = findMessageInLocales({
       messages: ctx.messages,
       candidateLocales: ctx.candidateLocales,
       key: ctx.key,
     });
   },
-};
+  200,
+);

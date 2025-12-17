@@ -1,6 +1,6 @@
 // __tests__/pipeline/hooks/resolve-locales.hook.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { resolveLocalesHook } from "@/pipeline/hooks/resolve-locales.hook";
+import { resolveLocales } from "@/pipeline/hooks/resolve-locales";
 import { type TranslateContext } from "@/pipeline/types";
 import * as localeUtil from "@/translators/shared/utils/resolve-candidate-locales";
 
@@ -21,7 +21,7 @@ describe("resolveLocalesHook", () => {
       candidateLocales: [],
     } as unknown as TranslateContext;
 
-    resolveLocalesHook.run(ctx);
+    resolveLocales.run(ctx);
 
     expect(spy).toHaveBeenCalledWith("zh-TW", ["zh"]);
     expect(ctx.candidateLocales).toBe(mockReturn);

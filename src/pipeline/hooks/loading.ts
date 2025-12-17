@@ -1,11 +1,10 @@
-import type { TranslateHook } from "@/pipeline/types";
+import type { TranslateContext } from "@/pipeline/types";
+import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 
-export const loadingHook: TranslateHook = {
-  name: "loading",
-  order: 300,
-
-  run(ctx) {
+export const loading = rura.createHook<TranslateContext>(
+  "loading",
+  (ctx) => {
     const { config, isLoading } = ctx;
     if (!isLoading) return;
 
@@ -13,15 +12,16 @@ export const loadingHook: TranslateHook = {
     const { loadingHandler } = config.handlers || {};
     if (loadingHandler) {
       return {
-        done: true,
-        value: loadingHandler(makeHandlerContext(ctx)),
+        early: true,
+        output: loadingHandler(makeHandlerContext(ctx)),
       };
     }
 
     // Static message
     const { loadingMessage } = config;
     if (loadingMessage) {
-      return { done: true, value: loadingMessage };
+      return { early: true, output: loadingMessage };
     }
   },
-};
+  300,
+);

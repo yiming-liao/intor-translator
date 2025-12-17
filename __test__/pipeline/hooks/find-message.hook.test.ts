@@ -1,10 +1,10 @@
 /* eslint-disable unicorn/no-useless-undefined */
 import type { TranslateContext } from "@/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { findMessageHook } from "@/pipeline/hooks/find-message.hook";
+import { findMessage } from "@/pipeline/hooks/find-message";
 import * as findUtil from "@/translators/shared/utils/find-message-in-locales";
 
-describe("findMessageHook", () => {
+describe("findMessage", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -26,7 +26,7 @@ describe("findMessageHook", () => {
     } as unknown as TranslateContext;
 
     // run hook
-    findMessageHook.run(ctx);
+    findMessage.run(ctx);
 
     // ensure utility was called
     expect(spy).toHaveBeenCalledWith({
@@ -49,7 +49,7 @@ describe("findMessageHook", () => {
       rawMessage: "previousValue",
     } as unknown as TranslateContext;
 
-    findMessageHook.run(ctx);
+    findMessage.run(ctx);
 
     expect(ctx.rawMessage).toBeUndefined();
   });

@@ -3,7 +3,7 @@ import type { TranslateHook } from "@/pipeline/types";
 import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
 import type { Replacement, Locale, LocaleMessages } from "@/types";
 import type { LocalizedLeafKeys } from "@/types/keys/localized-key";
-import { DEFAULT_HOOKS } from "@/pipeline/hooks";
+import { DEFAULT_HOOKS } from "@/pipeline";
 import { BaseTranslator } from "@/translators/base-translator";
 import { hasKey } from "@/translators/shared/has-key";
 import { translate } from "@/translators/shared/translate";

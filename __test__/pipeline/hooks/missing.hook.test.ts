@@ -1,10 +1,10 @@
 import type { TranslateContext } from "@/pipeline/types";
 import type { HandlerContext } from "@/translators";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { missingHook } from "@/pipeline/hooks/missing.hook";
+import { missing } from "@/pipeline/hooks/missing";
 import * as handlerUtil from "@/pipeline/utils/make-handler-context";
 
-describe("missingHook", () => {
+describe("missing", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -16,7 +16,7 @@ describe("missingHook", () => {
       config: {},
     } as unknown as TranslateContext;
 
-    const result = missingHook.run(ctx);
+    const result = missing.run(ctx);
 
     expect(result).toBeUndefined();
   });
@@ -43,7 +43,7 @@ describe("missingHook", () => {
       },
     } as unknown as TranslateContext;
 
-    const result = missingHook.run(ctx);
+    const result = missing.run(ctx);
 
     // handler must be called
     expect(missingHandler).toHaveBeenCalledWith(mockSnapshot);
@@ -53,8 +53,8 @@ describe("missingHook", () => {
 
     // hook return shape
     expect(result).toEqual({
-      done: true,
-      value: mockReturnValue,
+      early: true,
+      output: mockReturnValue,
     });
   });
 
@@ -67,11 +67,11 @@ describe("missingHook", () => {
       },
     } as unknown as TranslateContext;
 
-    const result = missingHook.run(ctx);
+    const result = missing.run(ctx);
 
     expect(result).toEqual({
-      done: true,
-      value: "N/A",
+      early: true,
+      output: "N/A",
     });
   });
 
@@ -82,11 +82,11 @@ describe("missingHook", () => {
       config: {},
     } as unknown as TranslateContext;
 
-    const result = missingHook.run(ctx);
+    const result = missing.run(ctx);
 
     expect(result).toEqual({
-      done: true,
-      value: "hello.world",
+      early: true,
+      output: "hello.world",
     });
   });
 });

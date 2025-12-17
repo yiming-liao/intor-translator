@@ -1,7 +1,7 @@
 import type { TranslateContext, TranslateHook } from "@/pipeline/types";
 import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
 import type { Locale, LocaleMessages, Replacement } from "@/types";
-import { runPipeline } from "@/pipeline/run-pipeline";
+import { rura } from "rura";
 
 export type TranslateOptions = {
   hooks: TranslateHook[];
@@ -14,12 +14,14 @@ export type TranslateOptions = {
 };
 
 export function translate<Result = string>(options: TranslateOptions): Result {
-  const ctx: TranslateContext = {
+  const context: TranslateContext = {
     ...options,
     config: options.translateConfig,
     candidateLocales: [],
     meta: {},
   };
 
-  return runPipeline(ctx, options.hooks) as Result;
+  const { early, ctx, output } = rura.run(context, options.hooks);
+  if (early === true) return output as Result;
+  return ctx.finalMessage as Result;
 }
