@@ -30,8 +30,10 @@ Easy to use, modular at its core, and fully extensible.
 ```bash
 # npm
 npm install intor-translator
+
 # yarn
 yarn add intor-translator
+
 # pnpm
 pnpm add intor-translator
 ```
