@@ -38,6 +38,12 @@ yarn add intor-translator
 pnpm add intor-translator
 ```
 
+Or load it directly from a CDN:
+
+```js
+import { Translator } from "https://cdn.jsdelivr.net/npm/intor-translator/+esm";
+```
+
 ## Quick Start
 
 ```typescript
