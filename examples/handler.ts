@@ -1,6 +1,6 @@
-import type { FormatHandler } from "../dist";
+import type { FormatHandler } from "intor-translator";
 import { IntlMessageFormat } from "intl-messageformat";
-import { Translator } from "../dist";
+import { Translator } from "intor-translator";
 
 /**
  * [Handler] Custom ICU formatting.

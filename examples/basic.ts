@@ -1,4 +1,4 @@
-import { Translator } from "../dist";
+import { Translator } from "intor-translator";
 
 /**
  * Basic translation flow

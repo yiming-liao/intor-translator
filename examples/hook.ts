@@ -1,4 +1,4 @@
-import { Translator, type TranslateHook } from "../dist";
+import { Translator, type TranslateHook } from "intor-translator";
 
 /**
  * [Hook] Modify the final translated output.
