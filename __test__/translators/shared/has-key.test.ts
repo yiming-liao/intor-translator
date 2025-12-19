@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-useless-undefined */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { hasKey } from "@/translators/shared/has-key";
 import { findMessageInLocales } from "@/translators/shared/utils/find-message-in-locales";

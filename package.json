@@ -2,8 +2,11 @@
   "name": "intor-translator",
   "version": "1.2.2",
   "description": "🤖 A modern, type-safe i18n engine.",
-  "author": "Yiming Liao",
-  "license": "MIT",
+  "author": {
+    "name": "Yiming Liao",
+    "email": "yimingliao.official@gmail.com",
+    "url": "https://github.com/yiming-liao"
+  },
   "homepage": "https://github.com/yiming-liao/intor-translator#readme",
   "repository": {
     "type": "git",
@@ -11,6 +14,10 @@
   },
   "bugs": {
     "url": "https://github.com/yiming-liao/intor-translator/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/yiming-liao"
   },
   "keywords": [
     "i18n",
@@ -21,6 +28,8 @@
     "i18n engine",
     "translator"
   ],
+  "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,7 +45,10 @@
     "README.md",
     "LICENSE"
   ],
-  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "build": "tsup",
     "prepublishOnly": "yarn build",
@@ -46,10 +58,6 @@
     "lint:debug": "eslint --debug",
     "knip": "knip --config .config/knip.config.ts",
     "examples:html": "vite --config examples/html/vite.config.ts"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=16.0.0"
   },
   "dependencies": {
     "rura": "1.0.7"

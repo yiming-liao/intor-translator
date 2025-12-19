@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-useless-undefined */
 import type { TranslateContext } from "@/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { findMessage } from "@/pipeline/hooks/find-message";

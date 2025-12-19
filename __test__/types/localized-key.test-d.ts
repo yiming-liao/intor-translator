@@ -1,6 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// test-d/localized-node-leaf.test-d.ts
 import type { LocalizedNodeKeys, LocalizedLeafKeys } from "@/types";
 import { expectType } from "tsd";
 
