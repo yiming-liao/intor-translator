@@ -6,7 +6,7 @@ export default defineConfig({
     include: ["**/*.test.{ts,tsx}"],
     environment: "node",
     globals: true,
-    coverage: { reporter: ["lcov"] },
+    coverage: { reporter: ["text", "lcov"] },
   },
   resolve: {
     alias: {

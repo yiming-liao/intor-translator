@@ -3,6 +3,7 @@ import type { TranslateHook } from "@/pipeline/types";
 import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
 import type { Replacement, Locale, LocaleMessages } from "@/types";
 import type { LocalizedLeafKeys } from "@/types/keys/localized-key";
+import { rura } from "rura";
 import { DEFAULT_HOOKS } from "@/pipeline";
 import { BaseTranslator } from "@/translators/base-translator";
 import { hasKey } from "@/translators/shared/has-key";
@@ -50,6 +51,15 @@ export class CoreTranslator<
       this.hooks.push(...hooks);
     }
     this.sortHooks();
+  }
+
+  /** Outputs a debug overview of the active pipeline. */
+  debugHooks() {
+    return rura
+      .createPipeline(this.hooks)
+      .debugHooks(
+        (hooks) => `🤖 Intor Translator pipeline (${hooks.length} hooks)`,
+      );
   }
 
   /** Check if a key exists in the specified locale or current locale. */

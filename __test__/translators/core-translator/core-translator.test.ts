@@ -13,7 +13,6 @@ vi.mock("@/translators/shared/translate");
 describe("CoreTranslator", () => {
   const messages = { en: { hello: "Hello" }, zh: { hello: "你好" } };
   const locale = "en";
-
   const options: CoreTranslatorOptions<typeof messages> = {
     messages,
     locale,
@@ -35,11 +34,8 @@ describe("CoreTranslator", () => {
   it("hasKey should call hasKey with correct arguments", () => {
     const key = "hello";
     const targetLocale = "zh";
-
     const spy = vi.mocked(hasKeyModule.hasKey).mockReturnValue(true);
-
     const result = translator.hasKey(key, targetLocale);
-
     expect(result).toBe(true);
     expect(spy).toHaveBeenCalledWith({
       messages: translator["_messages"],
@@ -52,13 +48,10 @@ describe("CoreTranslator", () => {
   it("t should call translate with correct arguments and return result", () => {
     const key = "hello";
     const replacements = { name: "Yiming" };
-
     const spy = vi
       .mocked(translateModule.translate)
       .mockReturnValue("Hello Yiming");
-
     const result = translator.t(key, replacements);
-
     expect(result).toBe("Hello Yiming");
     expect(spy).toHaveBeenCalledWith({
       hooks: translator["hooks"],
@@ -77,11 +70,8 @@ describe("CoreTranslator", () => {
       run: vi.fn(),
       order: 10,
     };
-
     const prevLength = translator["hooks"].length;
-
     translator.use(hook);
-
     expect(translator["hooks"].length).toBe(prevLength + 1);
     expect(translator["hooks"]).toContain(hook);
   });
@@ -92,15 +82,9 @@ describe("CoreTranslator", () => {
       run: vi.fn(),
       order: 5,
     };
-
-    const plugin: TranslatorPlugin = {
-      hook,
-    };
-
+    const plugin: TranslatorPlugin = { hook };
     const prevLength = translator["hooks"].length;
-
     translator.use(plugin);
-
     expect(translator["hooks"].length).toBe(prevLength + 1);
     expect(translator["hooks"]).toContain(hook);
   });
@@ -116,15 +100,11 @@ describe("CoreTranslator", () => {
       run: vi.fn(),
       order: 2,
     };
-
     const plugin: TranslatorPlugin = {
       hook: [hookA, hookB],
     };
-
     const prevLength = translator["hooks"].length;
-
     translator.use(plugin);
-
     expect(translator["hooks"].length).toBe(prevLength + 2);
     expect(translator["hooks"]).toContain(hookA);
     expect(translator["hooks"]).toContain(hookB);
@@ -132,9 +112,7 @@ describe("CoreTranslator", () => {
 
   it("use should ignore a plugin without run or hook", () => {
     const prevLength = translator["hooks"].length;
-
     translator.use({} as TranslatorPlugin);
-
     expect(translator["hooks"].length).toBe(prevLength);
   });
 
@@ -148,10 +126,8 @@ describe("CoreTranslator", () => {
       name: "no-order-hook",
       run: vi.fn(),
     };
-
     translator.use(hookWithOrder);
     translator.use(hookWithoutOrder);
-
     expect(translator["hooks"]).toContain(hookWithOrder);
     expect(translator["hooks"]).toContain(hookWithoutOrder);
   });
@@ -161,18 +137,14 @@ describe("CoreTranslator", () => {
     const hookB = { name: "B", run: vi.fn() };
     const hookC = { name: "C", run: vi.fn(), order: 1 };
     const hookD = { name: "D", run: vi.fn() };
-
     translator.use(hookA);
     translator.use(hookB);
     translator.use(hookC);
     translator.use(hookD);
-
     const hooks = translator["hooks"];
-
     expect(hooks.indexOf(hookB)).toBeLessThan(hooks.indexOf(hookC));
     expect(hooks.indexOf(hookD)).toBeLessThan(hooks.indexOf(hookC));
     expect(hooks.indexOf(hookC)).toBeLessThan(hooks.indexOf(hookA));
-
     expect([hookB, hookD]).toContain(hooks[0]);
     expect([hookB, hookD]).toContain(hooks[1]);
   });
@@ -183,28 +155,23 @@ describe("CoreTranslator", () => {
       run: vi.fn(),
       order: 3,
     };
-
     const translatorWithPlugin = new CoreTranslator({
       messages,
       locale,
       plugins: [hook],
     });
-
     expect(translatorWithPlugin["hooks"]).toContain(hook);
   });
 
   it("should load plugin objects containing multiple hooks via constructor", () => {
     const hookA: TranslateHook = { name: "A", run: vi.fn(), order: 1 };
     const hookB: TranslateHook = { name: "B", run: vi.fn(), order: 2 };
-
     const plugin: TranslatorPlugin = { hook: [hookA, hookB] };
-
     const translatorWithPlugin = new CoreTranslator({
       messages,
       locale,
       plugins: [plugin],
     });
-
     expect(translatorWithPlugin["hooks"]).toContain(hookA);
     expect(translatorWithPlugin["hooks"]).toContain(hookB);
   });
@@ -215,19 +182,25 @@ describe("CoreTranslator", () => {
       run: vi.fn(),
       order: 10,
     };
-
     const translatorCtor = new CoreTranslator({
       messages,
       locale,
       plugins: [hook],
     });
-
     const translatorManual = new CoreTranslator({
       messages,
       locale,
     });
     translatorManual.use(hook);
-
     expect(translatorCtor["hooks"]).toEqual(translatorManual["hooks"]);
+  });
+
+  it("debugHooks should output debug information", () => {
+    const hook: TranslateHook = {
+      name: "hookA",
+      run: vi.fn(),
+    };
+    translator.use(hook);
+    expect(() => translator.debugHooks()).not.toThrow();
   });
 });
