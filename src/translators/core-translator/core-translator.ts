@@ -17,7 +17,7 @@ import { translate } from "@/translators/shared/translate";
  * @template L - Locale selection strategy ("union" or specific locale keys).
  */
 export class CoreTranslator<
-  M extends LocaleMessages,
+  M extends LocaleMessages | unknown = unknown,
   L extends keyof M | "union" = "union",
 > extends BaseTranslator<M> {
   /** User-provided options including messages, locale, and config. */
@@ -68,7 +68,7 @@ export class CoreTranslator<
     targetLocale?: Locale<M>,
   ): boolean => {
     return hasKey({
-      messages: this._messages,
+      messages: this._messages as Readonly<LocaleMessages>,
       locale: this._locale,
       key: key as string,
       targetLocale,
@@ -85,7 +85,7 @@ export class CoreTranslator<
   ): Result => {
     return translate({
       hooks: this.hooks,
-      messages: this._messages,
+      messages: this._messages as Readonly<LocaleMessages>,
       locale: this._locale,
       isLoading: this._isLoading,
       translateConfig: this.translateConfig,

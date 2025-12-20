@@ -28,14 +28,14 @@ import type { LocaleMessages } from "@/types/messages";
  * ```
  */
 export type LocalizedNodeKeys<
-  M extends LocaleMessages | undefined = undefined,
+  M = unknown,
   L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
-> = [M] extends [undefined]
-  ? string
-  : L extends "union"
+> = M extends LocaleMessages
+  ? L extends "union"
     ? NodeKeys<M[keyof M], D>
-    : NodeKeys<M[Extract<L, keyof M>], D>;
+    : NodeKeys<M[Extract<L, keyof M>], D>
+  : string;
 
 /**
  * Extracts all **leaf keys** from the messages
@@ -60,11 +60,11 @@ export type LocalizedNodeKeys<
  * ```
  */
 export type LocalizedLeafKeys<
-  M extends LocaleMessages | undefined = undefined,
+  M = unknown,
   L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
-> = [M] extends [undefined]
-  ? string
-  : L extends "union"
+> = M extends LocaleMessages
+  ? L extends "union"
     ? LeafKeys<M[keyof M], D>
-    : LeafKeys<M[Extract<L, keyof M>], D>;
+    : LeafKeys<M[Extract<L, keyof M>], D>
+  : string;

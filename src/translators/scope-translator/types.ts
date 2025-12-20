@@ -9,7 +9,7 @@ import type {
 export type ScopeTranslatorOptions<M> = CoreTranslatorOptions<M>;
 
 export type ScopeTranslatorMethods<
-  M extends LocaleMessages | undefined = undefined,
+  M extends LocaleMessages | unknown = unknown,
   L extends keyof M | "union" = "union",
   K = LocalizedLeafKeys<M, L>,
 > = {

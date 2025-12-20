@@ -7,7 +7,7 @@ import { hasKey as hasKeyMethod } from "@/translators/shared/has-key";
 import { translate } from "@/translators/shared/translate";
 
 export class ScopeTranslator<
-  M extends LocaleMessages,
+  M extends LocaleMessages | unknown = unknown,
   L extends keyof M | "union" = "union",
 > extends CoreTranslator<M> {
   constructor(options: ScopeTranslatorOptions<M>) {
@@ -24,7 +24,7 @@ export class ScopeTranslator<
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
         const fullKey = getFullKey(preKey as string | undefined, key);
         return hasKeyMethod({
-          messages: this._messages,
+          messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
           key: fullKey as string,
           targetLocale,
@@ -34,7 +34,7 @@ export class ScopeTranslator<
         const fullKey = getFullKey(preKey as string | undefined, key);
         return translate({
           hooks: this.hooks,
-          messages: this._messages,
+          messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
           isLoading: this._isLoading,
           translateConfig: this.translateConfig,

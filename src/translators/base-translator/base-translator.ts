@@ -6,7 +6,7 @@ import type { Locale, LocaleMessages } from "@/types";
  *
  * @template M - Shape of the messages object.
  */
-export class BaseTranslator<M extends LocaleMessages> {
+export class BaseTranslator<M extends LocaleMessages | unknown = unknown> {
   /** Current messages for translation */
   protected _messages: Readonly<M>;
   /** Current active locale */
