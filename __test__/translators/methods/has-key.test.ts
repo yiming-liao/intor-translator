@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { hasKey } from "@/translators/shared/has-key";
-import { findMessageInLocales } from "@/translators/shared/utils/find-message-in-locales";
-import { resolveCandidateLocales } from "@/translators/shared/utils/resolve-candidate-locales";
+import { findMessageInLocales } from "@/shared/utils/find-message-in-locales";
+import { resolveCandidateLocales } from "@/shared/utils/resolve-candidate-locales";
+import { hasKey } from "@/translators/methods/has-key";
 
 // mock utils
-vi.mock("@/translators/shared/utils/find-message-in-locales");
-vi.mock("@/translators/shared/utils/resolve-candidate-locales");
+vi.mock("@/shared/utils/find-message-in-locales");
+vi.mock("@/shared/utils/resolve-candidate-locales");
 
 describe("hasKey", () => {
   const messages = {

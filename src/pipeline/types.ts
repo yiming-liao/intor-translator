@@ -17,6 +17,7 @@ export interface TranslateContext<Result = unknown> {
   locale: string;
   /** Current loading state */
   isLoading?: boolean;
+
   /** Message key to look up in the messages map */
   key: string;
   /** Optional value replacements */

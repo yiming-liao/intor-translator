@@ -1,7 +1,7 @@
 import type { LocaleMessages } from "@/types";
 import type { Locale } from "@/types";
-import { findMessageInLocales } from "@/translators/shared/utils/find-message-in-locales";
-import { resolveCandidateLocales } from "@/translators/shared/utils/resolve-candidate-locales";
+import { findMessageInLocales } from "@/shared/utils/find-message-in-locales";
+import { resolveCandidateLocales } from "@/shared/utils/resolve-candidate-locales";
 
 export type HasKeyOptions = {
   messages: Readonly<LocaleMessages>;
@@ -20,10 +20,6 @@ export const hasKey = ({
   targetLocale,
 }: HasKeyOptions): boolean => {
   const candidateLocales = resolveCandidateLocales(targetLocale || locale);
-  const message = findMessageInLocales({
-    messages: messages as LocaleMessages,
-    candidateLocales,
-    key,
-  });
+  const message = findMessageInLocales({ messages, candidateLocales, key });
   return !!message;
 };

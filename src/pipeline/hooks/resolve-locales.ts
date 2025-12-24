@@ -1,6 +1,6 @@
 import type { TranslateContext } from "@/pipeline/types";
 import { rura } from "rura";
-import { resolveCandidateLocales } from "@/translators/shared/utils/resolve-candidate-locales";
+import { resolveCandidateLocales } from "@/shared/utils/resolve-candidate-locales";
 
 export const resolveLocales = rura.createHook<TranslateContext>(
   "resolveLocales",

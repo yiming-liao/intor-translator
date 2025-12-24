@@ -1,17 +1,24 @@
 import type { TranslateContext } from "@/pipeline/types";
 import type { HandlerContext } from "@/translators/core-translator/translate-config.types";
 
+/**
+ * Create an immutable context object exposed to external handlers.
+ *
+ * The returned object is frozen to prevent handlers from
+ * mutating internal translator state.
+ */
 export function makeHandlerContext(ctx: TranslateContext): HandlerContext {
   return Object.freeze({
+    config: ctx.config,
+
+    messages: ctx.messages,
     locale: ctx.locale,
+    isLoading: ctx.isLoading,
+
     key: ctx.key,
     replacements: ctx.replacements,
 
-    messages: ctx.messages,
     candidateLocales: ctx.candidateLocales,
-    config: ctx.config,
-    isLoading: ctx.isLoading,
-
     rawMessage: ctx.rawMessage,
     formattedMessage: ctx.formattedMessage,
 

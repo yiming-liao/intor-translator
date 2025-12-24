@@ -4,8 +4,8 @@ import * as ruraPackage from "rura";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   translate,
-  type TranslateOptions,
-} from "@/translators/shared/translate";
+  type TranslateParams,
+} from "@/translators/methods/translate";
 
 describe("translate()", () => {
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe("translate()", () => {
       },
     });
 
-    const options: TranslateOptions = {
+    const options: TranslateParams = {
       hooks: [],
       messages: { en: { hello: "Hello" } },
       locale: "en",
@@ -56,7 +56,7 @@ describe("translate()", () => {
       ctx: {},
     });
 
-    const options: TranslateOptions = {
+    const options: TranslateParams = {
       hooks: [],
       messages: {},
       locale: "en",
@@ -77,7 +77,7 @@ describe("translate()", () => {
       ctx: { finalMessage: "meta-test" },
     });
 
-    const options: TranslateOptions = {
+    const options: TranslateParams = {
       hooks: [{ name: "test", run: () => {} }] as TranslateHook[],
       messages: { en: {} },
       locale: "en",

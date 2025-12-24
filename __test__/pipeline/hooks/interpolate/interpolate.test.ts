@@ -1,7 +1,7 @@
 import type { TranslateContext } from "@/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { interpolate } from "@/pipeline/hooks/interpolate";
-import * as interpUtil from "@/translators/shared/utils/replace-values";
+import { interpolate } from "@/pipeline/hooks/interpolate/interpolate";
+import * as interpUtil from "@/pipeline/hooks/interpolate/replace-values";
 
 describe("interpolate", () => {
   beforeEach(() => {

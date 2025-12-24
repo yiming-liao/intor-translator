@@ -6,8 +6,8 @@ import type { LocalizedLeafKeys } from "@/types/keys/localized-key";
 import { rura } from "rura";
 import { DEFAULT_HOOKS } from "@/pipeline";
 import { BaseTranslator } from "@/translators/base-translator";
-import { hasKey } from "@/translators/shared/has-key";
-import { translate } from "@/translators/shared/translate";
+import { hasKey } from "@/translators/methods/has-key";
+import { translate } from "@/translators/methods/translate";
 
 /**
  * CoreTranslator provides the default translation behavior

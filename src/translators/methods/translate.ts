@@ -3,7 +3,7 @@ import type { TranslateConfig } from "@/translators/core-translator/translate-co
 import type { Locale, LocaleMessages, Replacement } from "@/types";
 import { rura } from "rura";
 
-export type TranslateOptions = {
+export type TranslateParams = {
   hooks: TranslateHook[];
   messages: Readonly<LocaleMessages>;
   locale: Locale;
@@ -13,7 +13,7 @@ export type TranslateOptions = {
   replacements?: Replacement;
 };
 
-export function translate<Result = string>(options: TranslateOptions): Result {
+export function translate<Result = string>(options: TranslateParams): Result {
   const context: TranslateContext = {
     ...options,
     config: options.translateConfig,

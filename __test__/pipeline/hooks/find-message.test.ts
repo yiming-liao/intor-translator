@@ -1,7 +1,7 @@
 import type { TranslateContext } from "@/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { findMessage } from "@/pipeline/hooks/find-message";
-import * as findUtil from "@/translators/shared/utils/find-message-in-locales";
+import * as findUtil from "@/shared/utils/find-message-in-locales";
 
 describe("findMessage", () => {
   beforeEach(() => {

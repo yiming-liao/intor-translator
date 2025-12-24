@@ -3,12 +3,12 @@ import type { CoreTranslatorOptions } from "@/translators/core-translator";
 import type { TranslatorPlugin } from "@/translators/core-translator/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CoreTranslator } from "@/translators/core-translator/core-translator";
-import * as hasKeyModule from "@/translators/shared/has-key";
-import * as translateModule from "@/translators/shared/translate";
+import * as hasKeyModule from "@/translators/methods/has-key";
+import * as translateModule from "@/translators/methods/translate";
 
 // Mock methods used by CoreTranslator
-vi.mock("@/translators/shared/has-key");
-vi.mock("@/translators/shared/translate");
+vi.mock("@/translators/methods/has-key");
+vi.mock("@/translators/methods/translate");
 
 describe("CoreTranslator", () => {
   const messages = { en: { hello: "Hello" }, zh: { hello: "你好" } };

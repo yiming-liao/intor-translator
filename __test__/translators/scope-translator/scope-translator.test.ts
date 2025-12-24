@@ -1,12 +1,12 @@
 import type { CoreTranslatorOptions } from "@/translators/core-translator";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import * as hasKeyModule from "@/translators/methods/has-key";
+import * as translateModule from "@/translators/methods/translate";
 import { ScopeTranslator } from "@/translators/scope-translator/scope-translator";
 import * as getFullKeyModule from "@/translators/scope-translator/utils/get-full-key";
-import * as hasKeyModule from "@/translators/shared/has-key";
-import * as translateModule from "@/translators/shared/translate";
 
-vi.mock("@/translators/shared/has-key");
-vi.mock("@/translators/shared/translate");
+vi.mock("@/translators/methods/has-key");
+vi.mock("@/translators/methods/translate");
 vi.mock("@/translators/scope-translator/utils/get-full-key");
 
 describe("ScopeTranslator", () => {
