@@ -23,6 +23,7 @@ export {
   renderRichMessage,
   type ASTNode,
   type Renderer,
+  type Attributes,
 } from "@/message";
 
 // types
