@@ -17,6 +17,9 @@ export {
 // pipeline
 export type { TranslateContext, TranslateHook } from "@/pipeline";
 
+// message
+export { parseRichMessage } from "@/message";
+
 // types
 export type {
   // locale
