@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intor – Rich Message Example</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        background-color: #222;
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding: 40px;
+      }
+      pre {
+        width: 320px;
+        max-width: 900px;
+        background: #111;
+        color: #9cdcfe;
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1></h1>
+
+    <div>
+      <button data-locale="en-US">en-US</button>
+      <button data-locale="zh-TW">zh-TW</button>
+    </div>
+
+    <!-- AST output -->
+    <div>
+      <code>AST</code>
+      <pre id="ast"></pre>
+    </div>
+
+    <script type="module">
+      import {
+        Translator,
+        parseRichMessage,
+      } from "https://cdn.jsdelivr.net/npm/intor-translator/+esm";
+
+      const translator = new Translator({
+        locale: "en-US",
+        messages: {
+          "en-US": {
+            welcome: 'Welcome to <link href="/home"><i>our site</i></link>!',
+          },
+          "zh-TW": {
+            welcome: '歡迎來到<link href="/home"><i>我們的網站</i></link>！',
+          },
+        },
+      });
+
+      const h1Element = document.querySelector("h1");
+      const astElement = document.querySelector("#ast");
+
+      // Minimal renderer: semantic AST → DOM
+      const renderAST = (nodes, parent) => {
+        for (const node of nodes) {
+          if (node.type === "text") {
+            parent.appendChild(document.createTextNode(node.value));
+            continue;
+          }
+
+          // Optional tags mapping
+          const TAG_MAP = {
+            link: "a",
+          };
+
+          if (node.type === "tag") {
+            const tagName = TAG_MAP[node.name] ?? node.name;
+            const el = document.createElement(tagName);
+
+            for (const [key, value] of Object.entries(node.attributes)) {
+              el.setAttribute(key, value);
+            }
+
+            renderAST(node.children, el);
+            parent.appendChild(el);
+          }
+        }
+      };
+
+      // Render: Translate → parse rich message → render (+ inspect AST)
+      const render = () => {
+        h1Element.innerHTML = "";
+        const ast = parseRichMessage(translator.t("welcome"));
+        // Render DOM (to h1)
+        renderAST(ast, h1Element);
+        // Render AST as formatted JSON
+        astElement.textContent = JSON.stringify(ast, null, 2);
+      };
+
+      render();
+
+      // Switch locale
+      document.querySelectorAll("button[data-locale]").forEach((button) => {
+        button.addEventListener("click", () => {
+          translator.setLocale(button.dataset.locale);
+          render();
+        });
+      });
+    </script>
+  </body>
+</html>

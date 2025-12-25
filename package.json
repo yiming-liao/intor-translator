@@ -1,6 +1,6 @@
 {
   "name": "intor-translator",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "🤖 A modern, type-safe i18n engine.",
   "author": {
     "name": "Yiming Liao",
@@ -57,7 +57,8 @@
     "lint": "eslint",
     "lint:debug": "eslint --debug",
     "knip": "knip --config .config/knip.config.ts",
-    "examples:html": "vite --config examples/html/vite.config.ts"
+    "examples:html": "vite --config examples/html/basic/vite.config.ts",
+    "examples:html:rich": "vite --config examples/html/rich/vite.config.ts"
   },
   "dependencies": {
     "rura": "1.0.7"

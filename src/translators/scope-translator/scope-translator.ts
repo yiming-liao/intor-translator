@@ -2,9 +2,9 @@ import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
 import type { Locale, LocaleMessages, Replacement } from "@/types";
 import type { LocalizedNodeKeys, ScopedLeafKeys } from "@/types/keys";
 import { CoreTranslator } from "@/translators/core-translator";
-import { getFullKey } from "@/translators/scope-translator/utils/get-full-key";
 import { hasKey as hasKeyMethod } from "@/translators/methods/has-key";
 import { translate } from "@/translators/methods/translate";
+import { getFullKey } from "@/translators/scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
   M extends LocaleMessages | unknown = unknown,

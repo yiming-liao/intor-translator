@@ -4,6 +4,9 @@ import { Translator } from "intor-translator";
 
 /**
  * [Handler] Custom ICU formatting.
+ *
+ * run:
+ * tsx examples/handler.ts
  */
 
 // A custom formatter using ICU MessageFormat
