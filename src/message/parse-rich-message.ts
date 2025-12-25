@@ -1,19 +1,21 @@
-import type { ASTNode } from "@/message/build-ast/types";
-import { buildAST } from "@/message/build-ast";
+import type { ASTNode } from "@/message/ast";
+import { buildAST } from "@/message/ast";
 import { tokenize } from "@/message/tokenize";
 
 /**
  * Parse a rich-formatted message string into a semantic AST.
  *
- * This is the high-level entry point for processing translated messages
- * that contain semantic tags (e.g. <b>, <a>, <i>).
+ * This function is a high-level entry point for processing translated
+ * messages that contain semantic tags (e.g. <b>, <a>, <i>).
  *
- * Internally, this function:
- * - Tokenizes the input string into semantic tokens
- * - Builds a nested AST from the token stream
+ * Internally, it performs the following steps:
  *
- * Consumers should treat the returned AST as a semantic structure
- * suitable for rendering or further processing.
+ * - message (string) ⬇
+ *   - tokenize
+ *   - build AST
+ *
+ * The returned AST represents the semantic structure of the message
+ * and is intended to be consumed by renderers or further processing stages.
  */
 export function parseRichMessage(message: string): ASTNode[] {
   const tokens = tokenize(message);

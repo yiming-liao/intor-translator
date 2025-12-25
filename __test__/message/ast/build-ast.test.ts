@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildAST } from "@/message/build-ast";
+import { buildAST } from "@/message/ast";
 import { tokenize } from "@/message/tokenize";
 
 describe("buildAST", () => {

@@ -1,3 +1,5 @@
+import type { Attributes } from "@/message/types";
+
 /** Flat semantic token produced by the message tokenizer. */
 export type Token = TextToken | TagOpenToken | TagCloseToken;
 
@@ -22,6 +24,3 @@ export interface TagCloseToken {
   name: string;
   position: number;
 }
-
-/** Parsed tag attributes map. */
-export type Attributes = Record<string, string>;

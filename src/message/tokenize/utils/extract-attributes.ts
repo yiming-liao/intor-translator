@@ -1,8 +1,6 @@
-import type { Attributes } from "@/message/tokenize/types";
+import type { Attributes } from "@/message/types";
 
 /**
- * Attribute matcher for semantic tags.
- *
  * Matches strictly formatted attribute pairs:
  *   - Leading whitespace is required
  *   - Attribute name must be identifier-like (a-zA-Z_, then alphanumerics/_)
@@ -23,12 +21,12 @@ import type { Attributes } from "@/message/tokenize/types";
 const ATTR_REGEX = /\s+([a-zA-Z_][a-zA-Z0-9_]*)="([^"]*)"/g;
 
 /**
- * Parse a tag attribute string into a key-value map.
+ * Extract tag attributes into a key-value map.
  *
  * - Only supports strict key="value" pairs.
- * - Returns null if the input contains any invalid or leftover syntax.
+ * - Returns `null` if the input contains any unsupported or leftover syntax.
  */
-export const parseAttributes = (input: string): Attributes | null => {
+export const extractAttributes = (input: string): Attributes | null => {
   const attributes: Attributes = {};
 
   let match: RegExpExecArray | null;

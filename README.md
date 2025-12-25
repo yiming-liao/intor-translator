@@ -64,6 +64,8 @@ translator.t("hello"); // -> Hello World
 translator.t("greeting", { name: "John doe" }); // -> Hello, John doe!
 ```
 
+---
+
 ## Handlers & Hooks
 
 Intor Translator is powered by **a flexible pipeline** that lets you control how translations behave and how they are rendered.
@@ -91,6 +93,17 @@ Hooks run through the pipeline and can intercept any stage, use them to:
 - attach metadata or analytics
 
 > Together, they form a customizable translation pipeline — structured, predictable, beautifully simple.
+
+---
+
+# Rich Message Processing
+
+This module provides a semantic message processing flow for **_translated rich-formatted strings_**.
+
+- Tokenize → AST → renderer-driven output
+- Environment-agnostic by design
+
+Read the documentation: [Message Processing ↗](https://github.com/yiming-liao/intor-translator/tree/main/src/message)
 
 ---
 

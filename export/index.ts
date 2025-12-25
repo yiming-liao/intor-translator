@@ -18,7 +18,12 @@ export {
 export type { TranslateContext, TranslateHook } from "@/pipeline";
 
 // message
-export { parseRichMessage } from "@/message";
+export {
+  parseRichMessage,
+  renderRichMessage,
+  type ASTNode,
+  type Renderer,
+} from "@/message";
 
 // types
 export type {

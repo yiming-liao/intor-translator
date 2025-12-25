@@ -1,4 +1,4 @@
-import type { ASTNode, TagNode } from "@/message/build-ast/types";
+import type { ASTNode, TagNode } from "@/message/ast/types";
 import { type Token } from "@/message/tokenize";
 
 /**

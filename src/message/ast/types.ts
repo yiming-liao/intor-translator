@@ -1,4 +1,4 @@
-import type { Attributes } from "@/message/tokenize/types";
+import type { Attributes } from "@/message/types";
 
 /** Semantic node produced by the AST builder. */
 export type ASTNode = TextNode | TagNode;

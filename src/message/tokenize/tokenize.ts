@@ -1,5 +1,5 @@
 import type { Token } from "./types";
-import { parseAttributes } from "@/message/tokenize/parse-attributes";
+import { extractAttributes } from "@/message/tokenize/utils/extract-attributes";
 
 // Matches opening semantic tags with optional attributes: <tag ...>
 const OPEN_TAG_REGEX = /^<([a-zA-Z0-9_]+)([^>]*)>/;
@@ -15,7 +15,7 @@ const CLOSE_TAG_REGEX = /^<\/([a-zA-Z0-9_]+)>/;
  *   - <tag key="value">text</tag>
  *
  * Notes:
- * - Produces a flat token stream (nesting is handled in a later parsing stage)
+ * - Produces a flat token stream (nesting is handled in a later stage)
  * - Tag names are identifier-like and case-sensitive
  * - Attributes are strict key="value" pairs (double quotes only)
  * - Variables are assumed to be interpolated beforehand
@@ -48,7 +48,7 @@ export const tokenize = (message: string): Token[] => {
       const openMatch = message.slice(pos).match(OPEN_TAG_REGEX);
       if (openMatch) {
         const [, name, rawAttributes] = openMatch;
-        const attributes = parseAttributes(rawAttributes); // {} = no attributes, null = invalid syntax
+        const attributes = extractAttributes(rawAttributes); // {} = no attributes, null = invalid syntax
 
         if (attributes) {
           flushText();

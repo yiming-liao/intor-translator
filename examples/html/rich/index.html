@@ -3,40 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intor – Rich Message Example</title>
-
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
-      body {
-        background-color: #222;
-        color: #eee;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
-        padding: 40px;
-      }
-      pre {
-        width: 320px;
-        max-width: 900px;
-        background: #111;
-        color: #9cdcfe;
-        padding: 16px;
-        border-radius: 8px;
-        overflow-x: auto;
-        font-size: 13px;
-        line-height: 1.5;
-      }
-    </style>
+    <title>Rich Message Example | intor-translator</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
@@ -49,7 +17,7 @@
 
     <!-- AST output -->
     <div>
-      <code>AST</code>
+      <code>Parsed AST</code>
       <pre id="ast"></pre>
     </div>
 
@@ -57,8 +25,12 @@
       import {
         Translator,
         parseRichMessage,
+        renderRichMessage,
       } from "https://cdn.jsdelivr.net/npm/intor-translator/+esm";
 
+      /**
+       * Initialize translator with rich-formatted messages.
+       */
       const translator = new Translator({
         locale: "en-US",
         messages: {
@@ -74,46 +46,58 @@
       const h1Element = document.querySelector("h1");
       const astElement = document.querySelector("#ast");
 
-      // Minimal renderer: semantic AST → DOM
-      const renderAST = (nodes, parent) => {
-        for (const node of nodes) {
-          if (node.type === "text") {
-            parent.appendChild(document.createTextNode(node.value));
-            continue;
-          }
+      /**
+       * DOM renderer for semantic rich messages.
+       *
+       * This renderer defines how semantic tags are
+       * mapped to actual DOM elements.
+       */
+      const domRenderer = {
+        text(value) {
+          return document.createTextNode(value);
+        },
 
-          // Optional tags mapping
+        tag(name, attributes, children) {
           const TAG_MAP = {
             link: "a",
+            i: "i",
           };
 
-          if (node.type === "tag") {
-            const tagName = TAG_MAP[node.name] ?? node.name;
-            const el = document.createElement(tagName);
+          const el = document.createElement(TAG_MAP[name] ?? name);
 
-            for (const [key, value] of Object.entries(node.attributes)) {
-              el.setAttribute(key, value);
-            }
-
-            renderAST(node.children, el);
-            parent.appendChild(el);
+          for (const [key, value] of Object.entries(attributes)) {
+            el.setAttribute(key, value);
           }
-        }
+
+          children.forEach((child) => el.appendChild(child));
+          return el;
+        },
       };
 
-      // Render: Translate → parse rich message → render (+ inspect AST)
+      /**
+       * Render flow:
+       *
+       * translate → parse rich message → render via renderer
+       */
       const render = () => {
         h1Element.innerHTML = "";
-        const ast = parseRichMessage(translator.t("welcome"));
-        // Render DOM (to h1)
-        renderAST(ast, h1Element);
-        // Render AST as formatted JSON
+
+        const message = translator.t("welcome");
+
+        // Render rich message into DOM nodes
+        const nodes = renderRichMessage(message, domRenderer);
+        nodes.forEach((node) => h1Element.appendChild(node));
+
+        // Inspect semantic AST
+        const ast = parseRichMessage(message);
         astElement.textContent = JSON.stringify(ast, null, 2);
       };
 
       render();
 
-      // Switch locale
+      /**
+       * Switch locale dynamically.
+       */
       document.querySelectorAll("button[data-locale]").forEach((button) => {
         button.addEventListener("click", () => {
           translator.setLocale(button.dataset.locale);
