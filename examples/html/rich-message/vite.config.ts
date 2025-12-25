@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "examples/html/rich",
+  root: "examples/html/rich-message",
 });

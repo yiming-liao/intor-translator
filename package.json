@@ -58,7 +58,7 @@
     "lint:debug": "eslint --debug",
     "knip": "knip --config .config/knip.config.ts",
     "examples:html": "vite --config examples/html/basic/vite.config.ts",
-    "examples:html:rich": "vite --config examples/html/rich/vite.config.ts"
+    "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts"
   },
   "dependencies": {
     "rura": "1.0.7"

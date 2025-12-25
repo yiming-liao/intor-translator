@@ -2,9 +2,6 @@ import { Translator } from "intor-translator";
 
 /**
  * Basic translation flow
- *
- * run:
- * tsx examples/basic.ts
  */
 
 // Messages (follows the LocalesMessages structure)

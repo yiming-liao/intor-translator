@@ -2,9 +2,6 @@ import { Translator, type TranslateHook } from "intor-translator";
 
 /**
  * [Hook] Modify the final translated output.
- *
- * run:
- * tsx examples/hook.ts
  */
 
 // A simple hook that appends a suffix to every translated message
