@@ -18,9 +18,9 @@ export const missing = rura.createHook<TranslateContext>(
     }
 
     // Static message
-    const { placeholder } = config;
-    if (placeholder) {
-      return { early: true, output: placeholder };
+    const { missingMessage } = config;
+    if ("missingMessage" in config) {
+      return { early: true, output: missingMessage };
     }
 
     // Fallback to key

@@ -10,7 +10,7 @@ describe("makeHandlerContext", () => {
       replacements: { name: "John" },
       messages: { en: { hello: "Hi" } },
       candidateLocales: ["en"],
-      config: { placeholder: "??" },
+      config: { missingMessage: "??" },
       isLoading: false,
       rawMessage: "Hi",
       formattedMessage: "Hi (formatted)",

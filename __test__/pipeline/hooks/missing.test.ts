@@ -15,24 +15,17 @@ describe("missing", () => {
       key: "hello",
       config: {},
     } as unknown as TranslateContext;
-
     const result = missing.run(ctx);
-
     expect(result).toBeUndefined();
   });
 
   it("should call missingHandler and return its result", () => {
     const mockSnapshot = { mock: true } as unknown as HandlerContext;
-    const mockReturnValue = "handled-missing-msg";
-
-    // mock snapshot builder
+    const mockReturnValue = "handled-missing-msg"; // mock snapshot builder
     const snapshotSpy = vi
       .spyOn(handlerUtil, "makeHandlerContext")
-      .mockReturnValue(mockSnapshot);
-
-    // mock handler
+      .mockReturnValue(mockSnapshot); // mock handler
     const missingHandler = vi.fn().mockReturnValue(mockReturnValue);
-
     const ctx = {
       rawMessage: undefined,
       key: "home.title",
@@ -42,51 +35,55 @@ describe("missing", () => {
         },
       },
     } as unknown as TranslateContext;
-
-    const result = missing.run(ctx);
-
-    // handler must be called
-    expect(missingHandler).toHaveBeenCalledWith(mockSnapshot);
-
-    // snapshot must be created using whole ctx
-    expect(snapshotSpy).toHaveBeenCalledWith(ctx);
-
-    // hook return shape
+    const result = missing.run(ctx); // handler must be called
+    expect(missingHandler).toHaveBeenCalledWith(mockSnapshot); // snapshot must be created using whole ctx
+    expect(snapshotSpy).toHaveBeenCalledWith(ctx); // hook return shape
     expect(result).toEqual({
       early: true,
       output: mockReturnValue,
     });
   });
 
-  it("should return placeholder when no handler is provided", () => {
+  it("should return missingMessage when no handler is provided", () => {
     const ctx = {
       rawMessage: undefined,
       key: "home.title",
       config: {
-        placeholder: "N/A",
+        missingMessage: "N/A",
       },
     } as unknown as TranslateContext;
-
     const result = missing.run(ctx);
-
     expect(result).toEqual({
       early: true,
       output: "N/A",
     });
   });
 
-  it("should fallback to key when no handler or placeholder exists", () => {
+  it("should fallback to key when no handler or missingMessage exists", () => {
     const ctx = {
       rawMessage: undefined,
       key: "hello.world",
       config: {},
     } as unknown as TranslateContext;
-
     const result = missing.run(ctx);
-
     expect(result).toEqual({
       early: true,
       output: "hello.world",
+    });
+  });
+
+  it("should return empty string when missingMessage is an empty string", () => {
+    const ctx = {
+      rawMessage: undefined,
+      key: "home.title",
+      config: {
+        missingMessage: "",
+      },
+    } as unknown as TranslateContext;
+    const result = missing.run(ctx);
+    expect(result).toEqual({
+      early: true,
+      output: "",
     });
   });
 });

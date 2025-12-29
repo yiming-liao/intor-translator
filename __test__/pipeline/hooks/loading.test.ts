@@ -14,22 +14,17 @@ describe("loading", () => {
       isLoading: false,
       config: {},
     } as unknown as TranslateContext;
-
     const result = loading.run(ctx);
-
     expect(result).toBeUndefined();
   });
 
   it("should call loadingHandler and return its result", () => {
     const mockCtxSnapshot = { mock: true } as unknown as HandlerContext;
     const mockResult = "loading-from-handler";
-
     const makeCtxSpy = vi
       .spyOn(handlerUtil, "makeHandlerContext")
       .mockReturnValue(mockCtxSnapshot);
-
     const loadingHandler = vi.fn().mockReturnValue(mockResult);
-
     const ctx = {
       isLoading: true,
       config: {
@@ -38,19 +33,12 @@ describe("loading", () => {
         },
       },
     } as unknown as TranslateContext;
-
-    const result = loading.run(ctx);
-
-    // handler called
-    expect(loadingHandler).toHaveBeenCalledWith(mockCtxSnapshot);
-
-    // return correct result
+    const result = loading.run(ctx); // handler called
+    expect(loadingHandler).toHaveBeenCalledWith(mockCtxSnapshot); // return correct result
     expect(result).toEqual({
       early: true,
       output: mockResult,
-    });
-
-    // makeHandlerContext called correctly
+    }); // makeHandlerContext called correctly
     expect(makeCtxSpy).toHaveBeenCalledWith(ctx);
   });
 
@@ -61,26 +49,38 @@ describe("loading", () => {
         loadingMessage: "Loading…",
       },
     } as unknown as TranslateContext;
-
     const result = loading.run(ctx);
-
     expect(result).toEqual({
       early: true,
       output: "Loading…",
     });
   });
 
-  it("should return undefined when both handler and loadingMessage are missing", () => {
+  it("should return early with undefined output when loadingMessage is explicitly set to undefined", () => {
     const ctx = {
       isLoading: true,
       config: {
-        handlers: undefined,
         loadingMessage: undefined,
       },
     } as unknown as TranslateContext;
-
     const result = loading.run(ctx);
+    expect(result).toEqual({
+      early: true,
+      output: undefined,
+    });
+  });
 
-    expect(result).toBeUndefined();
+  it("should return empty string when loadingMessage is an empty string", () => {
+    const ctx = {
+      isLoading: true,
+      config: {
+        loadingMessage: "",
+      },
+    } as unknown as TranslateContext;
+    const result = loading.run(ctx);
+    expect(result).toEqual({
+      early: true,
+      output: "",
+    });
   });
 });

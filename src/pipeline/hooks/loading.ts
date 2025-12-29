@@ -19,7 +19,7 @@ export const loading = rura.createHook<TranslateContext>(
 
     // Static message
     const { loadingMessage } = config;
-    if (loadingMessage) {
+    if ("loadingMessage" in config) {
       return { early: true, output: loadingMessage };
     }
   },

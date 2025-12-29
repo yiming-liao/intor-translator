@@ -11,8 +11,8 @@ export type TranslateConfig<M = unknown> = {
   fallbackLocales?: FallbackLocalesMap<Locale<M>>;
   /** Optional message to display while translations are still loading. */
   loadingMessage?: string;
-  /** Optional placeholder to use when a message cannot be found. */
-  placeholder?: string;
+  /** Optional message used when a translation is missing. */
+  missingMessage?: string;
   /** Optional set of handler functions for customizing translation behavior. */
   handlers?: TranslateHandlers;
 };
