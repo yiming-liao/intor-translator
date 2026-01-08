@@ -2,6 +2,13 @@ import type { Locale } from "./locale";
 
 type MessagePrimitive = string | number | boolean | null;
 type MessageArray = readonly MessageValue[];
+
+/**
+ * A recursive message tree object.
+ *
+ * Represents the root message structure for a single locale
+ * (i.e. the value of `LocaleMessages[locale]`).
+ */
 export interface MessageObject {
   [key: string]: MessageValue;
 }
