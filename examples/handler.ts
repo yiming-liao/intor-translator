@@ -1,4 +1,4 @@
-import type { FormatHandler } from "intor-translator";
+import type { FormatHandler, MessageValue } from "intor-translator";
 import { IntlMessageFormat } from "intl-messageformat";
 import { Translator } from "intor-translator";
 
@@ -9,7 +9,7 @@ import { Translator } from "intor-translator";
 // A custom formatter using ICU MessageFormat
 const formatHandler: FormatHandler = ({ rawString, locale, replacements }) => {
   const formatter = new IntlMessageFormat(rawString, locale);
-  return formatter.format(replacements);
+  return formatter.format(replacements) as MessageValue;
 };
 
 // Messages (follows the LocalesMessages structure)
