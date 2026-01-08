@@ -1,27 +1,10 @@
-import type { TranslateContext, TranslateHook } from "@/pipeline/types";
-import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
-import type { Locale, LocaleMessages, Replacement } from "@/types";
-import { rura } from "rura";
+import { runTranslate, type TranslateParams } from "./utils/run-translate";
 
-export type TranslateParams = {
-  hooks: TranslateHook[];
-  messages: Readonly<LocaleMessages>;
-  locale: Locale;
-  isLoading: boolean;
-  translateConfig: TranslateConfig;
-  key: string;
-  replacements?: Replacement;
-};
-
+/**
+ *  Runs the translate pipeline and returns the final formatted message.
+ */
 export function translate<Result = string>(options: TranslateParams): Result {
-  const context: TranslateContext = {
-    ...options,
-    config: options.translateConfig,
-    candidateLocales: [],
-    meta: {},
-  };
-
-  const { early, ctx, output } = rura.run(context, options.hooks);
+  const { early, ctx, output } = runTranslate(options);
   if (early === true) return output as Result;
   return ctx.finalMessage as Result;
 }

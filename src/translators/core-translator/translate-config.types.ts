@@ -33,7 +33,7 @@ export type LoadingHandler<Result = unknown> = (ctx: HandlerContext) => Result;
 export type MissingHandler<Result = unknown> = (ctx: HandlerContext) => Result;
 /** Function to format a resolved message. */
 export type FormatHandler<Result = unknown> = (
-  ctx: HandlerContext & { rawMessage: string },
+  ctx: HandlerContext & { rawString: string },
 ) => Result;
 
 /**
