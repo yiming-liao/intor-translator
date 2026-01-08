@@ -17,8 +17,6 @@ Easy to use, modular at its core, and fully extensible.
 
 </div>
 
-> Structured 󠁯•󠁏 Predictable 󠁯•󠁏 Beautifully simple
-
 ## Features
 
 - 🔧 **Modular Pipeline** – A pluggable, hook-driven flow for any translation logic.
