@@ -41,7 +41,7 @@ describe("translate pipeline (tRaw smoke test)", () => {
     expect(tRaw("nested.flags")).toEqual([true, false]);
   });
 
-  it("should return undefined when key does not exist", () => {
+  it("should throw when key does not exist", () => {
     const messages = {
       en: {
         a: "b",
@@ -51,10 +51,10 @@ describe("translate pipeline (tRaw smoke test)", () => {
       locale: "en",
       messages,
     });
-    expect(tRaw("missing" as any)).toBeUndefined();
+    expect(() => tRaw("missing" as any)).toThrowError(/Invariant violated/i);
   });
 
-  it("should not return key string on missing (no string-world fallback)", () => {
+  it("should throw on missing key without string-world fallback", () => {
     const messages = {
       en: {},
     } as const;
@@ -62,7 +62,6 @@ describe("translate pipeline (tRaw smoke test)", () => {
       locale: "en",
       messages,
     });
-    const result = tRaw("count" as never);
-    expect(result).toBeUndefined();
+    expect(() => (tRaw as any)("count")).toThrowError(/Invariant violated/i);
   });
 });

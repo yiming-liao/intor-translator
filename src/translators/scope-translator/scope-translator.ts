@@ -5,7 +5,7 @@ import type {
   MessageValue,
   Replacement,
 } from "@/types";
-import type { LocalizedNodeKeys, ScopedLeafKeys } from "@/types/keys";
+import type { LocalizedNodeKeys } from "@/types/paths";
 import { CoreTranslator } from "@/translators/core-translator";
 import { hasKey as hasKeyMethod } from "@/translators/methods/has-key";
 import { translate } from "@/translators/methods/translate";
@@ -24,7 +24,7 @@ export class ScopeTranslator<
   public scoped<PK extends LocalizedNodeKeys<M, L> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
-    ? ScopeTranslatorMethods<M, L, ScopedLeafKeys<M, PK, L>>
+    ? ScopeTranslatorMethods<M, L, PK>
     : ScopeTranslatorMethods<M, L> {
     return {
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
@@ -36,7 +36,7 @@ export class ScopeTranslator<
           targetLocale,
         });
       },
-      t: (key?: string, replacements?: Replacement): string => {
+      t: (key?: string, replacements?: Replacement) => {
         const fullKey = getFullKey(preKey as string | undefined, key);
         return translate({
           hooks: this.hooks,
@@ -64,7 +64,7 @@ export class ScopeTranslator<
         });
       },
     } as PK extends string
-      ? ScopeTranslatorMethods<M, L, ScopedLeafKeys<M, PK, L>>
+      ? ScopeTranslatorMethods<M, L, PK>
       : ScopeTranslatorMethods<M, L>;
   }
 }

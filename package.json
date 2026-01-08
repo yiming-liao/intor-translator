@@ -62,7 +62,7 @@
     "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts"
   },
   "dependencies": {
-    "rura": "1.0.7"
+    "rura": "^1.0.8"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

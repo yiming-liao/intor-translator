@@ -4,10 +4,8 @@ import type { RuraHook } from "rura";
 
 /**
  * Context object shared across the translate pipeline.
- *
- * @template Result - Final translated value type.
  */
-export interface TranslateContext<Result = unknown> {
+export interface TranslateContext {
   /** Configuration for the translate pipeline. */
   config: TranslateConfig;
 
@@ -30,9 +28,9 @@ export interface TranslateContext<Result = unknown> {
   /** Raw string message before formatting. */
   rawString?: string;
   /** Message after formatting (e.g. ICU, custom formatters) */
-  formattedMessage?: unknown;
+  formattedMessage?: MessageValue;
   /** Final value produced by the pipeline */
-  finalMessage?: Result;
+  finalMessage?: MessageValue;
 
   /** Free-form metadata shared between hooks. */
   meta: Record<string, unknown>;
@@ -41,4 +39,4 @@ export interface TranslateContext<Result = unknown> {
 /**
  * A single step in the translate pipeline.
  */
-export type TranslateHook = RuraHook<TranslateContext>;
+export type TranslateHook = RuraHook<TranslateContext, MessageValue>;

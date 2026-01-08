@@ -1,4 +1,4 @@
-import type { LocaleMessages } from "@/types/messages";
+import type { LocaleMessages } from "./messages";
 
 /**
  * Extracts locale keys only when M is a valid messages object.

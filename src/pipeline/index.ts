@@ -1,5 +1,6 @@
 export type { TranslateContext, TranslateHook } from "./types";
 
+import { rura } from "rura";
 import {
   findMessage,
   format,
@@ -17,3 +18,5 @@ export const DEFAULT_HOOKS = [
   format,
   interpolate,
 ];
+
+rura.createPipeline(DEFAULT_HOOKS).debugHooks();

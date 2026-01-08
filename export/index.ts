@@ -42,7 +42,10 @@ export type {
   DefaultDepth,
   NodeKeys,
   LeafKeys,
+  LeafValue,
   LocalizedNodeKeys,
   LocalizedLeafKeys,
+  LocalizedLeafValue,
   ScopedLeafKeys,
+  ScopedLeafValue,
 } from "@/types";

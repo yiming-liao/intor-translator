@@ -1,8 +1,9 @@
 import type { TranslateContext } from "@/pipeline/types";
+import type { MessageValue } from "@/types";
 import { rura } from "rura";
 import { findMessageInLocales } from "@/shared/utils/find-message-in-locales";
 
-export const findMessage = rura.createHook<TranslateContext>(
+export const findMessage = rura.createHook<TranslateContext, MessageValue>(
   "findMessage",
   (ctx) => {
     ctx.rawValue = undefined;

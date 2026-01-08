@@ -56,7 +56,7 @@ describe("loading", () => {
     });
   });
 
-  it("should return early with undefined output when loadingMessage is explicitly set to undefined", () => {
+  it("should not return early when loadingMessage is undefined", () => {
     const ctx = {
       isLoading: true,
       config: {
@@ -64,10 +64,7 @@ describe("loading", () => {
       },
     } as unknown as TranslateContext;
     const result = loading.run(ctx);
-    expect(result).toEqual({
-      early: true,
-      output: undefined,
-    });
+    expect(result).toBeUndefined();
   });
 
   it("should return empty string when loadingMessage is an empty string", () => {

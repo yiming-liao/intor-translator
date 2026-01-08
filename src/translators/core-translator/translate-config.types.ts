@@ -1,5 +1,5 @@
 import type { TranslateContext } from "@/pipeline/types";
-import type { FallbackLocalesMap, Locale } from "@/types";
+import type { FallbackLocalesMap, Locale, MessageValue } from "@/types";
 
 /**
  * Configuration options for translation behavior.
@@ -28,13 +28,13 @@ export type TranslateHandlers = {
 };
 
 /** Function called when translation is still loading. */
-export type LoadingHandler<Result = unknown> = (ctx: HandlerContext) => Result;
+export type LoadingHandler = (ctx: HandlerContext) => MessageValue;
 /** Function called when no message is found for the given key. */
-export type MissingHandler<Result = unknown> = (ctx: HandlerContext) => Result;
+export type MissingHandler = (ctx: HandlerContext) => MessageValue;
 /** Function to format a resolved message. */
-export type FormatHandler<Result = unknown> = (
+export type FormatHandler = (
   ctx: HandlerContext & { rawString: string },
-) => Result;
+) => MessageValue;
 
 /**
  * Snapshot of the translate pipeline context exposed to handlers.

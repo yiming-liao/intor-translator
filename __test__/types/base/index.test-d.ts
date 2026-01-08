@@ -1,6 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { LeafKeys, NodeKeys } from "../../../dist";
+import type { LeafKeys, LeafValue, NodeKeys } from "../../../dist";
 import { expectType } from "tsd";
 
 const messages = {
@@ -8,7 +8,7 @@ const messages = {
   number: 123,
   boolean: true,
   null: null,
-  array: [],
+  array: ["value"],
   nested: { key: "value" },
 };
 const emptyMessages = {};
@@ -43,3 +43,20 @@ expectType<never>(null as unknown as NodeKeys<NoneObject>);
 expectType<never>(null as unknown as LeafKeys<NoneObject>);
 expectType<never>(null as unknown as NodeKeys<SymbolKeyObj>);
 expectType<never>(null as unknown as LeafKeys<SymbolKeyObj>);
+
+//---------------------------------------------------------------
+// LeafValue
+//---------------------------------------------------------------
+expectType<string>(null as unknown as LeafValue<Messages, "string">);
+expectType<number>(null as unknown as LeafValue<Messages, "number">);
+expectType<boolean>(null as unknown as LeafValue<Messages, "boolean">);
+expectType<null>(null as unknown as LeafValue<Messages, "null">);
+expectType<string[]>(null as unknown as LeafValue<Messages, "array">);
+expectType<{ key: string }>(null as unknown as LeafValue<Messages, "nested">);
+expectType<string>(null as unknown as LeafValue<Messages, "nested.key">);
+
+expectType<never>(null as unknown as LeafValue<EmptyMessages, "">);
+expectType<never>(null as unknown as LeafValue<Messages, "nested.missing">);
+expectType<never>(
+  null as unknown as LeafValue<{ [Symbol.iterator]: { str: string } }, "">,
+);

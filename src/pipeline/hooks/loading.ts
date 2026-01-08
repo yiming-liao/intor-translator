@@ -1,8 +1,9 @@
 import type { TranslateContext } from "@/pipeline/types";
+import type { MessageValue } from "@/types";
 import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 
-export const loading = rura.createHook<TranslateContext>(
+export const loading = rura.createHook<TranslateContext, MessageValue>(
   "loading",
   (ctx) => {
     const { config, isLoading } = ctx;
@@ -19,7 +20,7 @@ export const loading = rura.createHook<TranslateContext>(
 
     // Static message
     const { loadingMessage } = config;
-    if ("loadingMessage" in config) {
+    if (loadingMessage !== undefined) {
       return { early: true, output: loadingMessage };
     }
   },

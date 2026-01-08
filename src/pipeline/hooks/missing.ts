@@ -1,8 +1,9 @@
 import type { TranslateContext } from "@/pipeline/types";
+import type { MessageValue } from "@/types";
 import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 
-export const missing = rura.createHook<TranslateContext>(
+export const missing = rura.createHook<TranslateContext, MessageValue>(
   "missing",
   (ctx) => {
     const { config, key, rawString } = ctx;
@@ -19,7 +20,7 @@ export const missing = rura.createHook<TranslateContext>(
 
     // Static message
     const { missingMessage } = config;
-    if ("missingMessage" in config) {
+    if (missingMessage !== undefined) {
       return { early: true, output: missingMessage };
     }
 

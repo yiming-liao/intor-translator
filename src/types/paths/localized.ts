@@ -1,9 +1,5 @@
-import type {
-  DefaultDepth,
-  LeafKeys,
-  NodeKeys,
-} from "@/types/keys/key-extraction-utils";
-import type { LocaleMessages } from "@/types/messages";
+import type { LocaleMessages, MessageValue } from "../messages";
+import type { DefaultDepth, NodeKeys, LeafKeys, LeafValue } from "./base";
 
 /**
  * Extracts all **node keys** from the messages
@@ -68,3 +64,19 @@ export type LocalizedLeafKeys<
     ? LeafKeys<M[keyof M], D>
     : LeafKeys<M[Extract<L, keyof M>], D>
   : string;
+
+/**
+ * Resolves the value type of a **localized leaf key**
+ * from the messages of a specified locale (or union of locales).
+ *
+ * - Fallback to `MessageValue` if M is not LocaleMessages
+ */
+export type LocalizedLeafValue<
+  M = unknown,
+  K extends string = string,
+  L extends keyof M | "union" = "union",
+> = M extends LocaleMessages
+  ? L extends "union"
+    ? LeafValue<M[keyof M], K>
+    : LeafValue<M[Extract<L, keyof M>], K>
+  : MessageValue;

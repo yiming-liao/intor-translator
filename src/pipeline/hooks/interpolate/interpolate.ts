@@ -1,8 +1,9 @@
 import type { TranslateContext } from "@/pipeline/types";
+import type { MessageValue } from "@/types";
 import { rura } from "rura";
 import { replaceValues } from "./replace-values";
 
-export const interpolate = rura.createHook<TranslateContext>(
+export const interpolate = rura.createHook<TranslateContext, MessageValue>(
   "interpolate",
   (ctx) => {
     const { rawString, formattedMessage, replacements } = ctx;

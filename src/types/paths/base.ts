@@ -1,4 +1,4 @@
-import type { MessageLeaf } from "@/types/messages";
+import type { MessageLeaf } from "../messages";
 
 /**
  * Default maximum recursive depth for nested key type computations,
@@ -47,4 +47,24 @@ export type LeafKeys<M, D extends number = DefaultDepth> = [D] extends [never]
             ? `${K & string}.${LeafKeys<M[K], Prev[D]>}`
             : never;
       }[keyof M]
+    : never;
+
+/**
+ * Resolves the value type at a given dot-separated leaf key
+ * within a nested message object.
+ *
+ * @example
+ * ```ts
+ * LeafValue<{ a: { b: { c: string } } }, "a.b.c"> // → string
+ * ```
+ */
+export type LeafValue<
+  M,
+  K extends string,
+> = K extends `${infer Seg}.${infer Rest}`
+  ? Seg extends keyof M
+    ? LeafValue<M[Seg], Rest>
+    : never
+  : K extends keyof M
+    ? M[K]
     : never;

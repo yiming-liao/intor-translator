@@ -17,7 +17,10 @@ export type {
   DefaultDepth,
   NodeKeys,
   LeafKeys,
+  LeafValue,
   LocalizedNodeKeys,
   LocalizedLeafKeys,
+  LocalizedLeafValue,
   ScopedLeafKeys,
-} from "./keys";
+  ScopedLeafValue,
+} from "./paths";

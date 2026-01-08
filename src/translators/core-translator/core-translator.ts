@@ -5,9 +5,9 @@ import type {
   Replacement,
   Locale,
   LocaleMessages,
-  MessageValue,
+  LocalizedLeafKeys,
+  LocalizedLeafValue,
 } from "@/types";
-import type { LocalizedLeafKeys } from "@/types/keys/localized-key";
 import { rura } from "rura";
 import { DEFAULT_HOOKS } from "@/pipeline";
 import { BaseTranslator } from "@/translators/base-translator";
@@ -82,13 +82,10 @@ export class CoreTranslator<
   };
 
   /** Get the translated message for a key, with optional replacements. */
-  public t = <
-    Result = string,
-    K extends LocalizedLeafKeys<M, L> = LocalizedLeafKeys<M, L>,
-  >(
+  public t = <K extends LocalizedLeafKeys<M, L> = LocalizedLeafKeys<M, L>>(
     key: K,
     replacements?: Replacement,
-  ): Result => {
+  ): LocalizedLeafValue<M, K, L> => {
     return translate({
       hooks: this.hooks,
       messages: this._messages as Readonly<LocaleMessages>,
@@ -97,14 +94,14 @@ export class CoreTranslator<
       translateConfig: this.translateConfig,
       key: key as string,
       replacements,
-    });
+    }) as LocalizedLeafValue<M, K, L>;
   };
 
   /** Get the raw message value for a key without formatting or interpolation. */
   public tRaw = <K extends LocalizedLeafKeys<M, L> = LocalizedLeafKeys<M, L>>(
     key: K,
     replacements?: Replacement,
-  ): MessageValue | undefined => {
+  ): LocalizedLeafValue<M, K, L> => {
     return translateRaw({
       hooks: this.hooks,
       messages: this._messages as Readonly<LocaleMessages>,
@@ -113,6 +110,6 @@ export class CoreTranslator<
       translateConfig: this.translateConfig,
       key: key as string,
       replacements,
-    });
+    }) as LocalizedLeafValue<M, K, L>;
   };
 }
