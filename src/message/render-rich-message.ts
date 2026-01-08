@@ -1,22 +1,23 @@
 import type { Renderer } from "@/message/render";
+import type { MessageValue } from "@/types";
 import { parseRichMessage } from "@/message/parse-rich-message";
 import { render } from "@/message/render/render";
 
 /**
- * Render a rich-formatted message into a concrete output using a renderer.
+ * Render a rich message value into a concrete output using the given renderer.
  *
- * This function orchestrates the full rich message pipeline:
+ * This function is the main entry point of the rich message pipeline.
+ * It orchestrates the full flow from message value to rendered output:
  *
- * - message (string) ⬇
- *   - tokenize
- *   - build AST
- *   - render via provided renderer
+ * - MessageValue ⬇
+ *   - parse into semantic AST
+ *   - render AST via the provided renderer
  *
- * All rendering behavior is defined by the given renderer, making this
- * function environment-agnostic (string, DOM, React, etc.).
+ * All rendering behavior is delegated to the renderer, making this function
+ * fully environment-agnostic (e.g. string, DOM, React).
  */
 export function renderRichMessage<Output>(
-  message: string,
+  message: MessageValue,
   renderer: Renderer<Output>,
 ): Output[] {
   const nodes = parseRichMessage(message);

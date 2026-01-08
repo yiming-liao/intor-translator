@@ -1,7 +1,8 @@
 import type { Attributes } from "@/message/types";
+import type { MessageValue } from "@/types";
 
 /** Semantic node produced by the AST builder. */
-export type ASTNode = TextNode | TagNode;
+export type ASTNode = TextNode | TagNode | RawNode;
 
 /** Plain text node in the semantic AST. */
 export interface TextNode {
@@ -15,4 +16,10 @@ export interface TagNode {
   name: string;
   attributes: Attributes;
   children: ASTNode[];
+}
+
+/** Raw node representing a non-tokenizable message value. */
+export interface RawNode {
+  type: "raw";
+  value: Exclude<MessageValue, string>;
 }

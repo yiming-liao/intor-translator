@@ -1,23 +1,48 @@
 import type { ASTNode } from "@/message/ast";
+import type { MessageValue } from "@/types";
 import { buildAST } from "@/message/ast";
 import { tokenize } from "@/message/tokenize";
 
 /**
- * Parse a rich-formatted message string into a semantic AST.
+ * Parse a rich message value into a semantic AST.
  *
- * This function is a high-level entry point for processing translated
- * messages that contain semantic tags (e.g. <b>, <a>, <i>).
+ * This is the main entry point for processing translated messages that may
+ * contain semantic markup (e.g. <b>, <a>, <i>) or non-string values.
  *
- * Internally, it performs the following steps:
+ * Behavior by message type:
+ * - string        → tokenized and parsed into semantic AST
+ * - number/boolean → stringified, then tokenized and parsed
+ * - array         → recursively flattened and parsed
+ * - object        → preserved as a raw AST node
  *
- * - message (string) ⬇
- *   - tokenize
- *   - build AST
- *
- * The returned AST represents the semantic structure of the message
- * and is intended to be consumed by renderers or further processing stages.
+ * The returned AST is renderer-agnostic and represents semantic structure only.
  */
-export function parseRichMessage(message: string): ASTNode[] {
-  const tokens = tokenize(message);
-  return buildAST(tokens);
+export function parseRichMessage(message: MessageValue): ASTNode[] {
+  // Null or undefined produces no output
+  if (message == null) return [];
+
+  // Tokenizable string message
+  if (typeof message === "string") {
+    const tokens = tokenize(message);
+    return buildAST(tokens);
+  }
+
+  // Primitive values are stringified before parsing
+  if (typeof message === "number" || typeof message === "boolean") {
+    const tokens = tokenize(String(message));
+    return buildAST(tokens);
+  }
+
+  // Arrays are recursively flattened
+  if (Array.isArray(message)) {
+    return message.flatMap((m) => parseRichMessage(m));
+  }
+
+  // Non-tokenizable objects are preserved as raw nodes
+  return [
+    {
+      type: "raw",
+      value: message,
+    },
+  ];
 }

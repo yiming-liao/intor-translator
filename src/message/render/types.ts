@@ -1,4 +1,5 @@
 import type { Attributes } from "@/message/types";
+import type { MessageValue } from "@/types";
 
 /**
  * Renderer interface for semantic message ASTs.
@@ -15,4 +16,7 @@ export interface Renderer<Output> {
 
   /** Render a semantic tag node with attributes and rendered children. */
   tag(name: string, attributes: Attributes, children: Output[]): Output;
+
+  /** Render a raw (non-tokenized) message value. */
+  raw(value: Exclude<MessageValue, string>): Output;
 }

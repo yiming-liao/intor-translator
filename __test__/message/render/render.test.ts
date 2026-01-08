@@ -9,6 +9,7 @@ describe("render", () => {
     const renderer: Renderer<string> = {
       text: (value) => value,
       tag: () => "",
+      raw: String,
     };
     const result = render(ast, renderer);
     expect(result).toEqual(["Hello"]);
@@ -27,6 +28,7 @@ describe("render", () => {
       text: (value) => value,
       tag: (name, _attrs, children) =>
         `<${name}>${children.join("")}</${name}>`,
+      raw: String,
     };
     const result = render(ast, renderer);
     expect(result).toEqual(["<b>world</b>"]);
@@ -52,8 +54,24 @@ describe("render", () => {
       text: (value) => value,
       tag: (name, _attrs, children) =>
         `<${name}>${children.join("")}</${name}>`,
+      raw: String,
     };
     const result = render(ast, renderer);
     expect(result).toEqual(["<b><i>text</i></b>"]);
+  });
+
+  it("renders raw nodes via renderer.raw", () => {
+    const ast: ASTNode[] = [
+      { type: "raw", value: 123 },
+      { type: "raw", value: true },
+      { type: "raw", value: null },
+    ];
+    const renderer: Renderer<string> = {
+      text: (value) => value,
+      tag: () => "",
+      raw: (value) => `raw(${String(value)})`,
+    };
+    const result = render(ast, renderer);
+    expect(result).toEqual(["raw(123)", "raw(true)", "raw(null)"]);
   });
 });
