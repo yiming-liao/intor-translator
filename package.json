@@ -50,13 +50,14 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "tsup",
-    "prepublishOnly": "yarn build",
-    "test": "vitest",
     "type": "tsc --noEmit",
     "lint": "eslint",
     "lint:debug": "eslint --debug",
+    "test": "vitest",
+    "test:types": "tsx scripts/test-types.ts",
     "knip": "knip --config .config/knip.config.ts",
+    "build": "tsup",
+    "prepublishOnly": "yarn build",
     "examples:html": "vite --config examples/html/basic/vite.config.ts",
     "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts"
   },

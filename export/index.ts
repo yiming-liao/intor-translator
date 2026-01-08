@@ -32,7 +32,8 @@ export type {
   Locale,
   FallbackLocalesMap,
   // messages
-  NestedMessage,
+  MessageObject,
+  MessageValue,
   LocaleMessages,
   LocalizedMessagesUnion,
   // replacement

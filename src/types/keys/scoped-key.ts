@@ -1,9 +1,10 @@
-import type { DefaultDepth, LeafKeys } from "@/types/keys/key-extraction-utils";
 import type {
   LocaleMessages,
   LocalizedMessagesUnion,
-  NestedMessage,
-} from "@/types/messages";
+  MessageObject,
+  MessageValue,
+} from "../messages";
+import type { DefaultDepth, LeafKeys } from "./key-extraction-utils";
 
 /**
  * Resolves the type at a dot-separated key in a nested object.
@@ -54,9 +55,13 @@ export type ScopedLeafKeys<
   L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
 > = M extends LocaleMessages
-  ? LocalizedMessagesUnion<M, L> extends infer messages
-    ? messages extends NestedMessage
-      ? LeafKeys<MessagesAtPreKey<messages, PK>, D>
+  ? LocalizedMessagesUnion<M, L> extends infer Messages
+    ? Messages extends MessageValue
+      ? MessagesAtPreKey<Messages, PK> extends infer Scoped
+        ? Scoped extends MessageObject
+          ? LeafKeys<Scoped, D>
+          : never
+        : never
       : never
     : never
   : string;

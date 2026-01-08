@@ -1,29 +1,27 @@
-import type { Locale } from "@/types";
+import type { Locale } from "./locale";
+
+type MessagePrimitive = string | number | boolean | null;
+type MessageArray = readonly MessageValue[];
+export interface MessageObject {
+  [key: string]: MessageValue;
+}
+
+/** A message value in the locale message tree. */
+export type MessageValue = MessagePrimitive | MessageObject | MessageArray;
 
 /**
- * A nested message structure or a simple string message.
+ * A non-traversable message value.
  *
- * - Used to represent either a plain message or an object containing more nested messages.
- *
- * @example
- * ```ts
- * const greeting: NestedMessage = "Hello";
- * const userMessages: NestedMessage = {
- *   profile: {
- *     greeting: "Hello, user!",
- *     farewell: "Goodbye!"
- *   }
- * };
- * ```
+ * Leaf values represent the end of a message path.
  */
-export type NestedMessage = string | { [key: string]: NestedMessage };
+export type MessageLeaf = MessagePrimitive | MessageArray;
 
 /**
  * Messages grouped by locale.
  * Used to structure all available messages for multiple locales.
  *
  * - The root-level keys are locale identifiers, e.g., "en" or "zh-TW".
- * - Each value is a `NestedMessage`, allowing for deeply nested message objects.
+ * - Each value is a `MessageObject`, allowing for deeply nested message objects.
  *
  * @example
  * ```ts
@@ -36,20 +34,11 @@ export type NestedMessage = string | { [key: string]: NestedMessage };
  *         failure: "Login failed"
  *       }
  *     }
- *   },
- *   "zh-TW": {
- *     welcome: "歡迎",
- *     auth: {
- *       login: {
- *         success: "登入成功",
- *         failure: "登入失敗"
- *       }
- *     }
  *   }
  * };
  * ```
  */
-export type LocaleMessages = Record<string, { [x: string]: NestedMessage }>;
+export type LocaleMessages = Record<string, MessageObject>;
 
 /**
  * Merges messages from all locales into a single unified structure,

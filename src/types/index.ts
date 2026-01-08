@@ -3,7 +3,8 @@ export type { Locale, FallbackLocalesMap } from "./locale";
 
 // messages
 export type {
-  NestedMessage,
+  MessageObject,
+  MessageValue,
   LocaleMessages,
   LocalizedMessagesUnion,
 } from "./messages";
