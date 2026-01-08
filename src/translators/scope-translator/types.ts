@@ -1,3 +1,4 @@
+import type { MessageValue } from "../../../dist";
 import type { CoreTranslatorOptions } from "@/translators/core-translator";
 import type {
   Locale,
@@ -15,4 +16,5 @@ export type ScopeTranslatorMethods<
 > = {
   hasKey: (key?: K, targetLocale?: Locale<M>) => boolean;
   t: <Result = string>(key?: K, replacements?: Replacement) => Result;
+  tRaw: (key?: K, replacements?: Replacement) => MessageValue | undefined;
 };

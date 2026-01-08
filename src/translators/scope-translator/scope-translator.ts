@@ -1,9 +1,15 @@
 import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
-import type { Locale, LocaleMessages, Replacement } from "@/types";
+import type {
+  Locale,
+  LocaleMessages,
+  MessageValue,
+  Replacement,
+} from "@/types";
 import type { LocalizedNodeKeys, ScopedLeafKeys } from "@/types/keys";
 import { CoreTranslator } from "@/translators/core-translator";
 import { hasKey as hasKeyMethod } from "@/translators/methods/has-key";
 import { translate } from "@/translators/methods/translate";
+import { translateRaw } from "@/translators/methods/translate-raw";
 import { getFullKey } from "@/translators/scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
@@ -14,7 +20,7 @@ export class ScopeTranslator<
     super(options);
   }
 
-  /** Create a scoped translator with a prefix key, providing `t` and `hasKey` for nested keys. */
+  /** Create a scoped translator with a prefix key for resolving nested message paths. */
   public scoped<PK extends LocalizedNodeKeys<M, L> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
@@ -33,6 +39,21 @@ export class ScopeTranslator<
       t: (key?: string, replacements?: Replacement): string => {
         const fullKey = getFullKey(preKey as string | undefined, key);
         return translate({
+          hooks: this.hooks,
+          messages: this._messages as Readonly<LocaleMessages>,
+          locale: this._locale,
+          isLoading: this._isLoading,
+          translateConfig: this.translateConfig,
+          key: fullKey as string,
+          replacements,
+        });
+      },
+      tRaw: (
+        key?: string,
+        replacements?: Replacement,
+      ): MessageValue | undefined => {
+        const fullKey = getFullKey(preKey as string | undefined, key);
+        return translateRaw({
           hooks: this.hooks,
           messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
