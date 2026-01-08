@@ -6,8 +6,8 @@ import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
 export const missing = rura.createHook<TranslateContext, MessageValue>(
   "missing",
   (ctx) => {
-    const { config, key, rawString } = ctx;
-    if (rawString !== undefined) return;
+    const { config, key, rawMessage } = ctx;
+    if (rawMessage !== undefined) return;
 
     // Use custom handler if provided
     const { missingHandler } = config.handlers || {};

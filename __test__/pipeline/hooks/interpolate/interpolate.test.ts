@@ -10,27 +10,23 @@ describe("interpolate", () => {
 
   it("should use formattedMessage when available", () => {
     const ctx = {
-      rawString: "raw",
+      rawMessage: "raw",
       formattedMessage: "formatted",
       replacements: undefined,
       finalMessage: undefined,
     } as unknown as TranslateContext;
-
     interpolate.run(ctx);
-
     expect(ctx.finalMessage).toBe("formatted");
   });
 
-  it("should fallback to rawString when formattedMessage is not provided", () => {
+  it("should fallback to rawMessage when formattedMessage is not provided", () => {
     const ctx = {
-      rawString: "raw-only",
+      rawMessage: "raw-only",
       formattedMessage: undefined,
       replacements: undefined,
       finalMessage: undefined,
     } as unknown as TranslateContext;
-
     interpolate.run(ctx);
-
     expect(ctx.finalMessage).toBe("raw-only");
   });
 
@@ -39,48 +35,39 @@ describe("interpolate", () => {
     const replaceSpy = vi
       .spyOn(interpUtil, "replaceValues")
       .mockReturnValue(mockOutput);
-
     const ctx = {
-      rawString: "Hello {name}",
+      rawMessage: "Hello {name}",
       formattedMessage: undefined,
       replacements: { name: "John" },
       finalMessage: undefined,
     } as unknown as TranslateContext;
-
     interpolate.run(ctx);
-
     expect(replaceSpy).toHaveBeenCalledWith("Hello {name}", { name: "John" });
     expect(ctx.finalMessage).toBe(mockOutput);
   });
 
   it("should not call replaceValues if message is not a string", () => {
     const replaceSpy = vi.spyOn(interpUtil, "replaceValues");
-
     const ctx = {
-      rawString: 123,
+      rawMessage: 123,
       formattedMessage: undefined,
       replacements: { name: "John" },
       finalMessage: undefined,
     } as unknown as TranslateContext;
-
     interpolate.run(ctx);
-
     expect(replaceSpy).not.toHaveBeenCalled();
     expect(ctx.finalMessage).toBe(123);
   });
 
   it("should not call replaceValues if replacements is missing", () => {
     const replaceSpy = vi.spyOn(interpUtil, "replaceValues");
-
     const ctx = {
-      rawString: "Hello {name}",
+      rawMessage: "Hello {name}",
       formattedMessage: undefined,
       replacements: undefined,
       finalMessage: undefined,
     } as unknown as TranslateContext;
-
     interpolate.run(ctx);
-
     expect(replaceSpy).not.toHaveBeenCalled();
     expect(ctx.finalMessage).toBe("Hello {name}");
   });

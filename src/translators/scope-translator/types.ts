@@ -26,11 +26,4 @@ export type ScopeTranslatorMethods<
   ) => PK extends string
     ? ScopedLeafValue<M, PK, Key, L>
     : LocalizedLeafValue<M, Key, L>;
-
-  tRaw: <Key extends K>(
-    key?: Key,
-    replacements?: Replacement,
-  ) => PK extends string
-    ? ScopedLeafValue<M, PK, Key, L>
-    : LocalizedLeafValue<M, Key, L>;
 };

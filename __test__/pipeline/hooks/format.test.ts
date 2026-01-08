@@ -22,7 +22,7 @@ describe("format", () => {
     const formatHandler = vi.fn().mockReturnValue(mockFormatted);
 
     const ctx = {
-      rawString: "hello",
+      rawMessage: "hello",
       formattedMessage: undefined,
       config: {
         handlers: {
@@ -43,9 +43,9 @@ describe("format", () => {
     expect(ctx.formattedMessage).toBe(mockFormatted);
   });
 
-  it("should do nothing when rawString is undefined", () => {
+  it("should do nothing when rawMessage is undefined", () => {
     const ctx = {
-      rawString: undefined,
+      rawMessage: undefined,
       formattedMessage: undefined,
       config: {
         handlers: {
@@ -65,7 +65,7 @@ describe("format", () => {
 
   it("should do nothing when no formatHandler is provided", () => {
     const ctx = {
-      rawString: "hello",
+      rawMessage: "hello",
       formattedMessage: undefined,
       config: {
         handlers: undefined,

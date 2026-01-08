@@ -12,7 +12,7 @@ describe("makeHandlerContext", () => {
       candidateLocales: ["en"],
       config: { missingMessage: "??" },
       isLoading: false,
-      rawString: "Hi",
+      rawMessage: "Hi",
       formattedMessage: "Hi (formatted)",
       finalMessage: undefined,
       meta: { custom: true },
@@ -29,7 +29,7 @@ describe("makeHandlerContext", () => {
       candidateLocales: ["en"],
       config: ctx.config,
       isLoading: false,
-      rawString: "Hi",
+      rawMessage: "Hi",
       formattedMessage: "Hi (formatted)",
       meta: { custom: true },
     });

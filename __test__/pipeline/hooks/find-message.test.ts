@@ -8,12 +8,11 @@ describe("findMessage", () => {
     vi.restoreAllMocks();
   });
 
-  it("should resolve message and set both rawValue and rawString when value is string", () => {
+  it("resolves a string message and sets rawMessage", () => {
     const mockResult = "Hello from mock";
     const spy = vi
       .spyOn(findUtil, "findMessageInLocales")
       .mockReturnValue(mockResult);
-
     const ctx = {
       messages: {
         en: { hello: "Hello" },
@@ -21,56 +20,41 @@ describe("findMessage", () => {
       },
       candidateLocales: ["zh", "en"],
       key: "hello",
-      rawValue: undefined,
-      rawString: undefined,
+      rawMessage: undefined,
     } as unknown as TranslateContext;
-
     findMessage.run(ctx);
-
     expect(spy).toHaveBeenCalledWith({
       messages: ctx.messages,
       candidateLocales: ctx.candidateLocales,
       key: ctx.key,
     });
-
-    expect(ctx.rawValue).toBe(mockResult);
-    expect(ctx.rawString).toBe(mockResult);
+    expect(ctx.rawMessage).toBe(mockResult);
   });
 
-  it("should set rawValue but not rawString when value is non-string", () => {
+  it("resolves a non-string message and sets rawMessage", () => {
     const mockResult = ["a", "b", "c"];
     vi.spyOn(findUtil, "findMessageInLocales").mockReturnValue(mockResult);
-
     const ctx = {
       messages: {
         en: { list: ["a", "b", "c"] },
       },
       candidateLocales: ["en"],
       key: "list",
-      rawValue: undefined,
-      rawString: "previousValue",
+      rawMessage: "previousValue",
     } as unknown as TranslateContext;
-
     findMessage.run(ctx);
-
-    expect(ctx.rawValue).toEqual(mockResult);
-    expect(ctx.rawString).toBeUndefined();
+    expect(ctx.rawMessage).toEqual(mockResult);
   });
 
-  it("should clear rawValue and rawString when util returns undefined", () => {
+  it("sets rawMessage to undefined when util returns undefined", () => {
     vi.spyOn(findUtil, "findMessageInLocales").mockReturnValue(undefined);
-
     const ctx = {
       messages: {},
       candidateLocales: ["en"],
       key: "missingKey",
-      rawValue: "previousValue",
-      rawString: "previousString",
+      rawMessage: "previousValue",
     } as unknown as TranslateContext;
-
     findMessage.run(ctx);
-
-    expect(ctx.rawValue).toBeUndefined();
-    expect(ctx.rawString).toBeUndefined();
+    expect(ctx.rawMessage).toBeUndefined();
   });
 });

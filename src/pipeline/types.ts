@@ -24,9 +24,7 @@ export interface TranslateContext {
   /** Ordered list of locales to try, including fallbacks */
   candidateLocales: string[];
   /** Raw message value resolved from the message tree. */
-  rawValue?: MessageValue;
-  /** Raw string message before formatting. */
-  rawString?: string;
+  rawMessage?: MessageValue;
   /** Message after formatting (e.g. ICU, custom formatters) */
   formattedMessage?: MessageValue;
   /** Final value produced by the pipeline */
