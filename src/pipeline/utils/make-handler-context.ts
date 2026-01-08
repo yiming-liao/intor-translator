@@ -19,7 +19,8 @@ export function makeHandlerContext(ctx: TranslateContext): HandlerContext {
     replacements: ctx.replacements,
 
     candidateLocales: ctx.candidateLocales,
-    rawMessage: ctx.rawMessage,
+    rawValue: ctx.rawValue,
+    rawString: ctx.rawString,
     formattedMessage: ctx.formattedMessage,
 
     meta: ctx.meta,

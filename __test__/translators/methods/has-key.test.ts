@@ -54,4 +54,17 @@ describe("hasKey", () => {
     });
     expect(result).toBe(true);
   });
+
+  it("should return true for existing key with falsy value", () => {
+    vi.mocked(resolveCandidateLocales).mockReturnValue(["en"]);
+    vi.mocked(findMessageInLocales).mockReturnValue(0); // or false / null
+
+    const result = hasKey({
+      messages,
+      locale,
+      key: "count",
+    });
+
+    expect(result).toBe(true);
+  });
 });

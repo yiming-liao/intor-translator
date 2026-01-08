@@ -9,9 +9,9 @@ describe("missing", () => {
     vi.restoreAllMocks();
   });
 
-  it("should do nothing when rawMessage exists", () => {
+  it("should do nothing when rawString exists", () => {
     const ctx = {
-      rawMessage: "already found",
+      rawString: "already found",
       key: "hello",
       config: {},
     } as unknown as TranslateContext;
@@ -27,7 +27,7 @@ describe("missing", () => {
       .mockReturnValue(mockSnapshot); // mock handler
     const missingHandler = vi.fn().mockReturnValue(mockReturnValue);
     const ctx = {
-      rawMessage: undefined,
+      rawString: undefined,
       key: "home.title",
       config: {
         handlers: {
@@ -46,7 +46,7 @@ describe("missing", () => {
 
   it("should return missingMessage when no handler is provided", () => {
     const ctx = {
-      rawMessage: undefined,
+      rawString: undefined,
       key: "home.title",
       config: {
         missingMessage: "N/A",
@@ -61,7 +61,7 @@ describe("missing", () => {
 
   it("should fallback to key when no handler or missingMessage exists", () => {
     const ctx = {
-      rawMessage: undefined,
+      rawString: undefined,
       key: "hello.world",
       config: {},
     } as unknown as TranslateContext;
@@ -74,7 +74,7 @@ describe("missing", () => {
 
   it("should return empty string when missingMessage is an empty string", () => {
     const ctx = {
-      rawMessage: undefined,
+      rawString: undefined,
       key: "home.title",
       config: {
         missingMessage: "",

@@ -1,4 +1,4 @@
-import type { LocaleMessages } from "@/types";
+import type { LocaleMessages, MessageValue } from "@/types";
 
 interface FindMessageInLocalesOptions {
   messages: LocaleMessages;
@@ -7,7 +7,12 @@ interface FindMessageInLocalesOptions {
 }
 
 /**
- * Finds the first available string message for a given key across a list of locales.
+ * Finds the first available message value for a given key across a list of locales.
+ *
+ * The returned value is the raw message from the locale message tree and may be
+ * of any type (e.g. string, object, array, or null).
+ *
+ * A value of `undefined` indicates that the key does not exist in any of the candidate locales.
  *
  * @example
  * ```ts
@@ -28,23 +33,27 @@ export const findMessageInLocales = ({
   messages,
   candidateLocales,
   key,
-}: FindMessageInLocalesOptions): string | undefined => {
+}: FindMessageInLocalesOptions): MessageValue | undefined => {
   for (const locale of candidateLocales) {
-    const localeMessages = messages[locale];
-    if (!localeMessages) continue;
+    const messagesForLocale = messages[locale];
+    if (!messagesForLocale) continue;
 
-    let candidate: unknown = localeMessages;
+    let candidate: MessageValue | undefined = messagesForLocale;
     const keys = key.split(".");
 
-    for (const k of keys) {
-      if (candidate && typeof candidate === "object" && k in candidate) {
-        candidate = (candidate as Record<string, unknown>)[k];
+    for (const key of keys) {
+      if (
+        candidate !== null &&
+        typeof candidate === "object" &&
+        key in candidate
+      ) {
+        candidate = (candidate as Record<string, MessageValue>)[key];
       } else {
         candidate = undefined;
         break;
       }
     }
 
-    if (typeof candidate === "string") return candidate;
+    if (candidate !== undefined) return candidate;
   }
 };

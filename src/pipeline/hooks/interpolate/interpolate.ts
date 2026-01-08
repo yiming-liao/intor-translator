@@ -5,8 +5,8 @@ import { replaceValues } from "./replace-values";
 export const interpolate = rura.createHook<TranslateContext>(
   "interpolate",
   (ctx) => {
-    const { rawMessage, formattedMessage, replacements } = ctx;
-    const message = formattedMessage ?? rawMessage;
+    const { rawString, formattedMessage, replacements } = ctx;
+    const message = formattedMessage ?? rawString;
 
     // Interpolation applies only to string messages with replacement values.
     // Structural or function-based replacements are handled later.

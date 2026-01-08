@@ -83,4 +83,13 @@ describe("loading", () => {
       output: "",
     });
   });
+
+  it("should return undefined when isLoading is true but no handler or loadingMessage is provided", () => {
+    const ctx = {
+      isLoading: true,
+      config: {},
+    } as unknown as TranslateContext;
+    const result = loading.run(ctx);
+    expect(result).toBeUndefined();
+  });
 });

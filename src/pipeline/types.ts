@@ -1,5 +1,5 @@
 import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
-import type { LocaleMessages, Replacement } from "@/types";
+import type { LocaleMessages, Replacement, MessageValue } from "@/types";
 import type { RuraHook } from "rura";
 
 /**
@@ -25,8 +25,10 @@ export interface TranslateContext<Result = unknown> {
 
   /** Ordered list of locales to try, including fallbacks */
   candidateLocales: string[];
-  /** Raw message string found in the messages map, before formatting */
-  rawMessage?: string;
+  /** Raw message value resolved from the message tree. */
+  rawValue?: MessageValue;
+  /** Raw string message before formatting. */
+  rawString?: string;
   /** Message after formatting (e.g. ICU, custom formatters) */
   formattedMessage?: unknown;
   /** Final value produced by the pipeline */

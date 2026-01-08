@@ -10,7 +10,7 @@ describe("interpolate", () => {
 
   it("should use formattedMessage when available", () => {
     const ctx = {
-      rawMessage: "raw",
+      rawString: "raw",
       formattedMessage: "formatted",
       replacements: undefined,
       finalMessage: undefined,
@@ -21,9 +21,9 @@ describe("interpolate", () => {
     expect(ctx.finalMessage).toBe("formatted");
   });
 
-  it("should fallback to rawMessage when formattedMessage is not provided", () => {
+  it("should fallback to rawString when formattedMessage is not provided", () => {
     const ctx = {
-      rawMessage: "raw-only",
+      rawString: "raw-only",
       formattedMessage: undefined,
       replacements: undefined,
       finalMessage: undefined,
@@ -41,7 +41,7 @@ describe("interpolate", () => {
       .mockReturnValue(mockOutput);
 
     const ctx = {
-      rawMessage: "Hello {name}",
+      rawString: "Hello {name}",
       formattedMessage: undefined,
       replacements: { name: "John" },
       finalMessage: undefined,
@@ -57,7 +57,7 @@ describe("interpolate", () => {
     const replaceSpy = vi.spyOn(interpUtil, "replaceValues");
 
     const ctx = {
-      rawMessage: 123,
+      rawString: 123,
       formattedMessage: undefined,
       replacements: { name: "John" },
       finalMessage: undefined,
@@ -73,7 +73,7 @@ describe("interpolate", () => {
     const replaceSpy = vi.spyOn(interpUtil, "replaceValues");
 
     const ctx = {
-      rawMessage: "Hello {name}",
+      rawString: "Hello {name}",
       formattedMessage: undefined,
       replacements: undefined,
       finalMessage: undefined,

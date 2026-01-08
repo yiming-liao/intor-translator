@@ -45,4 +45,32 @@ describe("findMessageInLocales", () => {
     });
     expect(result).toBeUndefined();
   });
+
+  it("should return raw array value if message is an array", () => {
+    const messages = {
+      en: {
+        steps: ["one", "two", "three"],
+      },
+    };
+    const result = findMessageInLocales({
+      messages,
+      candidateLocales: ["en"],
+      key: "steps",
+    });
+    expect(result).toEqual(["one", "two", "three"]);
+  });
+
+  it("should return null if the message exists but is explicitly null", () => {
+    const messages = {
+      en: {
+        empty: null,
+      },
+    };
+    const result = findMessageInLocales({
+      messages,
+      candidateLocales: ["en"],
+      key: "empty",
+    });
+    expect(result).toBeNull();
+  });
 });

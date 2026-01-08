@@ -8,7 +8,7 @@ describe("findMessage", () => {
     vi.restoreAllMocks();
   });
 
-  it("should call findMessageInLocales with correct arguments and set ctx.rawMessage", () => {
+  it("should resolve message and set both rawValue and rawString when value is string", () => {
     const mockResult = "Hello from mock";
     const spy = vi
       .spyOn(findUtil, "findMessageInLocales")
@@ -21,35 +21,56 @@ describe("findMessage", () => {
       },
       candidateLocales: ["zh", "en"],
       key: "hello",
-      rawMessage: undefined,
+      rawValue: undefined,
+      rawString: undefined,
     } as unknown as TranslateContext;
 
-    // run hook
     findMessage.run(ctx);
 
-    // ensure utility was called
     expect(spy).toHaveBeenCalledWith({
       messages: ctx.messages,
       candidateLocales: ctx.candidateLocales,
       key: ctx.key,
     });
 
-    // ensure hook sets rawMessage correctly
-    expect(ctx.rawMessage).toBe(mockResult);
+    expect(ctx.rawValue).toBe(mockResult);
+    expect(ctx.rawString).toBe(mockResult);
   });
 
-  it("should set rawMessage to undefined when util returns undefined", () => {
+  it("should set rawValue but not rawString when value is non-string", () => {
+    const mockResult = ["a", "b", "c"];
+    vi.spyOn(findUtil, "findMessageInLocales").mockReturnValue(mockResult);
+
+    const ctx = {
+      messages: {
+        en: { list: ["a", "b", "c"] },
+      },
+      candidateLocales: ["en"],
+      key: "list",
+      rawValue: undefined,
+      rawString: "previousValue",
+    } as unknown as TranslateContext;
+
+    findMessage.run(ctx);
+
+    expect(ctx.rawValue).toEqual(mockResult);
+    expect(ctx.rawString).toBeUndefined();
+  });
+
+  it("should clear rawValue and rawString when util returns undefined", () => {
     vi.spyOn(findUtil, "findMessageInLocales").mockReturnValue(undefined);
 
     const ctx = {
       messages: {},
       candidateLocales: ["en"],
       key: "missingKey",
-      rawMessage: "previousValue",
+      rawValue: "previousValue",
+      rawString: "previousString",
     } as unknown as TranslateContext;
 
     findMessage.run(ctx);
 
-    expect(ctx.rawMessage).toBeUndefined();
+    expect(ctx.rawValue).toBeUndefined();
+    expect(ctx.rawString).toBeUndefined();
   });
 });

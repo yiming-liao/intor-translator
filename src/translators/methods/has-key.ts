@@ -21,5 +21,5 @@ export const hasKey = ({
 }: HasKeyOptions): boolean => {
   const candidateLocales = resolveCandidateLocales(targetLocale || locale);
   const message = findMessageInLocales({ messages, candidateLocales, key });
-  return !!message;
+  return message !== undefined;
 };
