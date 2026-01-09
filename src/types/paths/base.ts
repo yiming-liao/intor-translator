@@ -68,3 +68,26 @@ export type LeafValue<
   : K extends keyof M
     ? M[K]
     : never;
+
+/**
+ * Resolves the type located at a dot-separated path.
+ *
+ * The resolved type may be a subtree or a leaf value.
+ *
+ * @example
+ * ```ts
+ * const messages = { a: { b: { c: "1" }, z: "2" } };
+ * AtPath<typeof messages, "a">; // → { b: { c: string }; z: string };
+ * AtPath<typeof messages, "a.b">; // → { c: string };
+ * ```
+ */
+export type AtPath<
+  MessageSchema,
+  PK extends string,
+> = PK extends `${infer Head}.${infer Tail}`
+  ? Head extends keyof MessageSchema
+    ? AtPath<MessageSchema[Head], Tail>
+    : never
+  : PK extends keyof MessageSchema
+    ? MessageSchema[PK]
+    : never;

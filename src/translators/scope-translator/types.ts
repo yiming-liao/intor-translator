@@ -1,10 +1,10 @@
 import type { CoreTranslatorOptions } from "../core-translator";
 import type {
   Locale,
-  Replacement,
   LocalizedLeafKeys,
   LocaleMessages,
   LocalizedLeafValue,
+  LocalizedReplacement,
 } from "@/types";
 import type { ScopedLeafKeys, ScopedLeafValue } from "@/types";
 
@@ -12,6 +12,7 @@ export type ScopeTranslatorOptions<M> = CoreTranslatorOptions<M>;
 
 export type ScopeTranslatorMethods<
   M extends LocaleMessages | unknown = unknown,
+  ReplacementSchema = unknown,
   PK extends string | undefined = undefined,
   K extends string = PK extends string
     ? ScopedLeafKeys<M, PK>
@@ -21,7 +22,12 @@ export type ScopeTranslatorMethods<
 
   t: <Key extends K>(
     key?: Key,
-    replacements?: Replacement,
+    ...replacementArgs: [
+      LocalizedReplacement<
+        ReplacementSchema,
+        PK extends string ? `${PK}.${Key & string}` : Key // full dot-path key (e.g. "user.name")
+      >?,
+    ]
   ) => PK extends string
     ? ScopedLeafValue<M, PK, Key>
     : LocalizedLeafValue<M, Key>;

@@ -1,6 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { LeafKeys, LeafValue, NodeKeys } from "../../../../dist";
+import type { AtPath, LeafKeys, LeafValue, NodeKeys } from "../../../../dist";
 import { expectType } from "tsd";
 
 const messages = {
@@ -60,3 +60,15 @@ expectType<never>(null as unknown as LeafValue<Messages, "nested.missing">);
 expectType<never>(
   null as unknown as LeafValue<{ [Symbol.iterator]: { str: string } }, "">,
 );
+
+//---------------------------------------------------------------
+// AtPath
+//---------------------------------------------------------------
+const nestedMessages = { a: { b: { c: { d: { string: "", number: 0 } } } } };
+expectType<{ d: { string: string; number: number } }>(
+  null as unknown as AtPath<typeof nestedMessages, "a.b.c">,
+);
+expectType<number>(
+  null as unknown as AtPath<typeof nestedMessages, "a.b.c.d.number">,
+);
+expectType<never>(null as unknown as AtPath<typeof messages, "a.non-exist">);

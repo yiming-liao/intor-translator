@@ -1,6 +1,10 @@
 import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
-import type { Locale, LocaleMessages, Replacement } from "@/types";
-import type { LocalizedNodeKeys } from "@/types/paths";
+import type {
+  Locale,
+  LocaleMessages,
+  LocalizedNodeKeys,
+  Replacement,
+} from "@/types";
 import { CoreTranslator } from "../core-translator";
 import { hasKey as hasKeyMethod } from "../methods/has-key";
 import { translate } from "../methods/translate";
@@ -8,7 +12,8 @@ import { getFullKey } from "../scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
   M extends LocaleMessages | unknown = unknown,
-> extends CoreTranslator<M> {
+  ReplacementSchema = unknown,
+> extends CoreTranslator<M, ReplacementSchema> {
   constructor(options: ScopeTranslatorOptions<M>) {
     super(options);
   }
@@ -17,8 +22,8 @@ export class ScopeTranslator<
   public scoped<PK extends LocalizedNodeKeys<M> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
-    ? ScopeTranslatorMethods<M, PK>
-    : ScopeTranslatorMethods<M> {
+    ? ScopeTranslatorMethods<M, ReplacementSchema, PK>
+    : ScopeTranslatorMethods<M, ReplacementSchema> {
     return {
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
         const fullKey = getFullKey(preKey as string | undefined, key);
@@ -29,7 +34,7 @@ export class ScopeTranslator<
           targetLocale,
         });
       },
-      t: (key?: string, replacements?: Replacement) => {
+      t: (key?: string, ...args: [Replacement?]) => {
         const fullKey = getFullKey(preKey as string | undefined, key);
         return translate({
           hooks: this.hooks,
@@ -38,11 +43,11 @@ export class ScopeTranslator<
           isLoading: this._isLoading,
           translateConfig: this.translateConfig,
           key: fullKey as string,
-          replacements,
+          replacements: args[0],
         });
       },
     } as PK extends string
-      ? ScopeTranslatorMethods<M, PK>
-      : ScopeTranslatorMethods<M>;
+      ? ScopeTranslatorMethods<M, ReplacementSchema, PK>
+      : ScopeTranslatorMethods<M, ReplacementSchema>;
   }
 }

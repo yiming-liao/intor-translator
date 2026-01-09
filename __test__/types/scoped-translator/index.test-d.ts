@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import { expectType } from "tsd";
-import { Translator as ScopeTranslator } from "../../../dist";
+import { Translator as ScopeTranslator, type Replacement } from "../../../dist";
 
 const messages = {
-  "en-US": { hello: "world", a: { b: { c: "d" } }, more: { k: "v" } },
-  "zh-TW": { hello: "world", a: { b: { c: "d" } } },
+  "en-US": { greeting: "Hello, {name}", a: { b: { c: "d" } } },
+  "zh-TW": { greeting: "哈囉, {name}", a: { b: { c: "d" } } },
 };
 const locale = "en-US";
 const withoutMessages = { locale } as const;
@@ -24,7 +24,7 @@ const withMessages = { locale, messages } as const;
 {
   const translator = new ScopeTranslator(withMessages);
   const scoped = translator.scoped();
-  expectType<"hello" | "a.b.c" | "more.k" | undefined>(
+  expectType<"greeting" | "a.b.c" | undefined>(
     null as unknown as Parameters<(typeof scoped)["t"]>[0],
   );
 }
@@ -38,7 +38,11 @@ const withMessages = { locale, messages } as const;
   );
 }
 
-// [With preKey] No messages provided
+//---------------------------------------------------------------
+// With preKey
+//---------------------------------------------------------------
+
+// No messages provided
 {
   const translator = new ScopeTranslator(withoutMessages);
   const scoped = translator.scoped("a");
@@ -47,7 +51,7 @@ const withMessages = { locale, messages } as const;
   );
 }
 
-// [With preKey] Messages provided (inference mode)
+// Messages provided (inference mode)
 {
   const translator = new ScopeTranslator(withMessages);
   const scoped = translator.scoped("a");
@@ -56,11 +60,34 @@ const withMessages = { locale, messages } as const;
   );
 }
 
-// [With preKey] Explicitly opting out of inference
+// Explicitly opting out of inference
 {
   const translator = new ScopeTranslator<unknown>(withMessages);
   const scoped = translator.scoped("a");
   expectType<string | undefined>(
     null as unknown as Parameters<(typeof scoped)["t"]>[0],
+  );
+}
+
+//---------------------------------------------------------------
+// Replacements
+//---------------------------------------------------------------
+
+// No ReplacementSchema provided (fallback to Replacement)
+{
+  const translator = new ScopeTranslator<typeof messages>(withMessages);
+  expectType<Replacement | undefined>(
+    null as unknown as Parameters<(typeof translator)["t"]>[1],
+  );
+}
+
+// ReplacementSchema provided (inference mode)
+{
+  type ReplacementSchema = { "{locale}": { greeting: { name: string } } };
+  const translator = new ScopeTranslator<typeof messages, ReplacementSchema>(
+    withMessages,
+  );
+  expectType<{ name: string } | undefined>(
+    null as unknown as Parameters<(typeof translator)["t"]>[1],
   );
 }

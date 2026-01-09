@@ -7,6 +7,7 @@ import type {
   LocaleMessages,
   LocalizedLeafKeys,
   LocalizedLeafValue,
+  LocalizedReplacement,
 } from "@/types";
 import { rura } from "rura";
 import { DEFAULT_HOOKS } from "@/pipeline";
@@ -22,6 +23,7 @@ import { translate } from "../methods/translate";
  */
 export class CoreTranslator<
   M extends LocaleMessages | unknown = unknown,
+  ReplacementSchema = unknown,
 > extends BaseTranslator<M> {
   /** User-provided options including messages, locale, and config. */
   protected translateConfig: TranslateConfig<M>;
@@ -81,7 +83,7 @@ export class CoreTranslator<
   /** Get the translated message for a key, with optional replacements. */
   public t = <K extends LocalizedLeafKeys<M> = LocalizedLeafKeys<M>>(
     key: K,
-    replacements?: Replacement,
+    ...replacementArgs: [LocalizedReplacement<ReplacementSchema, K>?]
   ): LocalizedLeafValue<M, K> => {
     return translate({
       hooks: this.hooks,
@@ -90,7 +92,7 @@ export class CoreTranslator<
       isLoading: this._isLoading,
       translateConfig: this.translateConfig,
       key: key as string,
-      replacements,
+      replacements: replacementArgs[0] as Replacement | undefined,
     }) as LocalizedLeafValue<M, K>;
   };
 }

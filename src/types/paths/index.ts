@@ -1,4 +1,10 @@
-export type { DefaultDepth, NodeKeys, LeafKeys, LeafValue } from "./base";
+export type {
+  DefaultDepth,
+  NodeKeys,
+  LeafKeys,
+  LeafValue,
+  AtPath,
+} from "./base";
 
 export type {
   LocalizedNodeKeys,

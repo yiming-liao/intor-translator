@@ -35,7 +35,6 @@ export type {
   MessageObject,
   MessageValue,
   LocaleMessages,
-  LocalizedMessagesUnion,
   // replacement
   Replacement,
   // keys
@@ -43,6 +42,7 @@ export type {
   NodeKeys,
   LeafKeys,
   LeafValue,
+  AtPath,
   LocalizedNodeKeys,
   LocalizedLeafKeys,
   LocalizedLeafValue,
