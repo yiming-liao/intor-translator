@@ -40,6 +40,7 @@ export type {
   LocaleMessages,
   // replacement
   Replacement,
+  LocalizedReplacement,
   // keys
   DefaultDepth,
   NodeKeys,
