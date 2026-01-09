@@ -5,17 +5,20 @@ export {
   type ScopeTranslatorMethods as TranslatorMethods,
   // plugin
   type TranslatorPlugin,
-  // translate config / handlers
-  type TranslateConfig,
-  type TranslateHandlers,
-  type FormatHandler,
-  type LoadingHandler,
-  type MissingHandler,
-  type HandlerContext,
 } from "@/translators";
 
 // pipeline
-export type { TranslateContext, TranslateHook } from "@/pipeline";
+export type {
+  TranslateContext,
+  TranslateHook,
+  // translate config / handlers
+  TranslateConfig,
+  TranslateHandlers,
+  FormatHandler,
+  LoadingHandler,
+  MissingHandler,
+  HandlerContext,
+} from "@/pipeline";
 
 // message
 export {

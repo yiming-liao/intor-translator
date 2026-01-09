@@ -1,6 +1,5 @@
-import type { TranslateHook } from "@/pipeline/types";
-import type { BaseTranslatorOptions } from "@/translators/base-translator";
-import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
+import type { BaseTranslatorOptions } from "../base-translator";
+import type { TranslateHook, TranslateConfig } from "@/pipeline";
 
 export interface CoreTranslatorOptions<M>
   extends BaseTranslatorOptions<M>,

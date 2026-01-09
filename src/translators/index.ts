@@ -4,15 +4,4 @@ export {
   type ScopeTranslatorMethods,
 } from "./scope-translator";
 
-export type {
-  // plugin
-  TranslatorPlugin,
-
-  // translate config / handlers
-  TranslateConfig,
-  TranslateHandlers,
-  FormatHandler,
-  LoadingHandler,
-  MissingHandler,
-  HandlerContext,
-} from "./core-translator";
+export type { TranslatorPlugin } from "./core-translator";

@@ -2,7 +2,7 @@
 import type { TranslateContext } from "@/pipeline/types";
 import { rura } from "rura";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { runTranslate } from "@/translators/methods/utils/run-translate";
+import { runTranslate } from "@/pipeline/run-translate";
 
 describe("runTranslate", () => {
   beforeEach(() => {

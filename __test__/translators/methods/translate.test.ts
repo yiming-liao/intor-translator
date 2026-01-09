@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, afterEach } from "vitest";
+import * as runUtil from "@/pipeline/run-translate";
 import { translate } from "@/translators/methods/translate";
-import * as runUtil from "@/translators/methods/utils/run-translate";
 
 describe("translate", () => {
   afterEach(() => {

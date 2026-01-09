@@ -1,4 +1,15 @@
+export { runTranslate, type TranslateParams } from "./run-translate";
+
 export type { TranslateContext, TranslateHook } from "./types";
+
+export type {
+  TranslateConfig,
+  TranslateHandlers,
+  FormatHandler,
+  LoadingHandler,
+  MissingHandler,
+  HandlerContext,
+} from "./translate-config";
 
 import {
   findMessage,

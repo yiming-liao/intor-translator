@@ -1,5 +1,5 @@
 import type { MessageValue } from "@/types";
-import { runTranslate, type TranslateParams } from "./utils/run-translate";
+import { runTranslate, type TranslateParams } from "@/pipeline";
 
 /**
  *  Runs the translate pipeline and returns the final formatted message.

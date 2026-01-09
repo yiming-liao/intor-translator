@@ -1,5 +1,5 @@
-import type { TranslateContext, TranslateHook } from "@/pipeline/types";
-import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
+import type { TranslateConfig } from "./translate-config";
+import type { TranslateContext, TranslateHook } from "./types";
 import type {
   Locale,
   LocaleMessages,

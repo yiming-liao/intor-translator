@@ -1,5 +1,5 @@
-import type { TranslateContext } from "@/pipeline/types";
-import type { HandlerContext } from "@/translators/core-translator/translate-config.types";
+import type { HandlerContext } from "../translate-config";
+import type { TranslateContext } from "../types";
 
 /**
  * Create an immutable context object exposed to external handlers.

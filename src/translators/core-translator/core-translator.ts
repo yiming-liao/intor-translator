@@ -1,6 +1,5 @@
-import type { TranslateConfig } from "./translate-config.types";
 import type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
-import type { TranslateHook } from "@/pipeline";
+import type { TranslateHook, TranslateConfig } from "@/pipeline";
 import type {
   Replacement,
   Locale,
