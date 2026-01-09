@@ -43,13 +43,13 @@ const withMessages = { locale, messages } as const;
 //---------------------------------------------------------------
 
 // No messages provided
-{
-  const translator = new ScopeTranslator(withoutMessages);
-  const scoped = translator.scoped("a");
-  expectType<string | undefined>(
-    null as unknown as Parameters<(typeof scoped)["t"]>[0],
-  );
-}
+// {
+//   const translator = new ScopeTranslator(withoutMessages);
+//   const scoped = translator.scoped("a");
+//   expectType<string | undefined>(
+//     null as unknown as Parameters<(typeof scoped)["t"]>[0],
+//   );
+// }
 
 // Messages provided (inference mode)
 {

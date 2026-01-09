@@ -38,19 +38,24 @@ export type {
   MessageObject,
   MessageValue,
   LocaleMessages,
+  // utils
+  GeneratePaths,
+  AtPath,
+  IfLocaleMessages,
+  IfMessageObject,
+  // key
+  Key,
+  LocalizedKey,
+  ScopedKey,
+  // pre-key
+  PreKey,
+  LocalizedPreKey,
+  // value
+  Value,
+  LocalizedValue,
+  ScopedValue,
   // replacement
   Replacement,
   LocalizedReplacement,
   ScopedReplacement,
-  // keys
-  DefaultDepth,
-  NodeKeys,
-  LeafKeys,
-  LeafValue,
-  AtPath,
-  LocalizedNodeKeys,
-  LocalizedLeafKeys,
-  LocalizedLeafValue,
-  ScopedLeafKeys,
-  ScopedLeafValue,
 } from "@/types";

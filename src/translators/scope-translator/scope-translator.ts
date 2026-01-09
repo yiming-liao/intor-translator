@@ -2,7 +2,7 @@ import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
 import type {
   Locale,
   LocaleMessages,
-  LocalizedNodeKeys,
+  LocalizedPreKey,
   Replacement,
 } from "@/types";
 import { CoreTranslator } from "../core-translator";
@@ -19,7 +19,7 @@ export class ScopeTranslator<
   }
 
   /** Create a scoped translator with a prefix key for resolving nested message paths. */
-  public scoped<PK extends LocalizedNodeKeys<M> | undefined = undefined>(
+  public scoped<PK extends LocalizedPreKey<M> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
     ? ScopeTranslatorMethods<M, ReplacementSchema, PK>

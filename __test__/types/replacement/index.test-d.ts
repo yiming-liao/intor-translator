@@ -1,4 +1,8 @@
-import type { LocalizedReplacement, ScopedReplacement } from "../../../dist";
+import type {
+  LocalizedReplacement,
+  Replacement,
+  ScopedReplacement,
+} from "../../../dist";
 import { expectType } from "tsd";
 
 interface ReplacementSchema {
@@ -19,8 +23,19 @@ expectType<{ key: { count: number } }>(
   null as unknown as LocalizedReplacement<ReplacementSchema, "nested">,
 );
 
-expectType<never>(
-  null as unknown as LocalizedReplacement<ReplacementSchema, "non-exist">,
+expectType<Replacement>(
+  null as unknown as LocalizedReplacement<ReplacementSchema, "missing">,
+);
+
+expectType<Replacement>(
+  null as unknown as LocalizedReplacement<
+    { "{locale}": { hello: string } },
+    "hello"
+  >,
+);
+
+expectType<Replacement>(
+  null as unknown as LocalizedReplacement<ReplacementSchema, string>,
 );
 
 //---------------------------------------------------------------
@@ -28,4 +43,8 @@ expectType<never>(
 //---------------------------------------------------------------
 expectType<{ count: number }>(
   null as unknown as ScopedReplacement<ReplacementSchema, "nested", "key">,
+);
+
+expectType<Replacement>(
+  null as unknown as ScopedReplacement<ReplacementSchema, "nested", "missing">,
 );
