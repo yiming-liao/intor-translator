@@ -1,6 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { LeafKeys, LeafValue, NodeKeys } from "../../../dist";
+import type { LeafKeys, LeafValue, NodeKeys } from "../../../../dist";
 import { expectType } from "tsd";
 
 const messages = {

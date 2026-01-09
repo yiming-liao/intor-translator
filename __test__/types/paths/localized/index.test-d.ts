@@ -5,7 +5,7 @@ import type {
   LocalizedLeafValue,
   LocalizedNodeKeys,
   MessageValue,
-} from "../../../dist";
+} from "../../../../dist";
 import { expectType } from "tsd";
 
 const messages = {
@@ -28,17 +28,8 @@ type EmptyMessages = typeof emptyMessages;
 // LocalizedNodeKeys
 //---------------------------------------------------------------
 
-// Union Mode
 expectType<"nested" | "nested.key" | "onlyInEn" | "diffValue">(
   null as unknown as LocalizedNodeKeys<Messages>,
-);
-
-// Locale Narrowing
-expectType<"nested" | "nested.key" | "onlyInEn" | "diffValue">(
-  null as unknown as LocalizedNodeKeys<Messages, "en">,
-);
-expectType<"nested" | "nested.key" | "diffValue">(
-  null as unknown as LocalizedNodeKeys<Messages, "zh">,
 );
 
 // Empty Messages
@@ -51,17 +42,8 @@ expectType<string>(null as unknown as LocalizedNodeKeys);
 // LocalizedLeafKeys
 //---------------------------------------------------------------
 
-// Union Mode
 expectType<"nested.key" | "onlyInEn" | "diffValue">(
   null as unknown as LocalizedLeafKeys<Messages>,
-);
-
-// Locale Narrowing
-expectType<"nested.key" | "onlyInEn" | "diffValue">(
-  null as unknown as LocalizedLeafKeys<Messages, "en">,
-);
-expectType<"nested.key" | "diffValue">(
-  null as unknown as LocalizedLeafKeys<Messages, "zh">,
 );
 
 // Empty Messages
@@ -74,17 +56,8 @@ expectType<string>(null as unknown as LocalizedLeafKeys);
 // LocalizedLeafValue
 //---------------------------------------------------------------
 
-// Union Mode
 expectType<string>(
   null as unknown as LocalizedLeafValue<Messages, "nested.key">,
-);
-
-// Locale Narrowing
-expectType<boolean>(
-  null as unknown as LocalizedLeafValue<Messages, "diffValue", "en">,
-);
-expectType<number>(
-  null as unknown as LocalizedLeafValue<Messages, "diffValue", "zh">,
 );
 
 // Empty Messages

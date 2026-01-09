@@ -2,15 +2,10 @@
 export type { Locale, FallbackLocalesMap } from "./locale";
 
 // messages
-export type {
-  MessageObject,
-  MessageValue,
-  LocaleMessages,
-  LocalizedMessagesUnion,
-} from "./messages";
+export type { MessageObject, MessageValue, LocaleMessages } from "./messages";
 
 // replacement
-export type { Replacement } from "./replacement";
+export type { Replacement, LocalizedReplacement } from "./replacement";
 
 // keys
 export type {

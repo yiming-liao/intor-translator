@@ -1,10 +1,6 @@
-import type {
-  LocaleMessages,
-  LocalizedMessagesUnion,
-  MessageObject,
-  MessageValue,
-} from "../messages";
+import type { LocaleMessages, MessageObject, MessageValue } from "../messages";
 import type { DefaultDepth, LeafKeys, LeafValue } from "./base";
+import type { Locale } from "../locale";
 
 /**
  * Resolves the type at a dot-separated key in a nested object.
@@ -52,10 +48,9 @@ type MessagesAtPreKey<
 export type ScopedLeafKeys<
   M,
   PK extends string,
-  L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
 > = M extends LocaleMessages
-  ? LocalizedMessagesUnion<M, L> extends infer Messages
+  ? M[Locale<M>] extends infer Messages
     ? Messages extends MessageValue
       ? MessagesAtPreKey<Messages, PK> extends infer Scoped
         ? Scoped extends MessageObject
@@ -84,9 +79,8 @@ export type ScopedLeafValue<
   M,
   PK extends string,
   K extends string,
-  L extends keyof M | "union" = "union",
 > = M extends LocaleMessages
-  ? LocalizedMessagesUnion<M, L> extends infer Messages
+  ? M[Locale<M>] extends infer Messages
     ? Messages extends MessageValue
       ? MessagesAtPreKey<Messages, PK> extends infer Scoped
         ? Scoped extends MessageObject

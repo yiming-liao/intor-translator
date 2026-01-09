@@ -1,4 +1,4 @@
-import type { CoreTranslatorOptions } from "@/translators/core-translator";
+import type { CoreTranslatorOptions } from "../core-translator";
 import type {
   Locale,
   Replacement,
@@ -12,11 +12,10 @@ export type ScopeTranslatorOptions<M> = CoreTranslatorOptions<M>;
 
 export type ScopeTranslatorMethods<
   M extends LocaleMessages | unknown = unknown,
-  L extends keyof M | "union" = "union",
   PK extends string | undefined = undefined,
   K extends string = PK extends string
-    ? ScopedLeafKeys<M, PK, L>
-    : LocalizedLeafKeys<M, L>,
+    ? ScopedLeafKeys<M, PK>
+    : LocalizedLeafKeys<M>,
 > = {
   hasKey: (key?: K, targetLocale?: Locale<M>) => boolean;
 
@@ -24,6 +23,6 @@ export type ScopeTranslatorMethods<
     key?: Key,
     replacements?: Replacement,
   ) => PK extends string
-    ? ScopedLeafValue<M, PK, Key, L>
-    : LocalizedLeafValue<M, Key, L>;
+    ? ScopedLeafValue<M, PK, Key>
+    : LocalizedLeafValue<M, Key>;
 };

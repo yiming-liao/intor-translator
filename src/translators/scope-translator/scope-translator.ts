@@ -1,25 +1,24 @@
 import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
 import type { Locale, LocaleMessages, Replacement } from "@/types";
 import type { LocalizedNodeKeys } from "@/types/paths";
-import { CoreTranslator } from "@/translators/core-translator";
-import { hasKey as hasKeyMethod } from "@/translators/methods/has-key";
-import { translate } from "@/translators/methods/translate";
-import { getFullKey } from "@/translators/scope-translator/utils/get-full-key";
+import { CoreTranslator } from "../core-translator";
+import { hasKey as hasKeyMethod } from "../methods/has-key";
+import { translate } from "../methods/translate";
+import { getFullKey } from "../scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
   M extends LocaleMessages | unknown = unknown,
-  L extends keyof M | "union" = "union",
 > extends CoreTranslator<M> {
   constructor(options: ScopeTranslatorOptions<M>) {
     super(options);
   }
 
   /** Create a scoped translator with a prefix key for resolving nested message paths. */
-  public scoped<PK extends LocalizedNodeKeys<M, L> | undefined = undefined>(
+  public scoped<PK extends LocalizedNodeKeys<M> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
-    ? ScopeTranslatorMethods<M, L, PK>
-    : ScopeTranslatorMethods<M, L> {
+    ? ScopeTranslatorMethods<M, PK>
+    : ScopeTranslatorMethods<M> {
     return {
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
         const fullKey = getFullKey(preKey as string | undefined, key);
@@ -43,7 +42,7 @@ export class ScopeTranslator<
         });
       },
     } as PK extends string
-      ? ScopeTranslatorMethods<M, L, PK>
-      : ScopeTranslatorMethods<M, L>;
+      ? ScopeTranslatorMethods<M, PK>
+      : ScopeTranslatorMethods<M>;
   }
 }

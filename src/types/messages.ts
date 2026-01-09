@@ -1,5 +1,3 @@
-import type { Locale } from "./locale";
-
 type MessagePrimitive = string | number | boolean | null;
 type MessageArray = readonly MessageValue[];
 
@@ -46,35 +44,3 @@ export type MessageLeaf = MessagePrimitive | MessageArray;
  * ```
  */
 export type LocaleMessages = Record<string, MessageObject>;
-
-/**
- * Merges messages from all locales into a single unified structure,
- * or extracts messages for a specific locale if `L` is provided.
- *
- * @example
- * ```ts
- * const messages = {
- *   en: { greeting: { morning: "morning" } },
- *   zh: { greeting: { evening: "晚上好" } },
- * };
- *
- * // 1. Union of all locales
- * UnionLocaleMessages<typeof messages>;
- * // → { greeting: { morning: string; }; } | { greeting: { evening: string; }; }
- *
- * // 2. Messages for a specified locale
- * UnionLocaleMessages<typeof messages, "en">; // → { greeting: { morning: string; }; }
- * UnionLocaleMessages<typeof messages, "zh">; // → { greeting: { evening: string; }; }
- *
- * // 3. Fallback if M is not LocaleMessages
- * UnionLocaleMessages // → unknown
- * ```
- */
-export type LocalizedMessagesUnion<
-  M = unknown,
-  L extends keyof M | "union" = "union",
-> = M extends LocaleMessages
-  ? L extends "union"
-    ? M[Locale<M>]
-    : M[L & keyof M]
-  : unknown;

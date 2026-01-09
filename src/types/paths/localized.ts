@@ -25,13 +25,8 @@ import type { DefaultDepth, NodeKeys, LeafKeys, LeafValue } from "./base";
  */
 export type LocalizedNodeKeys<
   M = unknown,
-  L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
-> = M extends LocaleMessages
-  ? L extends "union"
-    ? NodeKeys<M[keyof M], D>
-    : NodeKeys<M[Extract<L, keyof M>], D>
-  : string;
+> = M extends LocaleMessages ? NodeKeys<M[keyof M], D> : string;
 
 /**
  * Extracts all **leaf keys** from the messages
@@ -57,13 +52,8 @@ export type LocalizedNodeKeys<
  */
 export type LocalizedLeafKeys<
   M = unknown,
-  L extends keyof M | "union" = "union",
   D extends number = DefaultDepth,
-> = M extends LocaleMessages
-  ? L extends "union"
-    ? LeafKeys<M[keyof M], D>
-    : LeafKeys<M[Extract<L, keyof M>], D>
-  : string;
+> = M extends LocaleMessages ? LeafKeys<M[keyof M], D> : string;
 
 /**
  * Resolves the value type of a **localized leaf key**
@@ -74,9 +64,4 @@ export type LocalizedLeafKeys<
 export type LocalizedLeafValue<
   M = unknown,
   K extends string = string,
-  L extends keyof M | "union" = "union",
-> = M extends LocaleMessages
-  ? L extends "union"
-    ? LeafValue<M[keyof M], K>
-    : LeafValue<M[Extract<L, keyof M>], K>
-  : MessageValue;
+> = M extends LocaleMessages ? LeafValue<M[keyof M], K> : MessageValue;

@@ -1,6 +1,6 @@
+import type { TranslateConfig } from "./translate-config.types";
 import type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
-import type { TranslateHook } from "@/pipeline/types";
-import type { TranslateConfig } from "@/translators/core-translator/translate-config.types";
+import type { TranslateHook } from "@/pipeline";
 import type {
   Replacement,
   Locale,
@@ -10,20 +10,18 @@ import type {
 } from "@/types";
 import { rura } from "rura";
 import { DEFAULT_HOOKS } from "@/pipeline";
-import { BaseTranslator } from "@/translators/base-translator";
-import { hasKey } from "@/translators/methods/has-key";
-import { translate } from "@/translators/methods/translate";
+import { BaseTranslator } from "../base-translator";
+import { hasKey } from "../methods/has-key";
+import { translate } from "../methods/translate";
 
 /**
  * CoreTranslator provides the default translation behavior
  * using the pipeline engine and built-in hooks.
  *
  * @template M - Shape of the messages object.
- * @template L - Locale selection strategy ("union" or specific locale keys).
  */
 export class CoreTranslator<
   M extends LocaleMessages | unknown = unknown,
-  L extends keyof M | "union" = "union",
 > extends BaseTranslator<M> {
   /** User-provided options including messages, locale, and config. */
   protected translateConfig: TranslateConfig<M>;
@@ -68,7 +66,7 @@ export class CoreTranslator<
   }
 
   /** Check if a key exists in the specified locale or current locale. */
-  public hasKey = <K extends LocalizedLeafKeys<M, L>>(
+  public hasKey = <K extends LocalizedLeafKeys<M>>(
     key: K,
     targetLocale?: Locale<M>,
   ): boolean => {
@@ -81,10 +79,10 @@ export class CoreTranslator<
   };
 
   /** Get the translated message for a key, with optional replacements. */
-  public t = <K extends LocalizedLeafKeys<M, L> = LocalizedLeafKeys<M, L>>(
+  public t = <K extends LocalizedLeafKeys<M> = LocalizedLeafKeys<M>>(
     key: K,
     replacements?: Replacement,
-  ): LocalizedLeafValue<M, K, L> => {
+  ): LocalizedLeafValue<M, K> => {
     return translate({
       hooks: this.hooks,
       messages: this._messages as Readonly<LocaleMessages>,
@@ -93,6 +91,6 @@ export class CoreTranslator<
       translateConfig: this.translateConfig,
       key: key as string,
       replacements,
-    }) as LocalizedLeafValue<M, K, L>;
+    }) as LocalizedLeafValue<M, K>;
   };
 }

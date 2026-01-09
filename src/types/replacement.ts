@@ -1,18 +1,17 @@
 /**
- * Represents a recursive replacement object used for interpolating values in message templates.
+ * Represents a replacement map used for interpolating values
+ * in message templates.
  *
- * - Each key can be any value (`string`, `number`, `boolean`, `Date`, `function`, nested object, etc.).
- * - Supports nested structures for complex interpolation.
- * - Can be used directly with `intl-messageformat` or custom format handlers.
+ * Replacement values are treated as plain data and interpreted
+ * by the message formatter at runtime.
  *
  * @example
  * const replacements: Replacement = {
  *   name: "Alice",
  *   count: 5,
  *   nested: {
- *     score: 100
+ *     score: 100,
  *   },
- *   formatter: (value: unknown) => `<b>${value}</b>`
  * };
  */
 export type Replacement = Record<string, unknown>;
