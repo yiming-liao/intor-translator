@@ -4,7 +4,7 @@ import type {
   LocalizedLeafKeys,
   LocaleMessages,
   LocalizedLeafValue,
-  LocalizedReplacement,
+  ScopedReplacement,
 } from "@/types";
 import type { ScopedLeafKeys, ScopedLeafValue } from "@/types";
 
@@ -22,12 +22,7 @@ export type ScopeTranslatorMethods<
 
   t: <Key extends K>(
     key?: Key,
-    ...replacementArgs: [
-      LocalizedReplacement<
-        ReplacementSchema,
-        PK extends string ? `${PK}.${Key & string}` : Key // full dot-path key (e.g. "user.name")
-      >?,
-    ]
+    replacements?: ScopedReplacement<ReplacementSchema, PK, K>,
   ) => PK extends string
     ? ScopedLeafValue<M, PK, Key>
     : LocalizedLeafValue<M, Key>;

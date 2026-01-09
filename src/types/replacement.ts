@@ -27,17 +27,17 @@ export type Replacement = Record<string, unknown>;
  *
  * @example
  * ```ts
- * type RMap = {
+ * interface ReplacementSchema {
  *   "{locale}": {
  *     welcome: { name: MessageValue };
  *     total: { count: MessageValue };
  *   };
  * };
  *
- * type WelcomeReplacement = LocalizedReplacement<RMap, "welcome">;
+ * type WelcomeReplacement = LocalizedReplacement<ReplacementSchema, "welcome">;
  * // => { name: MessageValue }
  *
- * type UnknownReplacement = LocalizedReplacement<RMap, "unknown">;
+ * type UnknownReplacement = LocalizedReplacement<ReplacementSchema, "unknown">;
  * // => Replacement
  * ```
  */
@@ -47,9 +47,19 @@ export type LocalizedReplacement<
 > = ReplacementSchema extends {
   "{locale}": infer LM;
 }
-  ? AtPath<LM, K> extends infer R
-    ? R extends MessageObject
-      ? R
-      : Replacement
+  ? AtPath<LM, K> extends MessageObject
+    ? AtPath<LM, K>
     : Replacement
   : Replacement;
+
+/**
+ * Resolves the replacement type for a scoped translation key.
+ *
+ * Combines the scope prefix (`PK`) and local key (`K`)
+ * into a full dot-path for replacement schema lookup.
+ */
+export type ScopedReplacement<
+  ReplacementSchema,
+  PK extends string | undefined,
+  K extends string,
+> = LocalizedReplacement<ReplacementSchema, `${PK}.${K}`>;

@@ -41,6 +41,7 @@ export type {
   // replacement
   Replacement,
   LocalizedReplacement,
+  ScopedReplacement,
   // keys
   DefaultDepth,
   NodeKeys,

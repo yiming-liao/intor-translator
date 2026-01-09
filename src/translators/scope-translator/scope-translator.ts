@@ -34,7 +34,7 @@ export class ScopeTranslator<
           targetLocale,
         });
       },
-      t: (key?: string, ...args: [Replacement?]) => {
+      t: (key?: string, replacements?: Replacement) => {
         const fullKey = getFullKey(preKey as string | undefined, key);
         return translate({
           hooks: this.hooks,
@@ -43,7 +43,7 @@ export class ScopeTranslator<
           isLoading: this._isLoading,
           translateConfig: this.translateConfig,
           key: fullKey as string,
-          replacements: args[0],
+          replacements,
         });
       },
     } as PK extends string

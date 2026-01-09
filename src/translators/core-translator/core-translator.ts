@@ -1,7 +1,6 @@
 import type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
 import type { TranslateHook, TranslateConfig } from "@/pipeline";
 import type {
-  Replacement,
   Locale,
   LocaleMessages,
   LocalizedLeafKeys,
@@ -82,7 +81,7 @@ export class CoreTranslator<
   /** Get the translated message for a key, with optional replacements. */
   public t = <K extends LocalizedLeafKeys<M> = LocalizedLeafKeys<M>>(
     key: K,
-    ...replacementArgs: [LocalizedReplacement<ReplacementSchema, K>?]
+    replacements?: LocalizedReplacement<ReplacementSchema, K>,
   ): LocalizedLeafValue<M, K> => {
     return translate({
       hooks: this.hooks,
@@ -91,7 +90,7 @@ export class CoreTranslator<
       isLoading: this._isLoading,
       translateConfig: this.translateConfig,
       key: key as string,
-      replacements: replacementArgs[0] as Replacement | undefined,
+      replacements,
     }) as LocalizedLeafValue<M, K>;
   };
 }
