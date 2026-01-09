@@ -30,6 +30,10 @@ const stringRenderer: Renderer<string> = {
       }
     }
   },
+  raw(value) {
+    if (typeof value === "string") return value;
+    return "unknown";
+  },
 };
 
 //════════════════════════ Output ════════════════════════
