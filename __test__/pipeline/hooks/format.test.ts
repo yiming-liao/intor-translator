@@ -1,5 +1,4 @@
-import type { TranslateContext } from "@/pipeline/types";
-import type { HandlerContext } from "@/translators";
+import type { TranslateContext, HandlerContext } from "@/pipeline";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { format } from "@/pipeline/hooks/format";
 import * as handlerUtil from "@/pipeline/utils/make-handler-context";

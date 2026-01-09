@@ -1,5 +1,4 @@
-import type { TranslateContext } from "@/pipeline/types";
-import type { HandlerContext } from "@/translators";
+import type { TranslateContext, HandlerContext } from "@/pipeline";
 import type { MessageValue } from "@/types";
 import { rura } from "rura";
 import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
