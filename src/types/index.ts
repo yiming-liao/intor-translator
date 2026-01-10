@@ -21,6 +21,10 @@ export type {
   Replacement,
   LocalizedReplacement,
   ScopedReplacement,
+  // rich
+  Rich,
+  LocalizedRich,
+  ScopedRich,
   // utils
   GeneratePaths,
   AtPath,

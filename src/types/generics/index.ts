@@ -14,6 +14,9 @@ export type {
   ScopedReplacement,
 } from "./replacement";
 
+// rich
+export type { Rich, LocalizedRich, ScopedRich } from "./rich";
+
 // utils
 export type {
   GeneratePaths,

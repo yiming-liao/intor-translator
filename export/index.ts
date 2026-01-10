@@ -27,6 +27,8 @@ export {
   type ASTNode,
   type Renderer,
   type Attributes,
+  tokenize,
+  type Token,
 } from "@/message";
 
 // types
@@ -58,4 +60,8 @@ export type {
   Replacement,
   LocalizedReplacement,
   ScopedReplacement,
+  // rich
+  Rich,
+  LocalizedRich,
+  ScopedRich,
 } from "@/types";
