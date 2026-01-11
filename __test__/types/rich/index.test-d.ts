@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
   Attributes,
   LocalizedRich,
@@ -8,18 +9,16 @@ import { expectType } from "tsd";
 
 interface RichSchema {
   "{locale}": {
-    link: { a: { href: string } };
+    link: { a: {} };
     name: { strong: Attributes };
-    preKey: { info: { input: { placeholder: string } } };
+    preKey: { info: { input: {} } };
   };
 }
 
 //---------------------------------------------------------------
 // LocalizedRich
 //---------------------------------------------------------------
-expectType<{ a: { href: string } }>(
-  null as unknown as LocalizedRich<RichSchema, "link">,
-);
+expectType<{ a: {} }>(null as unknown as LocalizedRich<RichSchema, "link">);
 
 expectType<{ strong: Attributes }>(
   null as unknown as LocalizedRich<RichSchema, "name">,
@@ -32,7 +31,7 @@ expectType<Rich>(null as unknown as LocalizedRich<RichSchema, string>);
 //---------------------------------------------------------------
 // ScopedRich
 //---------------------------------------------------------------
-expectType<{ input: { placeholder: string } }>(
+expectType<{ input: {} }>(
   null as unknown as ScopedRich<RichSchema, "preKey", "info">,
 );
 

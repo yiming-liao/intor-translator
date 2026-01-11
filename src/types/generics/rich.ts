@@ -1,13 +1,12 @@
 import type { MessageObject } from "../messages";
 import type { AtPath, IsNever } from "./utils";
-import type { Attributes } from "@/message/types";
 
 /**
  * Generic rich tag map used when no schema is available.
  *
  * Acts as a safe fallback for dynamic or unknown rich tag shapes.
  */
-export type Rich = Record<string, Attributes>;
+export type Rich = Record<string, unknown>;
 
 /**
  * Rich tag map resolved from a localized rich schema.
@@ -17,8 +16,8 @@ export type Rich = Record<string, Attributes>;
  *
  * @example
  * ```ts
- * type RichSchema = { "{locale}": { link: { a: { href: string } } } }
- * LocalizedRich<RichSchema, "link"> // => { a: { href: string } }
+ * type RichSchema = { "{locale}": { link: { a: {} } } }
+ * LocalizedRich<RichSchema, "link"> // => { a: {} }
  * LocalizedRich<RichSchema, "missing">; // => Rich
  * ```
  */
@@ -40,8 +39,8 @@ export type LocalizedRich<RichSchema, K extends string> = RichSchema extends {
  *
  * @example
  * ```ts
- * type RichSchema = { "{locale}": { app: { link: { a: { href: string } } } } };
- * ScopedRich<RichSchema, "app", "link">; // => { a: { href: string } }
+ * type RichSchema = { "{locale}": { app: { link: { a: {} } } } };
+ * ScopedRich<RichSchema, "app", "link">; // => { a: {} }
  * ScopedRich<RichSchema, "app", "missing">; // => Rich
  * ```
  */
