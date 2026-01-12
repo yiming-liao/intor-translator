@@ -1,4 +1,3 @@
-import type { MessageValue } from "../messages";
 import type { AtPath, IfLocaleMessages } from "./utils";
 
 /**
@@ -28,7 +27,7 @@ export type Value<M, K extends string> = K extends `${infer Head}.${infer Tail}`
 export type LocalizedValue<M, K extends string> = IfLocaleMessages<
   M,
   Value<M[keyof M], K>,
-  MessageValue
+  string
 >;
 
 /**
@@ -43,4 +42,4 @@ export type ScopedValue<
   M,
   PK extends string,
   K extends string,
-> = IfLocaleMessages<M, Value<AtPath<M[keyof M], PK>, K>, MessageValue>;
+> = IfLocaleMessages<M, Value<AtPath<M[keyof M], PK>, K>, string>;
