@@ -1,16 +1,12 @@
 <h1 align="center">Intor Translator</h1>
 
-<div align="center">
-
-A modern **i18n engine** powered by a customizable, type-safe translation pipeline.  
-Easy to use, modular at its core, and fully extensible.
-
-</div>
+<p align="center">
+The <a href="https://github.com/yiming-liao/intor">Intor</a> translation core
+</p>
 
 <div align="center">
 
 [![NPM version](https://img.shields.io/npm/v/intor-translator?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/intor-translator)
-[![Bundle size](https://img.shields.io/bundlephobia/minzip/intor-translator?style=flat&colorA=000000&colorB=000000)](https://bundlephobia.com/package/intor-translator)
 [![Coverage Status](https://img.shields.io/coveralls/github/yiming-liao/intor-translator.svg?branch=main&style=flat&colorA=000000&colorB=000000)](https://coveralls.io/github/yiming-liao/intor-translator?branch=main)
 [![TypeScript](https://img.shields.io/badge/TypeScript-%E2%9C%94-blue?style=flat&colorA=000000&colorB=000000)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/npm/l/intor-translator?style=flat&colorA=000000&colorB=000000)](LICENSE)
@@ -19,9 +15,9 @@ Easy to use, modular at its core, and fully extensible.
 
 ## Features
 
-- 🔧 **Modular Pipeline** – A pluggable, hook-driven flow for any translation logic.
-- ✨ **Typed Autocomplete** – Inferred keys and locales with precise, reliable completion.
-- 🌐 **Framework-Agnostic** – A lightweight engine that runs anywhere in JavaScript.
+- **Modular Pipeline** – A pluggable, hook-driven flow for any translation logic.
+- **Typed Autocomplete** – Inferred keys and locales with precise, reliable completion.
+- **Framework-Agnostic** – A lightweight engine that runs anywhere in JavaScript.
 
 ## Installation
 
