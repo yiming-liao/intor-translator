@@ -1,7 +1,7 @@
 {
   "name": "intor-translator",
   "version": "1.4.13",
-  "description": "🤖 A modern, type-safe i18n engine.",
+  "description": "The Intor translation engine",
   "author": {
     "name": "Yiming Liao",
     "email": "yimingliao.official@gmail.com",
@@ -59,7 +59,8 @@
     "build": "tsup",
     "prepublishOnly": "yarn build",
     "examples:html": "vite --config examples/html/basic/vite.config.ts",
-    "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts"
+    "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts",
+    "bench:runtime": "tsx bench/runtime/index.ts"
   },
   "dependencies": {
     "rura": "^1.0.8"

@@ -1,7 +1,7 @@
 <h1 align="center">Intor Translator</h1>
 
 <p align="center">
-The <a href="https://github.com/yiming-liao/intor">Intor</a> translation core
+The <a href="https://github.com/yiming-liao/intor">Intor</a> translation engine
 </p>
 
 <div align="center">
@@ -90,7 +90,7 @@ Hooks run through the pipeline and can intercept any stage, use them to:
 
 ---
 
-# Rich Message Processing
+## Rich Message Processing
 
 This module provides a semantic message processing flow for **_translated rich-formatted strings_**.
 
@@ -103,3 +103,5 @@ Read the documentation: [Message Processing ↗](https://github.com/yiming-liao/
 
 **_For more advanced usage, see the full examples._**
 [View examples ↗](https://github.com/yiming-liao/intor-translator/tree/main/examples)
+
+**_See full benchmark details:_** [bench ↗](https://github.com/yiming-liao/intor-translator/tree/main/bench)
