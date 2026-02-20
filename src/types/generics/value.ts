@@ -1,4 +1,5 @@
-import type { AtPath, IfLocaleMessages } from "./utils";
+import type { AtPath, IsRuntime } from "./utils";
+import type { LocaleMessages } from "../messages";
 
 /**
  * Resolves the value type at a dot-separated path.
@@ -24,11 +25,12 @@ export type Value<M, K extends string> = K extends `${infer Head}.${infer Tail}`
  * LocalizedValue<{ en: { a: { b: { c: string }; z: string } } }, "a.b.c">; // => string
  * ```
  */
-export type LocalizedValue<M, K extends string> = IfLocaleMessages<
-  M,
-  Value<M[keyof M], K>,
-  string
->;
+export type LocalizedValue<M, K extends string> =
+  IsRuntime<M> extends true
+    ? string
+    : M extends LocaleMessages
+      ? Value<M[keyof M], K>
+      : never;
 
 /**
  * Value resolved under a scoped prefix key.
@@ -38,8 +40,9 @@ export type LocalizedValue<M, K extends string> = IfLocaleMessages<
  * ScopedValue<{ en: { a: { b: { c: string }; z: string } } }, "a", "b.c">; // => string
  * ```
  */
-export type ScopedValue<
-  M,
-  PK extends string,
-  K extends string,
-> = IfLocaleMessages<M, Value<AtPath<M[keyof M], PK>, K>, string>;
+export type ScopedValue<M, PK extends string, K extends string> =
+  IsRuntime<M> extends true
+    ? string
+    : M extends LocaleMessages
+      ? Value<AtPath<M[keyof M], PK>, K>
+      : never;

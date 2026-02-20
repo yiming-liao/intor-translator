@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { Value, LocalizedValue, ScopedValue } from "../../../dist";
+import type {
+  Value,
+  LocalizedValue,
+  ScopedValue,
+  LocaleMessages,
+} from "../../../dist";
 import { expectType } from "tsd";
 
 type Messages = {
@@ -27,13 +32,13 @@ expectType<any>(null as unknown as Value<any, "">);
 //---------------------------------------------------------------
 expectType<string>(null as unknown as LocalizedValue<Messages, "nested.key">);
 expectType<never>(null as unknown as LocalizedValue<Messages, "greeting">);
-expectType<never>(null as unknown as LocalizedValue<{}, any>);
+expectType<string>(null as unknown as LocalizedValue<LocaleMessages, any>);
 
 //---------------------------------------------------------------
 // ScopedValue
 //---------------------------------------------------------------
 expectType<string>(null as unknown as ScopedValue<Messages, "nested", "key">);
-expectType<never>(null as unknown as ScopedValue<{}, any, any>);
 expectType<never>(
   null as unknown as ScopedValue<Messages, "nested", "missing">,
 );
+expectType<string>(null as unknown as ScopedValue<LocaleMessages, any, any>);

@@ -85,3 +85,10 @@ export type IfLocaleMessages<T, Then, Else> = T extends LocaleMessages
 
 /** Narrows a type to `MessageObject`, otherwise resolves to never. */
 export type IfMessageObject<T> = T extends MessageObject ? T : never;
+
+/** Detects whether `M` is the generic runtime `LocaleMessages` type. */
+export type IsRuntime<M> = [M] extends [LocaleMessages]
+  ? [LocaleMessages] extends [M]
+    ? true
+    : false
+  : false;
