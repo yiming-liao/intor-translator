@@ -24,9 +24,7 @@ export type {
 export {
   parseRichMessage,
   renderRichMessage,
-  type ASTNode,
   type Renderer,
-  type Attributes,
   tokenize,
   type Token,
 } from "@/message";
@@ -40,20 +38,12 @@ export type {
   MessageObject,
   MessageValue,
   LocaleMessages,
-  // utils
-  GeneratePaths,
-  AtPath,
-  IfLocaleMessages,
-  IfMessageObject,
   // key
-  Key,
   LocalizedKey,
   ScopedKey,
   // pre-key
-  PreKey,
   LocalizedPreKey,
   // value
-  Value,
   LocalizedValue,
   ScopedValue,
   // replacement
