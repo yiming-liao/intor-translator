@@ -13,6 +13,11 @@ The <a href="https://github.com/yiming-liao/intor">Intor</a> translation engine
 
 </div>
 
+> [!NOTE]  
+> intor-translator is the execution core of the Intor ecosystem.  
+> It provides deterministic translation resolution and rendering,  
+> without coupling to routing, configuration systems, or frameworks.
+
 ## Features
 
 - **Modular Pipeline** – A pluggable, hook-driven flow for any translation logic.

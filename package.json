@@ -26,7 +26,8 @@
     "typescript",
     "type-safe",
     "i18n engine",
-    "translator"
+    "translator",
+    "intor"
   ],
   "license": "MIT",
   "type": "module",
@@ -47,7 +48,7 @@
   ],
   "sideEffects": false,
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20"
   },
   "scripts": {
     "type": "tsc --noEmit",
