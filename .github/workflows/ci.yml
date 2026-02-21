@@ -29,14 +29,14 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
 
+      - name: Build
+        run: yarn build
+
       - name: Type Check
         run: yarn type
 
       - name: Lint
         run: yarn lint
-
-      - name: Build
-        run: yarn build
 
       - name: Test
         run: yarn test --coverage
