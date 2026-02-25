@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { extractAttributes } from "@/message/tokenize/utils/extract-attributes";
+import { extractAttributes } from "../../../../src/message/tokenize/utils/extract-attributes";
 
 describe("extractAttributes", () => {
   it("parses a single attribute", () => {

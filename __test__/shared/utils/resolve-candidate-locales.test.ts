@@ -1,5 +1,6 @@
-import type { FallbackLocalesMap } from "@/types";
-import { resolveCandidateLocales } from "@/shared/utils/resolve-candidate-locales";
+import type { FallbackLocalesMap } from "../../../src/types";
+import { describe, expect, it } from "vitest";
+import { resolveCandidateLocales } from "../../../src/shared/utils/resolve-candidate-locales";
 
 export const mockFallbackLocales: FallbackLocalesMap = {
   "en-US": ["fr-FR", "zh-TW"],

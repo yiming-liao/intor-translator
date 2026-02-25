@@ -1,4 +1,5 @@
-import { getFullKey } from "@/translators/scope-translator/utils/get-full-key";
+import { describe, it, expect } from "vitest";
+import { getFullKey } from "../../../../src/translators/scope-translator/utils/get-full-key";
 
 describe("getFullKey", () => {
   it("should return key if preKey is undefined", () => {

@@ -1,14 +1,17 @@
 import type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
-import type { TranslateHook, TranslateConfig } from "@/pipeline";
 import type {
   Locale,
   LocaleMessages,
   LocalizedKey,
   LocalizedValue,
   LocalizedReplacement,
-} from "@/types";
+} from "../../types";
 import { rura } from "rura";
-import { DEFAULT_HOOKS } from "@/pipeline";
+import {
+  DEFAULT_HOOKS,
+  type TranslateConfig,
+  type TranslateHook,
+} from "../../pipeline";
 import { BaseTranslator } from "../base-translator";
 import { hasKey } from "../methods/has-key";
 import { translate } from "../methods/translate";
@@ -20,7 +23,7 @@ import { translate } from "../methods/translate";
  * @template M - Shape of the messages object.
  */
 export class CoreTranslator<
-  M extends LocaleMessages | unknown = unknown,
+  M = unknown,
   ReplacementShape = unknown,
 > extends BaseTranslator<M> {
   /** User-provided options including messages, locale, and config. */
@@ -31,7 +34,11 @@ export class CoreTranslator<
   constructor(options: CoreTranslatorOptions<M>) {
     const { locale, messages, isLoading, plugins, ...translateConfig } =
       options;
-    super({ locale, messages, isLoading });
+    super({
+      locale,
+      ...(messages !== undefined && { messages }),
+      ...(isLoading !== undefined && { isLoading }),
+    });
     this.translateConfig = translateConfig;
     if (plugins) {
       for (const plugin of plugins) this.use(plugin);
@@ -73,8 +80,8 @@ export class CoreTranslator<
     return hasKey({
       messages: this._messages as Readonly<LocaleMessages>,
       locale: this._locale,
-      key: key as string,
-      targetLocale,
+      key,
+      ...(targetLocale !== undefined && { targetLocale }),
     });
   };
 
@@ -89,8 +96,8 @@ export class CoreTranslator<
       locale: this._locale,
       isLoading: this._isLoading,
       translateConfig: this.translateConfig,
-      key: key as string,
-      replacements,
+      key,
+      ...(replacements !== undefined && { replacements }),
     }) as LocalizedValue<M, K>;
   };
 }

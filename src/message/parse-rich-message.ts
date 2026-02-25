@@ -1,7 +1,6 @@
-import type { ASTNode } from "@/message/ast";
-import type { MessageValue } from "@/types";
-import { buildAST } from "@/message/ast";
-import { tokenize } from "@/message/tokenize";
+import type { MessageValue } from "../types";
+import { buildAST, type ASTNode } from "./ast";
+import { tokenize } from "./tokenize";
 
 /**
  * Parse a rich message value into a semantic AST.

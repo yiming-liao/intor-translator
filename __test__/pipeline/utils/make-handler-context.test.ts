@@ -1,6 +1,6 @@
-import type { TranslateContext } from "@/pipeline/types";
+import type { TranslateContext } from "../../../src/pipeline/types";
 import { describe, it, expect } from "vitest";
-import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
+import { makeHandlerContext } from "../../../src/pipeline/utils/make-handler-context";
 
 describe("makeHandlerContext", () => {
   it("should return a frozen snapshot of the handler-related context fields", () => {

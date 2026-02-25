@@ -1,7 +1,7 @@
-import type { Renderer } from "@/message/render";
-import type { MessageValue } from "@/types";
-import { parseRichMessage } from "@/message/parse-rich-message";
-import { render } from "@/message/render/render";
+import type { MessageValue } from "../types";
+import type { Renderer } from "./render/types";
+import { parseRichMessage } from "./parse-rich-message";
+import { render } from "./render/render";
 
 /**
  * Render a rich message value into a concrete output using the given renderer.

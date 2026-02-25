@@ -1,5 +1,5 @@
-import type { Attributes } from "@/message/types";
-import type { MessageValue } from "@/types";
+import type { MessageValue } from "../../types";
+import type { Attributes } from "../types";
 
 /**
  * Renderer interface for semantic message ASTs.

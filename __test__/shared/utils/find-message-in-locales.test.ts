@@ -1,4 +1,5 @@
-import { findMessageInLocales } from "@/shared/utils/find-message-in-locales";
+import { describe, expect, it } from "vitest";
+import { findMessageInLocales } from "../../../src/shared/utils/find-message-in-locales";
 
 const messages = {
   en: {

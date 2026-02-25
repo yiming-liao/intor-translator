@@ -1,7 +1,7 @@
-import type { TranslateContext } from "@/pipeline/types";
+import type { TranslateContext } from "../../../../src/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { interpolate } from "@/pipeline/hooks/interpolate/interpolate";
-import * as interpUtil from "@/pipeline/hooks/interpolate/replace-values";
+import { interpolate } from "../../../../src/pipeline/hooks/interpolate/interpolate";
+import * as interpUtil from "../../../../src/pipeline/hooks/interpolate/replace-values";
 
 describe("interpolate", () => {
   beforeEach(() => {
@@ -70,5 +70,15 @@ describe("interpolate", () => {
     interpolate.run(ctx);
     expect(replaceSpy).not.toHaveBeenCalled();
     expect(ctx.finalMessage).toBe("Hello {name}");
+  });
+
+  it("should not set finalMessage when both rawMessage and formattedMessage are undefined", () => {
+    const ctx = {
+      rawMessage: undefined,
+      formattedMessage: undefined,
+      replacements: undefined,
+    } as unknown as TranslateContext;
+    interpolate.run(ctx);
+    expect("finalMessage" in ctx).toBe(false);
   });
 });

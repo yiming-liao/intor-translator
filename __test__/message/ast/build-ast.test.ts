@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { buildAST } from "@/message/ast";
-import { tokenize } from "@/message/tokenize";
+import { buildAST } from "../../../src/message/ast";
+import { tokenize } from "../../../src/message/tokenize";
 
 describe("buildAST", () => {
   it("builds AST from plain text", () => {

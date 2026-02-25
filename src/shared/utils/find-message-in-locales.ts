@@ -1,4 +1,4 @@
-import type { LocaleMessages, MessageValue } from "@/types";
+import type { LocaleMessages, MessageValue } from "../../types";
 
 interface FindMessageInLocalesOptions {
   messages: LocaleMessages;
@@ -54,6 +54,10 @@ export const findMessageInLocales = ({
       }
     }
 
-    if (candidate !== undefined) return candidate;
+    if (candidate !== undefined) {
+      return candidate;
+    }
   }
+
+  return undefined;
 };

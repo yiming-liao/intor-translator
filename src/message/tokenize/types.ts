@@ -1,4 +1,4 @@
-import type { Attributes } from "@/message/types";
+import type { Attributes } from "../types";
 
 /** Flat semantic token produced by the message tokenizer. */
 export type Token = TextToken | TagOpenToken | TagCloseToken;

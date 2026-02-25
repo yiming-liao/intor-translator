@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { tokenize } from "@/message/tokenize/tokenize";
+import { tokenize } from "../../../src/message/tokenize/tokenize";
 
 describe("tokenize (semantic behavior)", () => {
   it("tokenizes plain text", () => {

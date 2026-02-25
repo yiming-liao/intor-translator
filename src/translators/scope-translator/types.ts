@@ -1,18 +1,17 @@
-import type { CoreTranslatorOptions } from "../core-translator";
 import type {
   Locale,
-  LocaleMessages,
   LocalizedKey,
   LocalizedValue,
   ScopedReplacement,
   ScopedKey,
   ScopedValue,
-} from "@/types";
+} from "../../types";
+import type { CoreTranslatorOptions } from "../core-translator";
 
 export type ScopeTranslatorOptions<M> = CoreTranslatorOptions<M>;
 
 export type ScopeTranslatorMethods<
-  M extends LocaleMessages | unknown = unknown,
+  M = unknown,
   ReplacementShape = unknown,
   PK extends string | undefined = undefined,
   K extends string = PK extends string ? ScopedKey<M, PK> : LocalizedKey<M>,

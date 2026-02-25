@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Renderer } from "@/message/render/types";
+import type { Renderer } from "../../src/message/render/types";
 import { describe, it, expect } from "vitest";
-import { renderRichMessage } from "@/message";
+import { renderRichMessage } from "../../src/message";
 
 describe("renderRichMessage", () => {
   const renderer: Renderer<string> = {

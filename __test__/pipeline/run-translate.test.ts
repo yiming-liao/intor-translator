@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { TranslateContext } from "@/pipeline/types";
+import type { TranslateContext } from "../../src/pipeline/types";
 import { rura } from "rura";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { runTranslate } from "@/pipeline/run-translate";
+import { runTranslate } from "../../src/pipeline/run-translate";
 
 describe("runTranslate", () => {
   beforeEach(() => {

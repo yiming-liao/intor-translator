@@ -1,5 +1,5 @@
-import type { TranslateContext } from "@/pipeline/types";
-import type { MessageValue } from "@/types";
+import type { MessageValue } from "../../../types";
+import type { TranslateContext } from "../../types";
 import { rura } from "rura";
 import { replaceValues } from "./replace-values";
 
@@ -12,7 +12,9 @@ export const interpolate = rura.createHook<TranslateContext, MessageValue>(
     // Interpolation applies only to string messages with replacement values.
     // Structural or function-based replacements are handled later.
     if (typeof message !== "string" || !replacements) {
-      ctx.finalMessage = message;
+      if (message !== undefined) {
+        ctx.finalMessage = message;
+      }
       return;
     }
 

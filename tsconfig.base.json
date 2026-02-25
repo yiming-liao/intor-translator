@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    // ------------------------------------------------------------------
+    // Runtime & Module Strategy (ESM-first, Bundler-oriented)
+    // ------------------------------------------------------------------
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    // ------------------------------------------------------------------
+    // Core Type Safety (Strict by Design)
+    // ------------------------------------------------------------------
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitOverride": true,
+    // ------------------------------------------------------------------
+    // Code Hygiene & Logical Safety
+    // ------------------------------------------------------------------
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    // ------------------------------------------------------------------
+    // Performance Trade-offs
+    // ------------------------------------------------------------------
+    "skipLibCheck": true
+  }
+}

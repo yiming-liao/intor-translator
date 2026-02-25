@@ -4,14 +4,14 @@ import type {
   LocaleMessages,
   LocalizedPreKey,
   Replacement,
-} from "@/types";
+} from "../../types";
 import { CoreTranslator } from "../core-translator";
 import { hasKey as hasKeyMethod } from "../methods/has-key";
 import { translate } from "../methods/translate";
 import { getFullKey } from "../scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
-  M extends LocaleMessages | unknown = unknown,
+  M = unknown,
   ReplacementShape = unknown,
 > extends CoreTranslator<M, ReplacementShape> {
   constructor(options: ScopeTranslatorOptions<M>) {
@@ -31,7 +31,7 @@ export class ScopeTranslator<
           messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
           key: fullKey as string,
-          targetLocale,
+          ...(targetLocale !== undefined && { targetLocale }),
         });
       },
       t: (key?: string, replacements?: Replacement) => {
@@ -43,7 +43,7 @@ export class ScopeTranslator<
           isLoading: this._isLoading,
           translateConfig: this.translateConfig,
           key: fullKey as string,
-          replacements,
+          ...(replacements !== undefined && { replacements }),
         });
       },
     } as PK extends string

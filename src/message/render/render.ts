@@ -1,5 +1,5 @@
+import type { ASTNode } from "../ast";
 import type { Renderer } from "./types";
-import type { ASTNode } from "@/message/ast";
 
 /**
  * Render a semantic AST using the given renderer.

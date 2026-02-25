@@ -1,5 +1,5 @@
-import type { ASTNode, TagNode } from "@/message/ast/types";
-import { type Token } from "@/message/tokenize";
+import type { Token } from "../tokenize";
+import type { ASTNode, TagNode } from "./types";
 
 /**
  * Build a semantic AST from a flat token stream.

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { BaseTranslator } from "@/translators/base-translator/base-translator";
+import { BaseTranslator } from "../../../src/translators/base-translator/base-translator";
 
 describe("BaseTranslator", () => {
   const messages = {

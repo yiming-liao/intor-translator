@@ -1,5 +1,5 @@
 import type { Token } from "./types";
-import { extractAttributes } from "@/message/tokenize/utils/extract-attributes";
+import { extractAttributes } from "./utils/extract-attributes";
 
 // Matches opening semantic tags with optional attributes: <tag ...>
 const OPEN_TAG_REGEX = /^<([a-zA-Z0-9_]+)([^>]*)>/;
@@ -47,7 +47,8 @@ export const tokenize = (message: string): Token[] => {
       // Attempt to match an opening tag with optional attributes: <tag ...>
       const openMatch = message.slice(pos).match(OPEN_TAG_REGEX);
       if (openMatch) {
-        const [, name, rawAttributes] = openMatch;
+        const name = openMatch[1]!;
+        const rawAttributes = openMatch[2]!;
         const attributes = extractAttributes(rawAttributes); // {} = no attributes, null = invalid syntax
 
         if (attributes) {
@@ -67,10 +68,11 @@ export const tokenize = (message: string): Token[] => {
       // Attempt to match a closing tag: </tag>
       const closeMatch = message.slice(pos).match(CLOSE_TAG_REGEX);
       if (closeMatch) {
+        const name = closeMatch[1]!;
         flushText();
         tokens.push({
           type: "tag-close",
-          name: closeMatch[1],
+          name,
           position: pos,
         });
         pos += closeMatch[0].length;

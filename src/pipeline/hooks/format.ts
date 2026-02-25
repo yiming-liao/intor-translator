@@ -1,7 +1,8 @@
-import type { TranslateContext, HandlerContext } from "@/pipeline";
-import type { MessageValue } from "@/types";
+import type { MessageValue } from "../../types";
+import type { HandlerContext } from "../translate-config";
+import type { TranslateContext } from "../types";
 import { rura } from "rura";
-import { makeHandlerContext } from "@/pipeline/utils/make-handler-context";
+import { makeHandlerContext } from "../utils/make-handler-context";
 
 export const format = rura.createHook<TranslateContext, MessageValue>(
   "format",

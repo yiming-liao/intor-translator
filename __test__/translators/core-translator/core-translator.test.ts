@@ -1,14 +1,14 @@
-import type { TranslateHook } from "@/pipeline/types";
-import type { CoreTranslatorOptions } from "@/translators/core-translator";
-import type { TranslatorPlugin } from "@/translators/core-translator/types";
+import type { TranslateHook } from "../../../src/pipeline/types";
+import type { CoreTranslatorOptions } from "../../../src/translators/core-translator";
+import type { TranslatorPlugin } from "../../../src/translators/core-translator/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { CoreTranslator } from "@/translators/core-translator/core-translator";
-import * as hasKeyModule from "@/translators/methods/has-key";
-import * as translateModule from "@/translators/methods/translate";
+import { CoreTranslator } from "../../../src/translators/core-translator/core-translator";
+import * as hasKeyModule from "../../../src/translators/methods/has-key";
+import * as translateModule from "../../../src/translators/methods/translate";
 
 // Mock methods used by CoreTranslator
-vi.mock("@/translators/methods/has-key");
-vi.mock("@/translators/methods/translate");
+vi.mock("../../../src/translators/methods/has-key");
+vi.mock("../../../src/translators/methods/translate");
 
 describe("CoreTranslator", () => {
   const messages = { en: { hello: "Hello" }, zh: { hello: "你好" } };
@@ -202,5 +202,14 @@ describe("CoreTranslator", () => {
     };
     translator.use(hook);
     expect(() => translator.debugHooks()).not.toThrow();
+  });
+
+  it("should pass isLoading when provided in constructor", () => {
+    const translatorWithLoading = new CoreTranslator({
+      messages,
+      locale,
+      isLoading: true,
+    });
+    expect(translatorWithLoading["_isLoading"]).toBe(true);
   });
 });

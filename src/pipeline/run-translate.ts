@@ -5,7 +5,7 @@ import type {
   LocaleMessages,
   MessageValue,
   Replacement,
-} from "@/types";
+} from "../types";
 import { rura } from "rura";
 
 export type TranslateParams = {

@@ -1,5 +1,5 @@
-import type { Attributes } from "@/message/types";
-import type { MessageValue } from "@/types";
+import type { MessageValue } from "../../types";
+import type { Attributes } from "../types";
 
 /** Semantic node produced by the AST builder. */
 export type ASTNode = TextNode | TagNode | RawNode;

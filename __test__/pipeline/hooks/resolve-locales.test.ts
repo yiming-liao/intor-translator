@@ -1,8 +1,7 @@
-// __tests__/pipeline/hooks/resolve-locales.hook.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { resolveLocales } from "@/pipeline/hooks/resolve-locales";
-import { type TranslateContext } from "@/pipeline/types";
-import * as localeUtil from "@/shared/utils/resolve-candidate-locales";
+import { resolveLocales } from "../../../src/pipeline/hooks/resolve-locales";
+import { type TranslateContext } from "../../../src/pipeline/types";
+import * as localeUtil from "../../../src/shared/utils/resolve-candidate-locales";
 
 describe("resolveLocalesHook", () => {
   beforeEach(() => {

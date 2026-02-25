@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "incremental": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "__test__"]
 }

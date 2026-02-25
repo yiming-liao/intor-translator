@@ -1,7 +1,7 @@
-import type { ASTNode } from "@/message/ast/types";
-import type { Renderer } from "@/message/render/types";
+import type { ASTNode } from "../../../src/message/ast/types";
+import type { Renderer } from "../../../src/message/render/types";
 import { describe, it, expect } from "vitest";
-import { render } from "@/message/render/render";
+import { render } from "../../../src/message/render/render";
 
 describe("render", () => {
   it("renders plain text nodes", () => {

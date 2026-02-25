@@ -1,4 +1,4 @@
-import type { FallbackLocalesMap } from "@/types";
+import type { FallbackLocalesMap } from "../../types";
 
 /**
  * Resolve a prioritized list of locales to attempt based on a primary locale.

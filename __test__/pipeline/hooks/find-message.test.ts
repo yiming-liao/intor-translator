@@ -1,7 +1,7 @@
-import type { TranslateContext } from "@/pipeline/types";
+import type { TranslateContext } from "../../../src/pipeline/types";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { findMessage } from "@/pipeline/hooks/find-message";
-import * as findUtil from "@/shared/utils/find-message-in-locales";
+import { findMessage } from "../../../src/pipeline/hooks/find-message";
+import * as findUtil from "../../../src/shared/utils/find-message-in-locales";
 
 describe("findMessage", () => {
   beforeEach(() => {
@@ -46,7 +46,7 @@ describe("findMessage", () => {
     expect(ctx.rawMessage).toEqual(mockResult);
   });
 
-  it("sets rawMessage to undefined when util returns undefined", () => {
+  it("does not override rawMessage when util returns undefined", () => {
     vi.spyOn(findUtil, "findMessageInLocales").mockReturnValue(undefined);
     const ctx = {
       messages: {},
@@ -55,6 +55,6 @@ describe("findMessage", () => {
       rawMessage: "previousValue",
     } as unknown as TranslateContext;
     findMessage.run(ctx);
-    expect(ctx.rawMessage).toBeUndefined();
+    expect(ctx.rawMessage).toBe("previousValue");
   });
 });

@@ -13,14 +13,17 @@ export function makeHandlerContext(ctx: TranslateContext): HandlerContext {
 
     messages: ctx.messages,
     locale: ctx.locale,
-    isLoading: ctx.isLoading,
+    ...(ctx.isLoading !== undefined && { isLoading: ctx.isLoading }),
 
     key: ctx.key,
-    replacements: ctx.replacements,
+    ...(ctx.replacements !== undefined && { replacements: ctx.replacements }),
 
     candidateLocales: ctx.candidateLocales,
-    rawMessage: ctx.rawMessage,
-    formattedMessage: ctx.formattedMessage,
+    ...(ctx.rawMessage !== undefined && { rawMessage: ctx.rawMessage }),
+
+    ...(ctx.formattedMessage !== undefined && {
+      formattedMessage: ctx.formattedMessage,
+    }),
 
     meta: ctx.meta,
   });

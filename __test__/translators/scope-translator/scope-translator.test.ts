@@ -1,13 +1,13 @@
-import type { CoreTranslatorOptions } from "@/translators/core-translator";
+import type { CoreTranslatorOptions } from "../../../src/translators/core-translator";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import * as hasKeyModule from "@/translators/methods/has-key";
-import * as translateModule from "@/translators/methods/translate";
-import { ScopeTranslator } from "@/translators/scope-translator/scope-translator";
-import * as getFullKeyModule from "@/translators/scope-translator/utils/get-full-key";
+import * as hasKeyModule from "../../../src/translators/methods/has-key";
+import * as translateModule from "../../../src/translators/methods/translate";
+import { ScopeTranslator } from "../../../src/translators/scope-translator/scope-translator";
+import * as getFullKeyModule from "../../../src/translators/scope-translator/utils/get-full-key";
 
-vi.mock("@/translators/methods/has-key");
-vi.mock("@/translators/methods/translate");
-vi.mock("@/translators/scope-translator/utils/get-full-key");
+vi.mock("../../../src/translators/methods/has-key");
+vi.mock("../../../src/translators/methods/translate");
+vi.mock("../../../src/translators/scope-translator/utils/get-full-key");
 
 describe("ScopeTranslator", () => {
   const messages = { en: { hello: "Hello", nested: { greet: "Hi" } } };

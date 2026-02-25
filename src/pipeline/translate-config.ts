@@ -1,5 +1,5 @@
-import type { TranslateContext } from "@/pipeline/types";
-import type { FallbackLocalesMap, Locale, MessageValue } from "@/types";
+import type { FallbackLocalesMap, Locale, MessageValue } from "../types";
+import type { TranslateContext } from "./types";
 
 /**
  * Configuration options for translation behavior.

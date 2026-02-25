@@ -1,5 +1,5 @@
-import type { TranslateConfig } from "@/pipeline/translate-config";
-import type { LocaleMessages, Replacement, MessageValue } from "@/types";
+import type { LocaleMessages, Replacement, MessageValue } from "../types";
+import type { TranslateConfig } from "./translate-config";
 import type { RuraHook } from "rura";
 
 /**

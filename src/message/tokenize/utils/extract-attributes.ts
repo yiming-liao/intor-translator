@@ -1,4 +1,4 @@
-import type { Attributes } from "@/message/types";
+import type { Attributes } from "../../types";
 
 /**
  * Matches strictly formatted attribute pairs:
@@ -33,7 +33,8 @@ export const extractAttributes = (input: string): Attributes | null => {
   let consumed = "";
 
   while ((match = ATTR_REGEX.exec(input))) {
-    const [, key, value] = match;
+    const key = match[1]!;
+    const value = match[2]!;
     attributes[key] = value;
     consumed += match[0];
   }

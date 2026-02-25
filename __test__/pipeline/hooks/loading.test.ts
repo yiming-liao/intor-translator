@@ -1,7 +1,7 @@
-import type { TranslateContext, HandlerContext } from "@/pipeline";
+import type { TranslateContext, HandlerContext } from "../../../src/pipeline";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { loading } from "@/pipeline/hooks/loading";
-import * as handlerUtil from "@/pipeline/utils/make-handler-context";
+import { loading } from "../../../src/pipeline/hooks/loading";
+import * as handlerUtil from "../../../src/pipeline/utils/make-handler-context";
 
 describe("loading", () => {
   beforeEach(() => {
