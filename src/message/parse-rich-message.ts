@@ -34,7 +34,7 @@ export function parseRichMessage(message: MessageValue): ASTNode[] {
 
   // Arrays are recursively flattened
   if (Array.isArray(message)) {
-    return message.flatMap((m) => parseRichMessage(m));
+    return message.flatMap((m: MessageValue) => parseRichMessage(m));
   }
 
   // Non-tokenizable objects are preserved as raw nodes

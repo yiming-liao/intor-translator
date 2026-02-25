@@ -14,7 +14,6 @@ describe("makeHandlerContext", () => {
       isLoading: false,
       rawMessage: "Hi",
       formattedMessage: "Hi (formatted)",
-      finalMessage: undefined,
       meta: { custom: true },
     };
 

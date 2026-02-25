@@ -2,7 +2,7 @@ import type {
   LocalizedReplacement,
   Replacement,
   ScopedReplacement,
-} from "../../../dist";
+} from "../../../dist/types/export";
 import { expectType } from "tsd";
 
 interface ReplacementShape {

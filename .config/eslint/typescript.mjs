@@ -1,8 +1,33 @@
 import tseslint from "typescript-eslint";
 
 export const typescriptConfig = [
-  ...tseslint.configs.recommended,
+  // src
+  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ["src/**/*.ts"],
+    languageOptions: {
+      ...(config.languageOptions ?? {}),
+      parserOptions: {
+        project: "./tsconfig.json",
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+  })),
 
+  // test
+  ...tseslint.configs.recommended.map((config) => ({
+    ...config,
+    files: ["__test__/**/*.ts"],
+    languageOptions: {
+      ...(config.languageOptions ?? {}),
+      parserOptions: {
+        project: "./tsconfig.test.json",
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+  })),
+
+  // shared
   {
     rules: {
       "@typescript-eslint/consistent-type-imports": [
@@ -10,19 +35,5 @@ export const typescriptConfig = [
         { prefer: "type-imports", fixStyle: "separate-type-imports" },
       ],
     },
-  },
-
-  {
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: import.meta.dirname,
-        project: "../../tsconfig.json",
-      },
-    },
-  },
-
-  {
-    files: [".config/**", "eslint.config.mjs", "postcss.config.mjs"],
-    extends: [tseslint.configs.disableTypeChecked],
   },
 ];

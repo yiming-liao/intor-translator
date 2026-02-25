@@ -26,23 +26,23 @@ export class ScopeTranslator<
     : ScopeTranslatorMethods<M, ReplacementShape> {
     return {
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
-        const fullKey = getFullKey(preKey as string | undefined, key);
+        const fullKey = getFullKey(preKey, key);
         return hasKeyMethod({
           messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
-          key: fullKey as string,
+          key: fullKey,
           ...(targetLocale !== undefined && { targetLocale }),
         });
       },
       t: (key?: string, replacements?: Replacement) => {
-        const fullKey = getFullKey(preKey as string | undefined, key);
+        const fullKey = getFullKey(preKey, key);
         return translate({
           hooks: this.hooks,
           messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
           isLoading: this._isLoading,
           translateConfig: this.translateConfig,
-          key: fullKey as string,
+          key: fullKey,
           ...(replacements !== undefined && { replacements }),
         });
       },

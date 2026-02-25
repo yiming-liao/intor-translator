@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { LocalizedRich, Rich, ScopedRich } from "../../../dist";
+import type {
+  LocalizedRich,
+  Rich,
+  ScopedRich,
+} from "../../../dist/types/export";
 import { expectType } from "tsd";
 
 interface RichShape {

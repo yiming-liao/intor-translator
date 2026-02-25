@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { TranslateParams } from "../../src/pipeline/run-translate";
 import type { TranslateContext } from "../../src/pipeline/types";
+import type { RuraResult } from "rura";
 import { rura } from "rura";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { runTranslate } from "../../src/pipeline/run-translate";
@@ -32,14 +34,16 @@ describe("runTranslate", () => {
       output: undefined,
     };
 
-    const runSpy = vi.spyOn(rura, "run").mockReturnValue(mockResult as any);
+    const runSpy = vi
+      .spyOn(rura, "run")
+      .mockReturnValue(mockResult as unknown as RuraResult<unknown, unknown>);
 
-    const result = runTranslate(options as any);
+    const result = runTranslate(options as unknown as TranslateParams);
 
     // rura.run is called correctly
     expect(runSpy).toHaveBeenCalledTimes(1);
 
-    const [ctxArg, hooksArg] = runSpy.mock.calls[0];
+    const [ctxArg, hooksArg] = runSpy.mock.calls[0]!;
 
     // hooks passed through
     expect(hooksArg).toBe(hooks);
@@ -74,7 +78,7 @@ describe("runTranslate", () => {
       key: "any",
     } as any);
 
-    const [ctxArg] = runSpy.mock.calls[0];
+    const [ctxArg] = runSpy.mock.calls[0]!;
 
     expect((ctxArg as any).meta).toEqual({});
     expect((ctxArg as any).candidateLocales).toEqual([]);

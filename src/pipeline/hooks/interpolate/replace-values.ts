@@ -23,23 +23,26 @@ export const replaceValues = (
   }
 
   // Deep replace
-  const replaced = message.replaceAll(/{([^}]+)}/g, (match, key) => {
-    const keys = key.split(".");
-    let value: unknown = params;
+  const replaced = message.replaceAll(
+    /{([^}]+)}/g,
+    (match: string, key: string): string => {
+      const keys = key.split(".");
+      let value: unknown = params;
 
-    for (const k of keys) {
-      // If value is undefined or null, return the original match
-      if (value == null || typeof value !== "object" || !(k in value)) {
-        return match;
+      for (const k of keys) {
+        // If value is undefined or null, return the original match
+        if (value == null || typeof value !== "object" || !(k in value)) {
+          return match;
+        }
+        // Move to the next nested level
+        value = (value as Record<string, unknown>)[k];
       }
-      // Move to the next nested level
-      value = (value as Record<string, unknown>)[k];
-    }
 
-    return typeof value === "string" || typeof value === "number"
-      ? String(value)
-      : match;
-  });
+      return typeof value === "string" || typeof value === "number"
+        ? String(value)
+        : match;
+    },
+  );
 
   return replaced;
 };

@@ -6,16 +6,21 @@ import { unicornConfig } from "./.config/eslint/unicorn.mjs";
 import { unusedImportsConfig } from "./.config/eslint/unused-imports.mjs";
 import prettierPlugin from "eslint-plugin-prettier";
 
-const eslintConfig = defineConfig([
+export default defineConfig([
   globalIgnores([
     ".yarn/**",
     ".config/**",
     "eslint.config.mjs",
     "dist",
     "coverage",
+    "examples",
+    "export",
+    "bench",
+    "scripts",
+    "tsup.config.ts",
+    "vitest.config.ts",
   ]),
 
-  // JS
   js.configs.recommended,
   ...typescriptConfig,
   ...unicornConfig,
@@ -25,17 +30,17 @@ const eslintConfig = defineConfig([
   {
     settings: {
       "import/resolver": {
-        typescript: { project: "./tsconfig.json" },
+        typescript: {
+          project: ["./tsconfig.json", "./tsconfig.test.json"],
+          noWarnOnMultipleProjects: true,
+        },
       },
     },
   },
 
   // Prettier
   {
-    files: ["src/**/*.{ts}"],
     plugins: { prettier: prettierPlugin },
     rules: { "prettier/prettier": "warn" },
   },
 ]);
-
-export default eslintConfig;
