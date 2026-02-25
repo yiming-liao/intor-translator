@@ -9,4 +9,4 @@ export type {
 
   // value
   Value,
-} from "@/types";
+} from "../../src/types";

@@ -33,7 +33,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/export/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
@@ -51,13 +51,13 @@
     "node": ">=20"
   },
   "scripts": {
-    "type": "tsc --noEmit",
+    "type": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
     "lint": "eslint",
     "lint:debug": "eslint --debug",
     "test": "vitest",
     "test:types": "tsx scripts/test-types.ts",
     "knip": "knip --config .config/knip.config.ts",
-    "build": "tsup",
+    "build": "tsx scripts/build.ts",
     "prepublishOnly": "yarn build",
     "examples:html": "vite --config examples/html/basic/vite.config.ts",
     "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts",

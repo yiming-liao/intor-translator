@@ -5,7 +5,7 @@ export {
   type ScopeTranslatorMethods as TranslatorMethods,
   // plugin
   type TranslatorPlugin,
-} from "@/translators";
+} from "../src/translators";
 
 // pipeline
 export type {
@@ -18,7 +18,7 @@ export type {
   LoadingHandler,
   MissingHandler,
   HandlerContext,
-} from "@/pipeline";
+} from "../src/pipeline";
 
 // message
 export {
@@ -27,7 +27,7 @@ export {
   type Renderer,
   tokenize,
   type Token,
-} from "@/message";
+} from "../src/message";
 
 // types
 export type {
@@ -54,4 +54,4 @@ export type {
   Rich,
   LocalizedRich,
   ScopedRich,
-} from "@/types";
+} from "../src/types";
