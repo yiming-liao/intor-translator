@@ -2,26 +2,26 @@ import type { MessageObject } from "../messages";
 import type { AtPath, IsNever } from "./utils";
 
 /**
- * Generic rich tag map used when no schema is available.
+ * Generic rich tag map used when no shape is available.
  *
  * Acts as a safe fallback for dynamic or unknown rich tag shapes.
  */
 export type Rich = Record<string, unknown>;
 
 /**
- * Rich tag map resolved from a localized rich schema.
+ * Rich tag map resolved from a localized rich shape.
  *
- * - If the key exists in the schema, resolves to the declared tag map
+ * - If the key exists in the shape, resolves to the declared tag map
  * - Otherwise falls back to generic `Rich`
  *
  * @example
  * ```ts
- * type RichSchema = { "{locale}": { link: { a: {} } } }
- * LocalizedRich<RichSchema, "link"> // => { a: {} }
- * LocalizedRich<RichSchema, "missing">; // => Rich
+ * type RichShape = { "{locale}": { link: { a: {} } } }
+ * LocalizedRich<RichShape, "link"> // => { a: {} }
+ * LocalizedRich<RichShape, "missing">; // => Rich
  * ```
  */
-export type LocalizedRich<RichSchema, K extends string> = RichSchema extends {
+export type LocalizedRich<RichShape, K extends string> = RichShape extends {
   "{locale}": infer LM;
 }
   ? IsNever<AtPath<LM, K>> extends true
@@ -39,13 +39,13 @@ export type LocalizedRich<RichSchema, K extends string> = RichSchema extends {
  *
  * @example
  * ```ts
- * type RichSchema = { "{locale}": { app: { link: { a: {} } } } };
- * ScopedRich<RichSchema, "app", "link">; // => { a: {} }
- * ScopedRich<RichSchema, "app", "missing">; // => Rich
+ * type RichShape = { "{locale}": { app: { link: { a: {} } } } };
+ * ScopedRich<RichShape, "app", "link">; // => { a: {} }
+ * ScopedRich<RichShape, "app", "missing">; // => Rich
  * ```
  */
 export type ScopedRich<
-  RichSchema,
+  RichShape,
   PK extends string | undefined,
   K extends string,
-> = LocalizedRich<RichSchema, `${PK}.${K}`>;
+> = LocalizedRich<RichShape, `${PK}.${K}`>;

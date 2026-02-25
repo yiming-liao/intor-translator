@@ -12,8 +12,8 @@ import { getFullKey } from "../scope-translator/utils/get-full-key";
 
 export class ScopeTranslator<
   M extends LocaleMessages | unknown = unknown,
-  ReplacementSchema = unknown,
-> extends CoreTranslator<M, ReplacementSchema> {
+  ReplacementShape = unknown,
+> extends CoreTranslator<M, ReplacementShape> {
   constructor(options: ScopeTranslatorOptions<M>) {
     super(options);
   }
@@ -22,8 +22,8 @@ export class ScopeTranslator<
   public scoped<PK extends LocalizedPreKey<M> | undefined = undefined>(
     preKey?: PK,
   ): PK extends string
-    ? ScopeTranslatorMethods<M, ReplacementSchema, PK>
-    : ScopeTranslatorMethods<M, ReplacementSchema> {
+    ? ScopeTranslatorMethods<M, ReplacementShape, PK>
+    : ScopeTranslatorMethods<M, ReplacementShape> {
     return {
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
         const fullKey = getFullKey(preKey as string | undefined, key);
@@ -47,7 +47,7 @@ export class ScopeTranslator<
         });
       },
     } as PK extends string
-      ? ScopeTranslatorMethods<M, ReplacementSchema, PK>
-      : ScopeTranslatorMethods<M, ReplacementSchema>;
+      ? ScopeTranslatorMethods<M, ReplacementShape, PK>
+      : ScopeTranslatorMethods<M, ReplacementShape>;
   }
 }

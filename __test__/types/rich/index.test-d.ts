@@ -1,16 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type {
-  Attributes,
-  LocalizedRich,
-  Rich,
-  ScopedRich,
-} from "../../../dist";
+import type { LocalizedRich, Rich, ScopedRich } from "../../../dist";
 import { expectType } from "tsd";
 
-interface RichSchema {
+interface RichShape {
   "{locale}": {
     link: { a: {} };
-    name: { strong: Attributes };
+    name: { strong: Record<string, never> };
     preKey: { info: { input: {} } };
   };
 }
@@ -18,23 +13,21 @@ interface RichSchema {
 //---------------------------------------------------------------
 // LocalizedRich
 //---------------------------------------------------------------
-expectType<{ a: {} }>(null as unknown as LocalizedRich<RichSchema, "link">);
+expectType<{ a: {} }>(null as unknown as LocalizedRich<RichShape, "link">);
 
-expectType<{ strong: Attributes }>(
-  null as unknown as LocalizedRich<RichSchema, "name">,
+expectType<{ strong: Record<string, never> }>(
+  null as unknown as LocalizedRich<RichShape, "name">,
 );
 
-expectType<Rich>(null as unknown as LocalizedRich<RichSchema, "missing">);
+expectType<Rich>(null as unknown as LocalizedRich<RichShape, "missing">);
 
-expectType<Rich>(null as unknown as LocalizedRich<RichSchema, string>);
+expectType<Rich>(null as unknown as LocalizedRich<RichShape, string>);
 
 //---------------------------------------------------------------
 // ScopedRich
 //---------------------------------------------------------------
 expectType<{ input: {} }>(
-  null as unknown as ScopedRich<RichSchema, "preKey", "info">,
+  null as unknown as ScopedRich<RichShape, "preKey", "info">,
 );
 
-expectType<Rich>(
-  null as unknown as ScopedRich<RichSchema, "preKey", "missing">,
-);
+expectType<Rich>(null as unknown as ScopedRich<RichShape, "preKey", "missing">);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { Key, LocalizedKey, ScopedKey } from "../../../dist";
+import type { LocalizedKey, ScopedKey } from "../../../dist";
+import type { Key } from "../../../dist/internal";
 import { expectType } from "tsd";
 
 type Messages = {

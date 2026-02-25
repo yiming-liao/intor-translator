@@ -68,14 +68,14 @@ export type GeneratePaths<
  * ```
  */
 export type AtPath<
-  MessageSchema,
+  T,
   PK extends string,
 > = PK extends `${infer Head}.${infer Tail}`
-  ? Head extends keyof MessageSchema
-    ? AtPath<MessageSchema[Head], Tail>
+  ? Head extends keyof T
+    ? AtPath<T[Head], Tail>
     : never
-  : PK extends keyof MessageSchema
-    ? MessageSchema[PK]
+  : PK extends keyof T
+    ? T[PK]
     : never;
 
 /** Conditional helper for branching on `LocaleMessages`. */

@@ -5,7 +5,7 @@ import type {
 } from "../../../dist";
 import { expectType } from "tsd";
 
-interface ReplacementSchema {
+interface ReplacementShape {
   "{locale}": {
     hello: { name: string };
     nested: { key: { count: number } };
@@ -16,15 +16,15 @@ interface ReplacementSchema {
 // LocalizedReplacement
 //---------------------------------------------------------------
 expectType<{ name: string }>(
-  null as unknown as LocalizedReplacement<ReplacementSchema, "hello">,
+  null as unknown as LocalizedReplacement<ReplacementShape, "hello">,
 );
 
 expectType<{ key: { count: number } }>(
-  null as unknown as LocalizedReplacement<ReplacementSchema, "nested">,
+  null as unknown as LocalizedReplacement<ReplacementShape, "nested">,
 );
 
 expectType<Replacement>(
-  null as unknown as LocalizedReplacement<ReplacementSchema, "missing">,
+  null as unknown as LocalizedReplacement<ReplacementShape, "missing">,
 );
 
 expectType<Replacement>(
@@ -35,16 +35,16 @@ expectType<Replacement>(
 );
 
 expectType<Replacement>(
-  null as unknown as LocalizedReplacement<ReplacementSchema, string>,
+  null as unknown as LocalizedReplacement<ReplacementShape, string>,
 );
 
 //---------------------------------------------------------------
 // ScopedReplacement
 //---------------------------------------------------------------
 expectType<{ count: number }>(
-  null as unknown as ScopedReplacement<ReplacementSchema, "nested", "key">,
+  null as unknown as ScopedReplacement<ReplacementShape, "nested", "key">,
 );
 
 expectType<Replacement>(
-  null as unknown as ScopedReplacement<ReplacementSchema, "nested", "missing">,
+  null as unknown as ScopedReplacement<ReplacementShape, "nested", "missing">,
 );

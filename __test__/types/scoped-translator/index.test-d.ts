@@ -73,7 +73,7 @@ const withMessages = { locale, messages } as const;
 // Replacements
 //---------------------------------------------------------------
 
-// No ReplacementSchema provided (fallback to Replacement)
+// No ReplacementShape provided (fallback to Replacement)
 {
   const translator = new ScopeTranslator<typeof messages>(withMessages);
   expectType<Replacement | undefined>(
@@ -81,10 +81,10 @@ const withMessages = { locale, messages } as const;
   );
 }
 
-// ReplacementSchema provided (inference mode)
+// ReplacementShape provided (inference mode)
 {
-  type ReplacementSchema = { "{locale}": { greeting: { name: string } } };
-  const translator = new ScopeTranslator<typeof messages, ReplacementSchema>(
+  type ReplacementShape = { "{locale}": { greeting: { name: string } } };
+  const translator = new ScopeTranslator<typeof messages, ReplacementShape>(
     withMessages,
   );
   expectType<{ name: string } | undefined>(

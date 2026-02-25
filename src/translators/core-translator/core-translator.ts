@@ -21,7 +21,7 @@ import { translate } from "../methods/translate";
  */
 export class CoreTranslator<
   M extends LocaleMessages | unknown = unknown,
-  ReplacementSchema = unknown,
+  ReplacementShape = unknown,
 > extends BaseTranslator<M> {
   /** User-provided options including messages, locale, and config. */
   protected translateConfig: TranslateConfig<M>;
@@ -81,7 +81,7 @@ export class CoreTranslator<
   /** Get the translated message for a key, with optional replacements. */
   public t = <K extends LocalizedKey<M> = LocalizedKey<M>>(
     key: K,
-    replacements?: LocalizedReplacement<ReplacementSchema, K>,
+    replacements?: LocalizedReplacement<ReplacementShape, K>,
   ): LocalizedValue<M, K> => {
     return translate({
       hooks: this.hooks,

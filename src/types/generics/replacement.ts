@@ -2,29 +2,29 @@ import type { MessageObject } from "../messages";
 import type { AtPath, IsNever } from "./utils";
 
 /**
- * Generic replacement object used when no schema is available.
+ * Generic replacement object used when no shape is available.
  *
  * Acts as a safe fallback for dynamic or unknown replacement shapes.
  */
 export type Replacement = Record<string, unknown>;
 
 /**
- * Replacement object resolved from a localized replacement schema.
+ * Replacement object resolved from a localized replacement shape.
  *
- * - If the key exists in the schema, resolves to the declared object shape
+ * - If the key exists in the shape, resolves to the declared object shape
  * - Otherwise falls back to generic `Replacement`
  *
  * @example
  * ```ts
- * type ReplacementSchema = { "{locale}": { greeting: { name: string } } };
- * LocalizedReplacement<ReplacementSchema, "greeting">; // => { name: string }
- * LocalizedReplacement<ReplacementSchema, "missing">;  // => Replacement
+ * type ReplacementShape = { "{locale}": { greeting: { name: string } } };
+ * LocalizedReplacement<ReplacementShape, "greeting">; // => { name: string }
+ * LocalizedReplacement<ReplacementShape, "missing">;  // => Replacement
  * ```
  */
 export type LocalizedReplacement<
-  ReplacementSchema,
+  ReplacementShape,
   K extends string,
-> = ReplacementSchema extends { "{locale}": infer LM }
+> = ReplacementShape extends { "{locale}": infer LM }
   ? IsNever<AtPath<LM, K>> extends true
     ? Replacement
     : AtPath<LM, K> extends MessageObject
@@ -40,13 +40,13 @@ export type LocalizedReplacement<
  *
  * @example
  * ```ts
- * type ReplacementSchema = { "{locale}": { user: { info: { name: string } } } };
- * ScopedReplacement<ReplacementSchema, "user", "info">; // => { name: string }
- * ScopedReplacement<ReplacementSchema, "user", "missing">; // => Replacement
+ * type ReplacementShape = { "{locale}": { user: { info: { name: string } } } };
+ * ScopedReplacement<ReplacementShape, "user", "info">; // => { name: string }
+ * ScopedReplacement<ReplacementShape, "user", "missing">; // => Replacement
  * ```
  */
 export type ScopedReplacement<
-  ReplacementSchema,
+  ReplacementShape,
   PK extends string | undefined,
   K extends string,
-> = LocalizedReplacement<ReplacementSchema, `${PK}.${K}`>;
+> = LocalizedReplacement<ReplacementShape, `${PK}.${K}`>;

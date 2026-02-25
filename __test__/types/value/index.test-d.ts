@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
-  Value,
   LocalizedValue,
   ScopedValue,
   LocaleMessages,
 } from "../../../dist";
+import type { Value } from "../../../dist/internal";
 import { expectType } from "tsd";
 
 type Messages = {

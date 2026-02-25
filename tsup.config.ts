@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig([
   {
-    entry: ["export/index.ts"],
+    entry: ["export/index.ts", "export/internal/index.ts"],
     format: ["cjs", "esm"],
     dts: true,
     outDir: "dist",
