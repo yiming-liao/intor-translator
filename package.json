@@ -51,7 +51,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "type": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "type": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint",
     "lint:debug": "eslint --debug",
     "test": "vitest",

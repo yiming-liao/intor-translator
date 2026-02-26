@@ -19,7 +19,7 @@ const stringRenderer: Renderer<string> = {
   text(value: string) {
     return value;
   },
-  tag(name: string, attributes: Record<string, string>, children: string[]) {
+  tag(name: string, _: Record<string, string>, children: string[]) {
     // This switch is where tag semantics are implemented.
     switch (name) {
       case "b": {

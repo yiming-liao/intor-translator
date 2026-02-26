@@ -21,7 +21,7 @@ export const typescriptConfig = [
     languageOptions: {
       ...(config.languageOptions ?? {}),
       parserOptions: {
-        project: "./tsconfig.test.json",
+        project: "./tsconfig.json",
         tsconfigRootDir: process.cwd(),
       },
     },

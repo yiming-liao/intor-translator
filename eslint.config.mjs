@@ -31,7 +31,7 @@ export default defineConfig([
     settings: {
       "import/resolver": {
         typescript: {
-          project: ["./tsconfig.json", "./tsconfig.test.json"],
+          project: ["./tsconfig.json"],
           noWarnOnMultipleProjects: true,
         },
       },
