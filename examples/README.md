@@ -22,20 +22,11 @@ tsx examples/hook.ts
 ```
 
 ```bash
-tsx examples/parse-rich-message.ts
+tsx examples/render-rich-message.ts
 ```
 
 ### HTML
 
-Browser-based examples powered by Vite, demonstrating translation
-and rich message rendering in a DOM environment.
-
 ```bash
 npm run examples:html
 ```
-
-```bash
-npm run examples:html:rich-message
-```
-
-Each example focuses on a single concept and is meant to be read and modified.

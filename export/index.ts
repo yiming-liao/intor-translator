@@ -38,9 +38,6 @@ export type {
 
 // message
 export {
-  // parse-rich-message
-  parseRichMessage,
-
   // render-rich-message
   renderRichMessage,
 

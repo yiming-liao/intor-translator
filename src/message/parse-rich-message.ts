@@ -15,8 +15,6 @@ import { tokenize } from "./tokenize";
  * - object        → preserved as a raw AST node
  *
  * The returned AST is renderer-agnostic and represents semantic structure only.
- *
- * @public
  */
 export function parseRichMessage(message: MessageValue): ASTNode[] {
   // Null or undefined produces no output

@@ -142,9 +142,6 @@ export type MessageValue = MessagePrimitive | MessageObject | MessageArray;
 export type MissingHandler = (ctx: HandlerContext) => MessageValue;
 
 // @public
-export function parseRichMessage(message: MessageValue): ASTNode[];
-
-// @public
 export type PreKey<M> = GeneratePaths<M, true>;
 
 // @public

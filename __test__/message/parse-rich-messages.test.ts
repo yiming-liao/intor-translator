@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect } from "vitest";
-import { parseRichMessage } from "../../src/message";
+import { parseRichMessage } from "../../src/message/parse-rich-message";
 
 describe("parseRichMessage", () => {
   it("parses a rich string message into semantic AST", () => {
