@@ -4,5 +4,6 @@
     "incremental": true,
     "noEmit": true
   },
-  "include": ["src", "export", "__test__"]
+  "include": ["src", "export", "__test__"],
+  "exclude": ["__test__/types"]
 }
