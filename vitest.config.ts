@@ -9,7 +9,7 @@ export default defineConfig({
         "src/**/index.ts",
         "src/**/types.ts",
         "src/types/**/*.ts",
-        "src/pipeline/translate-config.ts",
+        "pipeline/types/**.ts",
       ],
       reporter: ["text", "lcov"],
       thresholds: {
