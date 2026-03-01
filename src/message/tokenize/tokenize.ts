@@ -22,6 +22,8 @@ const CLOSE_TAG_REGEX = /^<\/([a-zA-Z0-9_]+)>/;
  *
  * This tokenizer is intentionally minimal and fail-closed:
  * any unrecognized or partially valid syntax is treated as plain text.
+ *
+ * @public
  */
 export const tokenize = (message: string): Token[] => {
   const tokens: Token[] = [];

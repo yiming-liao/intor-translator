@@ -10,6 +10,13 @@ import { hasKey as hasKeyMethod } from "../methods/has-key";
 import { translate } from "../methods/translate";
 import { getFullKey } from "../scope-translator/utils/get-full-key";
 
+/**
+ * The scoped translator implementation.
+ *
+ * Adds key prefix composition without changing translation behavior.
+ *
+ * @public
+ */
 export class ScopeTranslator<
   M = unknown,
   ReplacementShape = unknown,

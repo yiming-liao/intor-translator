@@ -1,12 +1,4 @@
 // internal
 
-export type {
-  // key
-  Key,
-
-  // pre-key
-  PreKey,
-
-  // value
-  Value,
-} from "../../src/types";
+// message
+export { tokenize, type Token } from "../../src/message";

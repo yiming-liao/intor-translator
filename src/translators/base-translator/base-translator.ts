@@ -2,9 +2,11 @@ import type { BaseTranslatorOptions } from "./types";
 import type { Locale, LocaleMessages } from "../../types";
 
 /**
- * The minimal, shared foundation for all translators.
+ * The base translator implementation.
  *
- * @template M - Shape of the messages object.
+ * Manages runtime state only.
+ *
+ * @public
  */
 export class BaseTranslator<M = unknown> {
   /** Current messages for translation */

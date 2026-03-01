@@ -15,6 +15,8 @@ import { render } from "./render/render";
  *
  * All rendering behavior is delegated to the renderer, making this function
  * fully environment-agnostic (e.g. string, DOM, React).
+ *
+ * @public
  */
 export function renderRichMessage<Output>(
   message: MessageValue,

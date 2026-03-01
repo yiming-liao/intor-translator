@@ -1,17 +1,33 @@
+/**
+ * Intor Translator — The Intor translation engine
+ *
+ * @packageDocumentation
+ */
+
 // translator
 export {
+  // base-translator
+  BaseTranslator,
+  type BaseTranslatorOptions,
+
+  // core-translator
+  CoreTranslator,
+  type CoreTranslatorOptions,
+  type TranslatorPlugin,
+
+  // scope-translator
   ScopeTranslator as Translator,
   type ScopeTranslatorOptions as TranslatorOptions,
   type ScopeTranslatorMethods as TranslatorMethods,
-  // plugin
-  type TranslatorPlugin,
 } from "../src/translators";
 
 // pipeline
 export type {
+  // types
   TranslateContext,
   TranslateHook,
-  // translate config / handlers
+
+  // translate config
   TranslateConfig,
   TranslateHandlers,
   FormatHandler,
@@ -22,11 +38,23 @@ export type {
 
 // message
 export {
+  // parse-rich-message
   parseRichMessage,
+
+  // render-rich-message
   renderRichMessage,
+
+  // render
   type Renderer,
-  tokenize,
-  type Token,
+
+  // ast
+  type ASTNode,
+  type TextNode,
+  type TagNode,
+  type RawNode,
+
+  // types
+  type Attributes,
 } from "../src/message";
 
 // types

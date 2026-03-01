@@ -1,25 +1,17 @@
 import type { Locale } from "../../types";
 
 /**
- * Options for initializing a translator
+ * Options for initializing a `BaseTranslator` instance.
  *
- * @template M - type of messages object
+ * Defines the minimal runtime state required for translation.
+ *
+ * @public
  */
 export interface BaseTranslatorOptions<M = unknown> {
-  /**
-   * Messages object for translations.
-   * - Use `LocaleMessages` type to enable key inference for `hasKey` and `t`.
-   */
+  /** Translations messages. */
   messages?: Readonly<M>;
-
-  /**
-   * Current locale key.
-   * - If `messages` is typed as `LocaleMessages`, this can be inferred automatically.
-   */
+  /** Current locale key. */
   locale: Locale<M>;
-
-  /**
-   * Indicates whether the translator is in a loading state.
-   */
+  /** Indicates whether the translator is in a loading state. */
   isLoading?: boolean;
 }

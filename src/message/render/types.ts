@@ -9,6 +9,8 @@ import type { Attributes } from "../types";
  *
  * This interface is stateless by design.
  * All rendering behavior is expressed through implementation.
+ *
+ * @public
  */
 export interface Renderer<Output> {
   /** Render a plain text node. */

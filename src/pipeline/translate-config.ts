@@ -4,7 +4,7 @@ import type { TranslateContext } from "./types";
 /**
  * Configuration options for translation behavior.
  *
- * @template M - Messages map type.
+ * @public
  */
 export type TranslateConfig<M = unknown> = {
   /** Optional mapping of fallback locales to use when a message is missing in the current locale. */
@@ -17,7 +17,11 @@ export type TranslateConfig<M = unknown> = {
   handlers?: TranslateHandlers;
 };
 
-/** Optional handler functions for customizing translation behavior. */
+/**
+ * Optional handler functions for customizing translation behavior
+ *
+ * @public
+ */
 export type TranslateHandlers = {
   /** Function called when a translation is still loading. */
   loadingHandler?: LoadingHandler;
@@ -27,11 +31,23 @@ export type TranslateHandlers = {
   formatHandler?: FormatHandler;
 };
 
-/** Function called when translation is still loading. */
+/**
+ * Function called when translation is still loading.
+ *
+ * @public
+ */
 export type LoadingHandler = (ctx: HandlerContext) => MessageValue;
-/** Function called when no message is found for the given key. */
+/**
+ * Function called when no message is found for the given key.
+ *
+ * @public
+ */
 export type MissingHandler = (ctx: HandlerContext) => MessageValue;
-/** Function to format a resolved message. */
+/**
+ * Function to format a resolved message.
+ *
+ * @public
+ */
 export type FormatHandler = (
   ctx: HandlerContext & { rawMessage: string },
 ) => MessageValue;
@@ -43,5 +59,12 @@ export type FormatHandler = (
  * - Handlers can inspect the translation state
  * - Handlers must NOT modify it
  * - Pipeline will not be affected by handler changes
+ *
+ * @public
  */
-export type HandlerContext = Readonly<Omit<TranslateContext, "finalMessage">>;
+export type HandlerContext = Readonly<
+  Pick<
+    TranslateContext,
+    "locale" | "isLoading" | "key" | "replacements" | "rawMessage" | "meta"
+  >
+>;

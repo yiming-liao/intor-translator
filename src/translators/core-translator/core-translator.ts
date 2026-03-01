@@ -17,10 +17,11 @@ import { hasKey } from "../methods/has-key";
 import { translate } from "../methods/translate";
 
 /**
- * CoreTranslator provides the default translation behavior
- * using the pipeline engine and built-in hooks.
+ * The core translator implementation.
  *
- * @template M - Shape of the messages object.
+ * Implements translation behavior and pipeline execution.
+ *
+ * @public
  */
 export class CoreTranslator<
   M = unknown,
