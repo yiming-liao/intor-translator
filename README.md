@@ -7,16 +7,10 @@ The <a href="https://github.com/yiming-liao/intor">Intor</a> translation engine
 <div align="center">
 
 [![NPM version](https://img.shields.io/npm/v/intor-translator?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/intor-translator)
-[![Coverage Status](https://img.shields.io/coveralls/github/yiming-liao/intor-translator.svg?branch=main&style=flat&colorA=000000&colorB=000000)](https://coveralls.io/github/yiming-liao/intor-translator?branch=main)
 [![TypeScript](https://img.shields.io/badge/TypeScript-%E2%9C%94-blue?style=flat&colorA=000000&colorB=000000)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/npm/l/intor-translator?style=flat&colorA=000000&colorB=000000)](LICENSE)
 
 </div>
-
-> [!NOTE]  
-> intor-translator is the execution core of the Intor ecosystem.  
-> It provides deterministic translation resolution and rendering,  
-> without coupling to routing, configuration systems, or frameworks.
 
 ## Features
 
@@ -35,12 +29,6 @@ yarn add intor-translator
 
 # pnpm
 pnpm add intor-translator
-```
-
-Or load it directly from a CDN:
-
-```js
-import { Translator } from "https://cdn.jsdelivr.net/npm/intor-translator/+esm";
 ```
 
 ## Quick Start
@@ -67,42 +55,24 @@ translator.t("greeting", { name: "John doe" }); // -> Hello, John doe!
 
 ## Handlers & Hooks
 
-Intor Translator is powered by **a flexible pipeline** that lets you control how translations behave and how they are rendered.
+Intor Translator runs on an explicit, hook-driven pipeline.
 
-### Handlers — format the final output
+**Ordered pipeline:**  
+ resolveLocales → findMessage → **_loading_** → **_missing_** → **_format_** → interpolate
 
-<sup>_changing how translations look_.</sup>
+### Handlers
 
-Handlers operate on the resolved message, use them to:
+Handlers override specific pipeline stages:
 
-- format ICU messages
-- apply custom plural logic
-- post-process output
-- style or transform the final string
+- loading
+- missing
+- formatting
 
-### Hooks — shape the translation flow
+### Hooks
 
-<sup>_changing how translations work_.</sup>
+Hooks participate in the ordered pipeline and control how the translation process executes.
 
-Hooks run through the pipeline and can intercept any stage, use them to:
-
-- transform keys or messages
-- adjust fallback behavior
-- implement loading or missing logic
-- attach metadata or analytics
-
-> Together, they form a customizable translation pipeline — structured, predictable, beautifully simple.
-
----
-
-## Rich Message Processing
-
-This module provides a semantic message processing flow for **_translated rich-formatted strings_**.
-
-- Tokenize → AST → renderer-driven output
-- Environment-agnostic by design
-
-Read the documentation: [Message Processing ↗](https://github.com/yiming-liao/intor-translator/tree/main/src/message)
+They allow external logic to extend or adjust the pipeline behavior.
 
 ---
 
