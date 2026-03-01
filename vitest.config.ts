@@ -1,12 +1,16 @@
-import path from "node:path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
     include: ["**/*.test.{ts,tsx}"],
-    environment: "node",
-    globals: true,
     coverage: {
+      include: ["src/**/*.ts"],
+      exclude: [
+        "src/**/index.ts",
+        "src/**/types.ts",
+        "src/types/**/*.ts",
+        "src/pipeline/translate-config.ts",
+      ],
       reporter: ["text", "lcov"],
       thresholds: {
         statements: 100,
@@ -14,11 +18,6 @@ export default defineConfig({
         functions: 100,
         lines: 100,
       },
-    },
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
     },
   },
 });

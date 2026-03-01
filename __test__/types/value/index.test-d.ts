@@ -5,7 +5,7 @@ import type {
   LocalizedValue,
   ScopedValue,
   LocaleMessages,
-} from "../../../dist/types/export";
+} from "../../../dist";
 import { expectType } from "tsd";
 
 type Messages = {

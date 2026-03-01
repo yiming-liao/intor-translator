@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { PreKey, LocalizedPreKey } from "../../../dist/types/export";
+import type { PreKey, LocalizedPreKey } from "../../../dist";
 import { expectType } from "tsd";
 
 type Messages = {

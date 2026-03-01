@@ -1,9 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { expectType } from "tsd";
-import {
-  Translator as ScopeTranslator,
-  type Replacement,
-} from "../../../dist/types/export";
+import { Translator as ScopeTranslator, type Replacement } from "../../../dist";
 
 const messages = {
   "en-US": { greeting: "Hello, {name}", a: { b: { c: "d" } } },
