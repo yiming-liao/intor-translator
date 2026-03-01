@@ -2,7 +2,14 @@
 export type { Locale, FallbackLocalesMap } from "./locale";
 
 // messages
-export type { MessageObject, MessageValue, LocaleMessages } from "./messages";
+export type {
+  MessagePrimitive,
+  MessageArray,
+  MessageObject,
+  MessageValue,
+  MessageLeaf,
+  LocaleMessages,
+} from "./messages";
 
 // generics
 export type {
@@ -10,24 +17,34 @@ export type {
   Key,
   LocalizedKey,
   ScopedKey,
+
   // pre-key
   PreKey,
   LocalizedPreKey,
-  // value
-  Value,
-  LocalizedValue,
-  ScopedValue,
+
   // replacement
   Replacement,
   LocalizedReplacement,
   ScopedReplacement,
+
   // rich
   Rich,
   LocalizedRich,
   ScopedRich,
+
+  // value
+  Value,
+  LocalizedValue,
+  ScopedValue,
+
   // utils
+  IsAny,
+  IsNever,
+  IsRuntime,
+  IfMessageObject,
+  IfLocaleMessages,
+  DepthDecrement,
+  ExpandPath,
   GeneratePaths,
   AtPath,
-  IfLocaleMessages,
-  IfMessageObject,
 } from "./generics";

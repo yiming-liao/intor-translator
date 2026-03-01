@@ -12,6 +12,8 @@ import type {
  * ```ts
  * Key<{ a: { b: { c: string }; z: string } }>; // => "a.z" | "a.b.c"
  * ```
+ *
+ * @public
  */
 export type Key<M> = GeneratePaths<M, false>;
 
@@ -22,6 +24,8 @@ export type Key<M> = GeneratePaths<M, false>;
  * ```ts
  * LocalizedKey<{ en: { a: { b: { c: string }; z: string } } }>; // =>  "a.z" | "a.b.c"
  * ```
+ *
+ * @public
  */
 export type LocalizedKey<M> = IfLocaleMessages<
   M,
@@ -36,6 +40,8 @@ export type LocalizedKey<M> = IfLocaleMessages<
  * ```ts
  *  ScopedKey<{ en: { a: { b: { c: string }; z: string } } }, "a">; // => "b.c" | "z"
  * ```
+ *
+ * @public
  */
 export type ScopedKey<M, PK extends string> = IfLocaleMessages<
   M,

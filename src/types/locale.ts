@@ -21,6 +21,8 @@ import type { LocaleMessages } from "./messages";
  * type Locales = Locale<unknown>;
  * // → string
  * ```
+ *
+ * @public
  */
 export type Locale<M = unknown> = M extends LocaleMessages
   ? keyof M & string
@@ -39,6 +41,8 @@ export type Locale<M = unknown> = M extends LocaleMessages
  *   "zh-TW": ["zh-HK", "zh"]
  * };
  * ```
+ *
+ * @public
  */
 export type FallbackLocalesMap<L extends string = string> = Partial<
   Record<L, L[]>

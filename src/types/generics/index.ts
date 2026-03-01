@@ -19,8 +19,13 @@ export type { Rich, LocalizedRich, ScopedRich } from "./rich";
 
 // utils
 export type {
+  IsAny,
+  IsNever,
+  IsRuntime,
+  IfMessageObject,
+  IfLocaleMessages,
+  DepthDecrement,
+  ExpandPath,
   GeneratePaths,
   AtPath,
-  IfLocaleMessages,
-  IfMessageObject,
 } from "./utils";

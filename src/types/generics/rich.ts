@@ -5,6 +5,8 @@ import type { AtPath, IsNever } from "./utils";
  * Generic rich tag map used when no shape is available.
  *
  * Acts as a safe fallback for dynamic or unknown rich tag shapes.
+ *
+ * @public
  */
 export type Rich = Record<string, unknown>;
 
@@ -20,6 +22,8 @@ export type Rich = Record<string, unknown>;
  * LocalizedRich<RichShape, "link"> // => { a: {} }
  * LocalizedRich<RichShape, "missing">; // => Rich
  * ```
+ *
+ * @public
  */
 export type LocalizedRich<RichShape, K extends string> = RichShape extends {
   "{locale}": infer LM;
@@ -43,6 +47,8 @@ export type LocalizedRich<RichShape, K extends string> = RichShape extends {
  * ScopedRich<RichShape, "app", "link">; // => { a: {} }
  * ScopedRich<RichShape, "app", "missing">; // => Rich
  * ```
+ *
+ * @public
  */
 export type ScopedRich<
   RichShape,

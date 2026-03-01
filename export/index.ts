@@ -34,24 +34,47 @@ export type {
   // locale
   Locale,
   FallbackLocalesMap,
+
   // messages
+  MessagePrimitive,
+  MessageArray,
   MessageObject,
   MessageValue,
+  MessageLeaf,
   LocaleMessages,
+
   // key
+  Key,
   LocalizedKey,
   ScopedKey,
+
   // pre-key
+  PreKey,
   LocalizedPreKey,
-  // value
-  LocalizedValue,
-  ScopedValue,
+
   // replacement
   Replacement,
   LocalizedReplacement,
   ScopedReplacement,
+
   // rich
   Rich,
   LocalizedRich,
   ScopedRich,
+
+  // value
+  Value,
+  LocalizedValue,
+  ScopedValue,
+
+  // utils
+  IsAny,
+  IsNever,
+  IsRuntime,
+  IfMessageObject,
+  IfLocaleMessages,
+  DepthDecrement,
+  ExpandPath,
+  GeneratePaths,
+  AtPath,
 } from "../src/types";

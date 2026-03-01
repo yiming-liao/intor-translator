@@ -5,6 +5,8 @@ import type { AtPath, IsNever } from "./utils";
  * Generic replacement object used when no shape is available.
  *
  * Acts as a safe fallback for dynamic or unknown replacement shapes.
+ *
+ * @public
  */
 export type Replacement = Record<string, unknown>;
 
@@ -20,6 +22,8 @@ export type Replacement = Record<string, unknown>;
  * LocalizedReplacement<ReplacementShape, "greeting">; // => { name: string }
  * LocalizedReplacement<ReplacementShape, "missing">;  // => Replacement
  * ```
+ *
+ * @public
  */
 export type LocalizedReplacement<
   ReplacementShape,
@@ -44,6 +48,8 @@ export type LocalizedReplacement<
  * ScopedReplacement<ReplacementShape, "user", "info">; // => { name: string }
  * ScopedReplacement<ReplacementShape, "user", "missing">; // => Replacement
  * ```
+ *
+ * @public
  */
 export type ScopedReplacement<
   ReplacementShape,

@@ -8,6 +8,8 @@ import type { LocaleMessages } from "../messages";
  * ```ts
  * Value<{ a: { b: { c: string } } }, "a.b.c">; // => string
  * ```
+ *
+ * @public
  */
 export type Value<M, K extends string> = K extends `${infer Head}.${infer Tail}`
   ? Head extends keyof M
@@ -24,6 +26,8 @@ export type Value<M, K extends string> = K extends `${infer Head}.${infer Tail}`
  * ```ts
  * LocalizedValue<{ en: { a: { b: { c: string }; z: string } } }, "a.b.c">; // => string
  * ```
+ *
+ * @public
  */
 export type LocalizedValue<M, K extends string> =
   IsRuntime<M> extends true
@@ -39,6 +43,8 @@ export type LocalizedValue<M, K extends string> =
  * ```ts
  * ScopedValue<{ en: { a: { b: { c: string }; z: string } } }, "a", "b.c">; // => string
  * ```
+ *
+ * @public
  */
 export type ScopedValue<M, PK extends string, K extends string> =
   IsRuntime<M> extends true

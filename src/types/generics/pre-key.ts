@@ -7,6 +7,8 @@ import type { GeneratePaths, IfLocaleMessages, IfMessageObject } from "./utils";
  * ```ts
  * PreKey<{ a: { b: { c: string }; z: string } }>; // → "a" | "a.b" | "a.z" | "a.b.c"
  * ```
+ *
+ * @public
  */
 export type PreKey<M> = GeneratePaths<M, true>;
 
@@ -17,6 +19,8 @@ export type PreKey<M> = GeneratePaths<M, true>;
  * ```ts
  * LocalizedPreKey<{ en: { a: { b: { c: string }; z: string } } }>; // →   "a" | "a.b" | "a.z" | "a.b.c"
  * ```
+ *
+ * @public
  */
 export type LocalizedPreKey<M> = IfLocaleMessages<
   M,

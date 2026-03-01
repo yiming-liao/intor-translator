@@ -1,23 +1,47 @@
-type MessagePrimitive = string | number | boolean | null;
-type MessageArray = readonly MessageValue[];
+/**
+ * Primitive message value.
+ *
+ * Represents non-object primitive values in the message tree.
+ *
+ * @public
+ */
+export type MessagePrimitive = string | number | boolean | null;
+
+/**
+ * Array-based message value.
+ *
+ * Allows messages to be composed as ordered lists of nested `MessageValue` items.
+ *
+ * @public
+ */
+export type MessageArray = readonly MessageValue[];
 
 /**
  * A recursive message tree object.
  *
- * Represents the root message structure for a single locale
- * (i.e. the value of `LocaleMessages[locale]`).
+ * Represents a node in the recursive message tree.
+ *
+ * @public
  */
 export interface MessageObject {
   [key: string]: MessageValue;
 }
 
-/** A message value in the locale message tree. */
+/**
+ * A message value in the locale message tree.
+ *
+ * Can be a primitive, nested object, or array.
+ *
+ * @public
+ */
 export type MessageValue = MessagePrimitive | MessageObject | MessageArray;
 
 /**
  * A non-traversable message value.
  *
  * Leaf values represent the end of a message path.
+ *
+ * @public
  */
 export type MessageLeaf = MessagePrimitive | MessageArray;
 
@@ -42,5 +66,7 @@ export type MessageLeaf = MessagePrimitive | MessageArray;
  *   }
  * };
  * ```
+ *
+ * @public
  */
 export type LocaleMessages = Record<string, MessageObject>;
