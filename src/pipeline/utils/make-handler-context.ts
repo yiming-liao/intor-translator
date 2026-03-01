@@ -1,5 +1,5 @@
-import type { HandlerContext } from "../translate-config";
-import type { TranslateContext } from "../types";
+import type { HandlerContext } from "../types";
+import type { TranslateContext } from "../types/context";
 
 /**
  * Create an immutable context object exposed to external handlers.

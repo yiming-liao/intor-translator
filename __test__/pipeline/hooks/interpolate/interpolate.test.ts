@@ -1,4 +1,4 @@
-import type { TranslateContext } from "../../../../src/pipeline/types";
+import type { TranslateContext } from "../../../../src/pipeline/types/context";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { interpolate } from "../../../../src/pipeline/hooks/interpolate/interpolate";
 import * as interpUtil from "../../../../src/pipeline/hooks/interpolate/replace-values";

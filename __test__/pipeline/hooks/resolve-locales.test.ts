@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { resolveLocales } from "../../../src/pipeline/hooks/resolve-locales";
-import { type TranslateContext } from "../../../src/pipeline/types";
+import { type TranslateContext } from "../../../src/pipeline/types/context";
 import * as localeUtil from "../../../src/shared/utils/resolve-candidate-locales";
 
 describe("resolveLocalesHook", () => {

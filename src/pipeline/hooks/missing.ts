@@ -1,5 +1,5 @@
 import type { MessageValue } from "../../types";
-import type { TranslateContext } from "../types";
+import type { TranslateContext } from "../types/context";
 import { rura } from "rura";
 import { makeHandlerContext } from "../utils/make-handler-context";
 
@@ -10,7 +10,7 @@ export const missing = rura.createHook<TranslateContext, MessageValue>(
     if (rawMessage !== undefined) return;
 
     // Use custom handler if provided
-    const { missingHandler } = config.handlers || {};
+    const { missingHandler } = config.handlers ?? {};
     if (missingHandler) {
       return {
         early: true,

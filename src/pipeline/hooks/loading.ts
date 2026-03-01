@@ -1,5 +1,5 @@
 import type { MessageValue } from "../../types";
-import type { TranslateContext } from "../types";
+import type { TranslateContext } from "../types/context";
 import { rura } from "rura";
 import { makeHandlerContext } from "../utils/make-handler-context";
 
@@ -10,7 +10,7 @@ export const loading = rura.createHook<TranslateContext, MessageValue>(
     if (!isLoading) return;
 
     // Use custom handler if provided
-    const { loadingHandler } = config.handlers || {};
+    const { loadingHandler } = config.handlers ?? {};
     if (loadingHandler) {
       return {
         early: true,

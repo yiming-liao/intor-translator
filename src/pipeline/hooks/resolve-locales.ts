@@ -1,5 +1,5 @@
 import type { MessageValue } from "../../types";
-import type { TranslateContext } from "../types";
+import type { TranslateContext } from "../types/context";
 import { rura } from "rura";
 import { resolveCandidateLocales } from "../../shared/utils/resolve-candidate-locales";
 

@@ -1,4 +1,4 @@
-import type { TranslateContext } from "../../../src/pipeline/types";
+import type { TranslateContext } from "../../../src/pipeline/types/context";
 import { describe, it, expect } from "vitest";
 import { makeHandlerContext } from "../../../src/pipeline/utils/make-handler-context";
 

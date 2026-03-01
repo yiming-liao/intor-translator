@@ -1,4 +1,4 @@
-import type { TranslateContext } from "../../../src/pipeline/types";
+import type { TranslateContext } from "../../../src/pipeline/types/context";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { findMessage } from "../../../src/pipeline/hooks/find-message";
 import * as findUtil from "../../../src/shared/utils/find-message-in-locales";

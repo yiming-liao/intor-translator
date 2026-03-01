@@ -1,34 +1,21 @@
-// run-translate
-export { runTranslate, type TranslateParams } from "./run-translate";
+// default-hooks
+export { DEFAULT_HOOKS } from "./default-hooks";
 
 // types
-export type { TranslateContext, TranslateHook } from "./types";
-
-// translate-config
 export type {
+  // context
+  TranslateContext,
+
+  // config
   TranslateConfig,
+
+  // handlers
   TranslateHandlers,
   FormatHandler,
   LoadingHandler,
   MissingHandler,
   HandlerContext,
-} from "./translate-config";
 
-// hooks
-import {
-  findMessage,
-  format,
-  interpolate,
-  loading,
-  missing,
-  resolveLocales,
-} from "./hooks";
-
-export const DEFAULT_HOOKS = [
-  resolveLocales,
-  findMessage,
-  loading,
-  missing,
-  format,
-  interpolate,
-];
+  // hook
+  TranslateHook,
+} from "./types";

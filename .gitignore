@@ -22,5 +22,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 # api-extractor
-temp/
+api-extractor/temp/
 
