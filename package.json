@@ -33,9 +33,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types/export/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./internal": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/internal/index.js",
+      "require": "./dist/internal/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -53,20 +58,24 @@
   "scripts": {
     "type": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint",
-    "lint:debug": "eslint --debug",
     "test": "vitest",
     "test:types": "tsx scripts/test-types.ts",
     "knip": "knip --config .config/knip.config.ts",
-    "build": "tsx scripts/build.ts",
-    "prepublishOnly": "yarn build",
+    "build": "tsup",
+    "build:types": "tsc -p tsconfig.build.json && api-extractor run -c api-extractor/index.json --local",
+    "build:release": "yarn build && yarn build:types",
+    "api:check": "api-extractor run -c api-extractor/index.json",
+    "api:build": "api-extractor run -c api-extractor/index.json --local",
+    "prepublishOnly": "yarn build:release",
+    "bench:runtime": "tsx bench/runtime/index.ts",
     "examples:html": "vite --config examples/html/basic/vite.config.ts",
-    "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts",
-    "bench:runtime": "tsx bench/runtime/index.ts"
+    "examples:html:rich-message": "vite --config examples/html/rich-message/vite.config.ts"
   },
   "dependencies": {
     "rura": "^1.0.8"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.57.6",
     "@types/node": "24.10.1",
     "@vitest/coverage-v8": "4.0.16",
     "eslint": "9.39.1",

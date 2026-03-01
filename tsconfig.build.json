@@ -5,7 +5,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "stripInternal": true,
-    "declarationDir": "dist/types"
+    "declarationDir": "dist-types"
   },
   "include": ["export"]
 }
