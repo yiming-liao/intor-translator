@@ -19,6 +19,7 @@ export default defineConfig([
     "scripts",
     "tsup.config.ts",
     "vitest.config.ts",
+    "__test__/types",
   ]),
 
   js.configs.recommended,
