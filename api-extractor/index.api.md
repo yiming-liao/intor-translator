@@ -4,7 +4,8 @@
 
 ```ts
 
-import type { RuraHook } from 'rura';
+import { RuraHookSync } from 'rura';
+import { RuraResult } from 'rura';
 
 // @public
 export type ASTNode = TextNode | TagNode | RawNode;
@@ -39,17 +40,23 @@ export interface BaseTranslatorOptions<M = unknown> {
 // @public
 export class CoreTranslator<M = unknown, ReplacementShape = unknown> extends BaseTranslator<M> {
     constructor(options: CoreTranslatorOptions<M>);
-    debugHooks(): void;
+    getHooks(): RuraHookSync<TranslateContext, MessageValue>[];
     hasKey: <K extends LocalizedKey<M>>(key: K, targetLocale?: Locale<M>) => boolean;
-    protected hooks: TranslateHook[];
+    logHooks(): void;
+    protected pipeline: {
+        use: (hook: RuraHookSync<TranslateContext, MessageValue>) => any;
+        getHooks: () => RuraHookSync<TranslateContext, MessageValue>[];
+        logHooks: () => void;
+        run: (ctx: TranslateContext) => RuraResult<TranslateContext, MessageValue>;
+    };
     t: <K extends LocalizedKey<M> = LocalizedKey<M>>(key: K, replacements?: LocalizedReplacement<ReplacementShape, K>) => LocalizedValue<M, K>;
     protected translateConfig: TranslateConfig<M>;
-    use(plugin: TranslatorPlugin | TranslateHook): void;
+    use(hook: TranslateHook): void;
 }
 
 // @public
 export interface CoreTranslatorOptions<M> extends BaseTranslatorOptions<M>, TranslateConfig<M> {
-    plugins?: Array<TranslatorPlugin | TranslateHook>;
+    hooks?: Array<TranslateHook>;
 }
 
 // @public
@@ -231,7 +238,7 @@ export type TranslateHandlers = {
 };
 
 // @public
-export type TranslateHook = RuraHook<TranslateContext, MessageValue>;
+export type TranslateHook = RuraHookSync<TranslateContext, MessageValue>;
 
 // @public
 export class Translator<M = unknown, ReplacementShape = unknown> extends CoreTranslator<M, ReplacementShape> {
@@ -247,12 +254,6 @@ export type TranslatorMethods<M = unknown, ReplacementShape = unknown, PK extend
 
 // @public
 export type TranslatorOptions<M> = CoreTranslatorOptions<M>;
-
-// @public
-export interface TranslatorPlugin {
-    hook?: TranslateHook | TranslateHook[];
-    name?: string;
-}
 
 // @public
 export type Value<M, K extends string> = K extends `${infer Head}.${infer Tail}` ? Head extends keyof M ? Value<M[Head], Tail> : never : K extends keyof M ? M[K] : never;

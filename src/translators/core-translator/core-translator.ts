@@ -1,15 +1,17 @@
-import type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
+import type { CoreTranslatorOptions } from "./types";
 import type {
   Locale,
   LocaleMessages,
   LocalizedKey,
   LocalizedValue,
   LocalizedReplacement,
+  MessageValue,
 } from "../../types";
 import { rura } from "rura";
 import {
   DEFAULT_HOOKS,
   type TranslateConfig,
+  type TranslateContext,
   type TranslateHook,
 } from "../../pipeline";
 import { BaseTranslator } from "../base-translator";
@@ -27,53 +29,41 @@ export class CoreTranslator<
   M = unknown,
   ReplacementShape = unknown,
 > extends BaseTranslator<M> {
-  /** User-provided options including messages, locale, and config. */
+  /** Active translation configuration. */
   protected translateConfig: TranslateConfig<M>;
-  /** Active pipeline hooks applied during translation. */
-  protected hooks: TranslateHook[] = [...DEFAULT_HOOKS];
+  /** Translation pipeline instance. */
+  protected pipeline = rura.createPipeline<TranslateContext, MessageValue>(
+    [...DEFAULT_HOOKS],
+    { name: "Intor Translator" },
+  );
 
   constructor(options: CoreTranslatorOptions<M>) {
-    const { locale, messages, isLoading, plugins, ...translateConfig } =
-      options;
+    const { locale, messages, isLoading, hooks, ...translateConfig } = options;
     super({
       locale,
       ...(messages !== undefined && { messages }),
       ...(isLoading !== undefined && { isLoading }),
     });
     this.translateConfig = translateConfig;
-    if (plugins) {
-      for (const plugin of plugins) this.use(plugin);
-    }
-    this.sortHooks();
+    if (hooks) for (const hook of hooks) this.use(hook);
   }
 
-  /** Sort hooks by order value (lower runs earlier). */
-  private sortHooks() {
-    this.hooks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  /** Registers a pipeline hook. */
+  public use(hook: TranslateHook) {
+    this.pipeline.use(hook);
   }
 
-  /** Register a plugin or a raw pipeline hook. */
-  public use(plugin: TranslatorPlugin | TranslateHook) {
-    // Direct hook
-    if ("run" in plugin) this.hooks.push(plugin);
-    // Plugin with hooks
-    else if ("hook" in plugin && plugin.hook) {
-      const hooks = Array.isArray(plugin.hook) ? plugin.hook : [plugin.hook];
-      this.hooks.push(...hooks);
-    }
-    this.sortHooks();
+  /** Logs the current hook order and execution type. */
+  public logHooks() {
+    this.pipeline.logHooks();
   }
 
-  /** Outputs a debug overview of the active pipeline. */
-  debugHooks() {
-    return rura
-      .createPipeline(this.hooks)
-      .debugHooks(
-        (hooks) => `🤖 Intor Translator pipeline (${hooks.length} hooks)`,
-      );
+  /** Returns a shallow copy of the ordered hooks. */
+  public getHooks() {
+    return this.pipeline.getHooks();
   }
 
-  /** Check if a key exists in the specified locale or current locale. */
+  /** Checks whether a translation key exists. */
   public hasKey = <K extends LocalizedKey<M>>(
     key: K,
     targetLocale?: Locale<M>,
@@ -86,19 +76,21 @@ export class CoreTranslator<
     });
   };
 
-  /** Get the translated message for a key, with optional replacements. */
+  /** Translates a key using the configured pipeline. */
   public t = <K extends LocalizedKey<M> = LocalizedKey<M>>(
     key: K,
     replacements?: LocalizedReplacement<ReplacementShape, K>,
   ): LocalizedValue<M, K> => {
-    return translate({
-      hooks: this.hooks,
+    const context: TranslateContext = {
       messages: this._messages as Readonly<LocaleMessages>,
       locale: this._locale,
       isLoading: this._isLoading,
-      translateConfig: this.translateConfig,
+      config: this.translateConfig,
       key,
-      ...(replacements !== undefined && { replacements }),
-    }) as LocalizedValue<M, K>;
+      ...(replacements !== undefined ? { replacements: replacements } : {}),
+      candidateLocales: [],
+      meta: {},
+    };
+    return translate(this.pipeline, context) as LocalizedValue<M, K>;
   };
 }

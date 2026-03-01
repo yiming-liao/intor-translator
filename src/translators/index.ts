@@ -2,11 +2,7 @@
 export { BaseTranslator, type BaseTranslatorOptions } from "./base-translator";
 
 // core-translator
-export {
-  CoreTranslator,
-  type TranslatorPlugin,
-  type CoreTranslatorOptions,
-} from "./core-translator";
+export { CoreTranslator, type CoreTranslatorOptions } from "./core-translator";
 
 // scope-translator
 export {

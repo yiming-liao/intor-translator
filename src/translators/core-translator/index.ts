@@ -1,2 +1,2 @@
-export type { CoreTranslatorOptions, TranslatorPlugin } from "./types";
+export type { CoreTranslatorOptions } from "./types";
 export { CoreTranslator } from "./core-translator";

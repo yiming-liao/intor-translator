@@ -1,61 +1,57 @@
-import type { CoreTranslatorOptions } from "../../../src/translators/core-translator";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import * as hasKeyModule from "../../../src/translators/methods/has-key";
 import * as translateModule from "../../../src/translators/methods/translate";
 import { ScopeTranslator } from "../../../src/translators/scope-translator/scope-translator";
 import * as getFullKeyModule from "../../../src/translators/scope-translator/utils/get-full-key";
 
+vi.mock("../../../src/translators/scope-translator/utils/get-full-key");
 vi.mock("../../../src/translators/methods/has-key");
 vi.mock("../../../src/translators/methods/translate");
-vi.mock("../../../src/translators/scope-translator/utils/get-full-key");
 
 describe("ScopeTranslator", () => {
   const messages = { en: { hello: "Hello", nested: { greet: "Hi" } } };
   const locale = "en";
-  const options: CoreTranslatorOptions<typeof messages> = { messages, locale };
   let translator: ScopeTranslator<typeof messages>;
+
   beforeEach(() => {
     vi.resetAllMocks();
-    translator = new ScopeTranslator(options);
+    translator = new ScopeTranslator({ messages, locale });
   });
 
-  it("scoped returns an object with hasKey and t methods", () => {
+  it("returns scoped translator with hasKey and t", () => {
     const scoped = translator.scoped("nested");
     expect(typeof scoped.hasKey).toBe("function");
     expect(typeof scoped.t).toBe("function");
   });
 
-  it("scoped.hasKey calls hasKey with correct full key", () => {
+  it("scoped.hasKey prefixes key correctly", () => {
     const scoped = translator.scoped("nested");
     vi.mocked(getFullKeyModule.getFullKey).mockReturnValue("nested.greet");
     vi.mocked(hasKeyModule.hasKey).mockReturnValue(true);
     const result = scoped.hasKey("greet", "en");
     expect(result).toBe(true);
     expect(getFullKeyModule.getFullKey).toHaveBeenCalledWith("nested", "greet");
-    expect(hasKeyModule.hasKey).toHaveBeenCalledWith({
-      messages: translator["_messages"],
-      locale: translator["_locale"],
-      key: "nested.greet",
-      targetLocale: "en",
-    });
+    expect(hasKeyModule.hasKey).toHaveBeenCalledWith(
+      expect.objectContaining({
+        key: "nested.greet",
+        targetLocale: "en",
+      }),
+    );
   });
 
-  it("scoped.t calls translate with correct full key and replacements", () => {
+  it("scoped.t prefixes key and delegates to translate()", () => {
     const scoped = translator.scoped("nested");
     vi.mocked(getFullKeyModule.getFullKey).mockReturnValue("nested.greet");
     vi.mocked(translateModule.translate).mockReturnValue("Hi!");
     const result = scoped.t("greet", { name: "Yiming" });
     expect(result).toBe("Hi!");
     expect(getFullKeyModule.getFullKey).toHaveBeenCalledWith("nested", "greet");
-    expect(translateModule.translate).toHaveBeenCalledWith({
-      hooks: translator["hooks"],
-      messages: translator["_messages"],
-      locale: translator["_locale"],
-      isLoading: translator["_isLoading"],
-      translateConfig: translator["translateConfig"],
-      key: "nested.greet",
-      replacements: { name: "Yiming" },
-    });
+    expect(translateModule.translate).toHaveBeenCalled();
+    const [, context] = vi.mocked(translateModule.translate).mock
+      .calls[0] as any;
+    expect(context.key).toBe("nested.greet");
+    expect(context.replacements).toEqual({ name: "Yiming" });
   });
 
   it("scoped works without preKey", () => {

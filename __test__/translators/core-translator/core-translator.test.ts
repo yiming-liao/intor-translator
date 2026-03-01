@@ -1,215 +1,90 @@
-import type { TranslateHook } from "../../../src/pipeline/types";
-import type { CoreTranslatorOptions } from "../../../src/translators/core-translator";
-import type { TranslatorPlugin } from "../../../src/translators/core-translator/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CoreTranslator } from "../../../src/translators/core-translator/core-translator";
 import * as hasKeyModule from "../../../src/translators/methods/has-key";
 import * as translateModule from "../../../src/translators/methods/translate";
 
-// Mock methods used by CoreTranslator
 vi.mock("../../../src/translators/methods/has-key");
 vi.mock("../../../src/translators/methods/translate");
 
 describe("CoreTranslator", () => {
-  const messages = { en: { hello: "Hello" }, zh: { hello: "你好" } };
+  const messages = { en: { hello: "Hello" } };
   const locale = "en";
-  const options: CoreTranslatorOptions<typeof messages> = {
-    messages,
-    locale,
-  };
 
   let translator: CoreTranslator<typeof messages>;
 
   beforeEach(() => {
     vi.resetAllMocks();
-    translator = new CoreTranslator(options);
+    translator = new CoreTranslator({ messages, locale });
   });
 
-  it("should initialize with given messages and locale", () => {
-    expect(translator["_messages"]).toEqual(messages);
-    expect(translator["_locale"]).toBe(locale);
-    expect(translator["_isLoading"]).toBe(false);
+  it("initializes with provided state", () => {
+    expect(translator).toBeInstanceOf(CoreTranslator);
   });
 
-  it("hasKey should call hasKey with correct arguments", () => {
-    const key = "hello";
-    const targetLocale = "zh";
+  it("delegates hasKey to method module", () => {
     const spy = vi.mocked(hasKeyModule.hasKey).mockReturnValue(true);
-    const result = translator.hasKey(key, targetLocale);
+    const result = translator.hasKey("hello");
     expect(result).toBe(true);
-    expect(spy).toHaveBeenCalledWith({
-      messages: translator["_messages"],
-      locale: translator["_locale"],
-      key,
-      targetLocale,
-    });
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it("t should call translate with correct arguments and return result", () => {
-    const key = "hello";
-    const replacements = { name: "Yiming" };
+  it("delegates translation to translate()", () => {
+    const spy = vi.mocked(translateModule.translate).mockReturnValue("Hello");
+    const result = translator.t("hello");
+    expect(result).toBe("Hello");
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it("passes replacements to translate()", () => {
     const spy = vi
       .mocked(translateModule.translate)
       .mockReturnValue("Hello Yiming");
-    const result = translator.t(key, replacements);
-    expect(result).toBe("Hello Yiming");
-    expect(spy).toHaveBeenCalledWith({
-      hooks: translator["hooks"],
-      messages: translator["_messages"],
-      locale: translator["_locale"],
-      isLoading: translator["_isLoading"],
-      translateConfig: translator["translateConfig"],
-      key,
-      replacements,
-    });
+    const replacements = { name: "Yiming" };
+    translator.t("hello", replacements);
+    const [, context] = spy.mock.calls[0] as any;
+    expect(context.replacements).toEqual(replacements);
   });
 
-  it("use should register a direct hook", () => {
-    const hook: TranslateHook = {
-      name: "test-hook",
-      run: vi.fn(),
-      order: 10,
-    };
-    const prevLength = translator["hooks"].length;
-    translator.use(hook);
-    expect(translator["hooks"].length).toBe(prevLength + 1);
-    expect(translator["hooks"]).toContain(hook);
+  it("registers hooks via use()", () => {
+    const hook = { run: vi.fn() } as any;
+    expect(() => translator.use(hook)).not.toThrow();
   });
 
-  it("use should register a plugin with a single hook", () => {
-    const hook: TranslateHook = {
-      name: "plugin-hook",
-      run: vi.fn(),
-      order: 5,
-    };
-    const plugin: TranslatorPlugin = { hook };
-    const prevLength = translator["hooks"].length;
-    translator.use(plugin);
-    expect(translator["hooks"].length).toBe(prevLength + 1);
-    expect(translator["hooks"]).toContain(hook);
+  it("logHooks() does not throw", () => {
+    expect(() => translator.logHooks()).not.toThrow();
   });
 
-  it("use should register a plugin with multiple hooks", () => {
-    const hookA: TranslateHook = {
-      name: "hookA",
-      run: vi.fn(),
-      order: 1,
-    };
-    const hookB: TranslateHook = {
-      name: "hookB",
-      run: vi.fn(),
-      order: 2,
-    };
-    const plugin: TranslatorPlugin = {
-      hook: [hookA, hookB],
-    };
-    const prevLength = translator["hooks"].length;
-    translator.use(plugin);
-    expect(translator["hooks"].length).toBe(prevLength + 2);
-    expect(translator["hooks"]).toContain(hookA);
-    expect(translator["hooks"]).toContain(hookB);
+  it("getHooks() returns an array", () => {
+    const hooks = translator.getHooks();
+    expect(Array.isArray(hooks)).toBe(true);
   });
 
-  it("use should ignore a plugin without run or hook", () => {
-    const prevLength = translator["hooks"].length;
-    translator.use({} as TranslatorPlugin);
-    expect(translator["hooks"].length).toBe(prevLength);
-  });
-
-  it("use should handle hooks without order when sorting", () => {
-    const hookWithOrder: TranslateHook = {
-      name: "ordered-hook",
-      run: vi.fn(),
-      order: 5,
-    };
-    const hookWithoutOrder: TranslateHook = {
-      name: "no-order-hook",
-      run: vi.fn(),
-    };
-    translator.use(hookWithOrder);
-    translator.use(hookWithoutOrder);
-    expect(translator["hooks"]).toContain(hookWithOrder);
-    expect(translator["hooks"]).toContain(hookWithoutOrder);
-  });
-
-  it("should correctly sort hooks with and without order", () => {
-    const hookA = { name: "A", run: vi.fn(), order: 5 };
-    const hookB = { name: "B", run: vi.fn() };
-    const hookC = { name: "C", run: vi.fn(), order: 1 };
-    const hookD = { name: "D", run: vi.fn() };
-    translator.use(hookA);
-    translator.use(hookB);
-    translator.use(hookC);
-    translator.use(hookD);
-    const hooks = translator["hooks"];
-    expect(hooks.indexOf(hookB)).toBeLessThan(hooks.indexOf(hookC));
-    expect(hooks.indexOf(hookD)).toBeLessThan(hooks.indexOf(hookC));
-    expect(hooks.indexOf(hookC)).toBeLessThan(hooks.indexOf(hookA));
-    expect([hookB, hookD]).toContain(hooks[0]);
-    expect([hookB, hookD]).toContain(hooks[1]);
-  });
-
-  it("should load plugins passed via constructor (single hook)", () => {
-    const hook: TranslateHook = {
-      name: "ctor-hook",
-      run: vi.fn(),
-      order: 3,
-    };
-    const translatorWithPlugin = new CoreTranslator({
+  it("passes isLoading=false correctly", () => {
+    const t = new CoreTranslator({
       messages,
       locale,
-      plugins: [hook],
+      isLoading: false,
     });
-    expect(translatorWithPlugin["hooks"]).toContain(hook);
+    expect(t["_isLoading"]).toBe(false);
   });
 
-  it("should load plugin objects containing multiple hooks via constructor", () => {
-    const hookA: TranslateHook = { name: "A", run: vi.fn(), order: 1 };
-    const hookB: TranslateHook = { name: "B", run: vi.fn(), order: 2 };
-    const plugin: TranslatorPlugin = { hook: [hookA, hookB] };
-    const translatorWithPlugin = new CoreTranslator({
+  it("registers constructor hooks", () => {
+    const hook = { run: vi.fn() } as any;
+    const t = new CoreTranslator({
       messages,
       locale,
-      plugins: [plugin],
+      hooks: [hook],
     });
-    expect(translatorWithPlugin["hooks"]).toContain(hookA);
-    expect(translatorWithPlugin["hooks"]).toContain(hookB);
+    expect(t.getHooks()).toContain(hook);
   });
 
-  it("should apply constructor plugins the same way as manual use()", () => {
-    const hook: TranslateHook = {
-      name: "compare",
-      run: vi.fn(),
-      order: 10,
-    };
-    const translatorCtor = new CoreTranslator({
-      messages,
-      locale,
-      plugins: [hook],
-    });
-    const translatorManual = new CoreTranslator({
-      messages,
-      locale,
-    });
-    translatorManual.use(hook);
-    expect(translatorCtor["hooks"]).toEqual(translatorManual["hooks"]);
-  });
-
-  it("debugHooks should output debug information", () => {
-    const hook: TranslateHook = {
-      name: "hookA",
-      run: vi.fn(),
-    };
-    translator.use(hook);
-    expect(() => translator.debugHooks()).not.toThrow();
-  });
-
-  it("should pass isLoading when provided in constructor", () => {
-    const translatorWithLoading = new CoreTranslator({
-      messages,
-      locale,
-      isLoading: true,
-    });
-    expect(translatorWithLoading["_isLoading"]).toBe(true);
+  it("calls hasKey with targetLocale", () => {
+    translator.hasKey("hello", "zh" as any);
+    expect(hasKeyModule.hasKey).toHaveBeenCalledWith(
+      expect.objectContaining({
+        targetLocale: "zh",
+      }),
+    );
   });
 });

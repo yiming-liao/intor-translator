@@ -1,4 +1,5 @@
 import type { ScopeTranslatorMethods, ScopeTranslatorOptions } from "./types";
+import type { TranslateContext } from "../../pipeline";
 import type {
   Locale,
   LocaleMessages,
@@ -32,6 +33,7 @@ export class ScopeTranslator<
     ? ScopeTranslatorMethods<M, ReplacementShape, PK>
     : ScopeTranslatorMethods<M, ReplacementShape> {
     return {
+      /** Checks whether a translation key exists. */
       hasKey: (key?: string, targetLocale?: Locale<M>): boolean => {
         const fullKey = getFullKey(preKey, key);
         return hasKeyMethod({
@@ -41,17 +43,21 @@ export class ScopeTranslator<
           ...(targetLocale !== undefined && { targetLocale }),
         });
       },
+
+      /** Translates a key using the configured pipeline. */
       t: (key?: string, replacements?: Replacement) => {
         const fullKey = getFullKey(preKey, key);
-        return translate({
-          hooks: this.hooks,
+        const context: TranslateContext = {
           messages: this._messages as Readonly<LocaleMessages>,
           locale: this._locale,
           isLoading: this._isLoading,
-          translateConfig: this.translateConfig,
+          config: this.translateConfig,
           key: fullKey,
-          ...(replacements !== undefined && { replacements }),
-        });
+          ...(replacements !== undefined ? { replacements: replacements } : {}),
+          candidateLocales: [],
+          meta: {},
+        };
+        return translate(this.pipeline, context);
       },
     } as PK extends string
       ? ScopeTranslatorMethods<M, ReplacementShape, PK>

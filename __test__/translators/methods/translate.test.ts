@@ -1,62 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { describe, it, expect, vi, afterEach } from "vitest";
-import * as runUtil from "../../../src/pipeline/run-translate";
+import type { TranslateContext } from "../../../src/pipeline";
+import type { MessageValue } from "../../../src/types";
+import { describe, it, expect, vi } from "vitest";
 import { translate } from "../../../src/translators/methods/translate";
 
 describe("translate", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
+  const baseContext: TranslateContext = {
+    messages: {},
+    locale: "en",
+    isLoading: false,
+    config: {} as any,
+    key: "hello",
+    candidateLocales: [],
+    meta: {},
+  };
 
-  it("returns early output when pipeline exits early", () => {
-    vi.spyOn(runUtil, "runTranslate").mockReturnValue({
+  function createMockPipeline(result: any) {
+    return { run: vi.fn().mockReturnValue(result) } as any;
+  }
+
+  it("returns output when pipeline short-circuits (early === true)", () => {
+    const output: MessageValue = "Early Result";
+    const pipeline = createMockPipeline({
+      ctx: baseContext,
       early: true,
-      output: "early-result",
-      ctx: {} as any,
+      output,
     });
-    const result = translate({
-      hooks: [],
-      messages: {},
-      locale: "en",
-      isLoading: false,
-      translateConfig: {} as any,
-      key: "hello",
-    });
-    expect(result).toBe("early-result");
+    const result = translate(pipeline, baseContext);
+    expect(result).toBe(output);
+    expect(pipeline.run).toHaveBeenCalledWith(baseContext);
   });
 
-  it("returns ctx.finalMessage when pipeline completes normally", () => {
-    vi.spyOn(runUtil, "runTranslate").mockReturnValue({
+  it("returns finalMessage when pipeline completes normally", () => {
+    const finalMessage: MessageValue = "Final Result";
+    const pipeline = createMockPipeline({
+      ctx: { ...baseContext, finalMessage },
       early: false,
-      ctx: {
-        finalMessage: "final-result",
-      } as any,
+      output: undefined,
     });
-    const result = translate({
-      hooks: [],
-      messages: {},
-      locale: "en",
-      isLoading: false,
-      translateConfig: {} as any,
-      key: "hello",
-    });
-    expect(result).toBe("final-result");
+    const result = translate(pipeline, baseContext);
+    expect(result).toBe(finalMessage);
   });
 
-  it("throws when pipeline completes without finalMessage", () => {
-    vi.spyOn(runUtil, "runTranslate").mockReturnValue({
+  it("throws when pipeline does not produce finalMessage", () => {
+    const pipeline = createMockPipeline({
+      ctx: { ...baseContext },
       early: false,
-      ctx: {} as any,
+      output: undefined,
     });
-    expect(() =>
-      translate({
-        hooks: [],
-        messages: {},
-        locale: "en",
-        isLoading: false,
-        translateConfig: {} as any,
-        key: "hello",
-      }),
-    ).toThrowError("Invariant violated: missing hook did not produce output");
+    expect(() => translate(pipeline, baseContext)).toThrow(
+      "Invariant violated: missing hook did not produce output",
+    );
   });
 });

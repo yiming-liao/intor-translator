@@ -13,7 +13,6 @@ export {
   // core-translator
   CoreTranslator,
   type CoreTranslatorOptions,
-  type TranslatorPlugin,
 
   // scope-translator
   ScopeTranslator as Translator,

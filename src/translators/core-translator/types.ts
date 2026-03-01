@@ -13,20 +13,5 @@ export interface CoreTranslatorOptions<M>
   extends BaseTranslatorOptions<M>,
     TranslateConfig<M> {
   /** Optional plugins or raw hooks to extend the translation pipeline. */
-  plugins?: Array<TranslatorPlugin | TranslateHook>;
-}
-
-/**
- * A plugin contributing one or more hooks
- * to the translation pipeline.
- *
- * Acts as a structural wrapper around `TranslateHook`.
- *
- * @public
- */
-export interface TranslatorPlugin {
-  /** Optional name for debugging or ordering hints. */
-  name?: string;
-  /** One or multiple hooks contributed by this plugin. */
-  hook?: TranslateHook | TranslateHook[];
+  hooks?: Array<TranslateHook>;
 }
